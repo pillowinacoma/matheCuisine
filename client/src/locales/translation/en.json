@@ -1,0 +1,13 @@
+{
+    "login": "Login",
+    "connection": "Connection",
+    "loginCaution": "<strong>Never share</strong> your login detail.",
+    "loginDetail": "Login",
+    "password": "Password",
+    "toDisconnect": "To disconnect",
+    "clickHere": "Click here",
+    "supervision": "Supervisor",
+    "help": "Help",
+    "server": "Server",
+    "factory": "Factory"
+}

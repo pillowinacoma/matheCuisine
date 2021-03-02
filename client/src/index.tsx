@@ -4,9 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import I18n from './engine/translation/i18n';
+
+/**
+ * Load theme files and modules.
+ */
+import Theme from './components/Theme';
+import { CssBaseline } from '@material-ui/core';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <CssBaseline/>
+    <Theme>
+      <I18n>
+        <App />
+      </I18n>
+    </Theme>
   </React.StrictMode>,
   document.getElementById('root')
 );
