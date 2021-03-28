@@ -3,6 +3,8 @@ import './App.css';
 import Layout from './components/Layout';
 
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import Connection from './pages/connection';
+import Disconnection from './pages/disconnect';
 
 
 function App() {
@@ -12,8 +14,14 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Switch>
-            <Route path="/">
-
+            <Route exact path="/">
+          
+            </Route>
+            <Route path="/connect">
+              <Connection/>
+            </Route>
+            <Route path="/disconnect">
+              <Disconnection/>
             </Route>
           </Switch>
         </Layout>
