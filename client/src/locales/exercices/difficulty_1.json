@@ -7,5 +7,14 @@
             "addition",
             "multiplication"
         ]
+    },
+    "ex_2": {
+        "type": 0,
+        "difficulty": 5,
+        "id": 1,
+        "notions": [
+            "addition",
+            "multiplication"
+        ]
     }
 }
