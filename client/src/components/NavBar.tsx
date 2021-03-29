@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { LangContext } from '../engine/translation/i18n';
 import LanguageIcon from '@material-ui/icons/Language';
 
-import {UserContext} from '../engine/profile/profile'
+import { UserContext } from '../engine/profile/profile'
 
 const useStyle = makeStyles((theme) => ({
     toolbar: {
@@ -34,37 +34,39 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-const NavBar = (props: {sideOpen: boolean, setSideOpen: any}) : JSX.Element => {
+const NavBar = (props: { sideOpen: boolean, setSideOpen: any }): JSX.Element => {
 
     const classes = useStyle();
 
-    const {setLanguage, state: {language}, translate} = React.useContext(LangContext);
+    const { setLanguage, state: { language }, translate } = React.useContext(LangContext);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    
+
+    const { state } = React.useContext(UserContext);
+
     const toogleSide = () => {
         props.setSideOpen(!props.sideOpen);
     }
 
-    const handleClick =  (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (text: string) =>  {
+    const handleClose = (text: string) => {
         return (
             event: React.KeyboardEvent | React.MouseEvent,
-          ) => {
+        ) => {
             if (event.type === 'keydown' &&
                 ((event as React.KeyboardEvent).key === 'Tab' ||
-                (event as React.KeyboardEvent).key === 'Shift')
+                    (event as React.KeyboardEvent).key === 'Shift')
             ) {
-            return;
+                return;
             }
             setAnchorEl(null);
             setLanguage(text);
         }
-      
+
     };
-  
+
 
     return (
         <React.Fragment>
@@ -76,9 +78,18 @@ const NavBar = (props: {sideOpen: boolean, setSideOpen: any}) : JSX.Element => {
                     <Typography variant="h6" className={classes.title}>
                         MatheCuisine
                     </Typography>
+
+                    {state.login !== "" ?
+                        <Typography>
+                            login : {state.login}
+                        </Typography> : ""
+                    }
+
+
+
                     <Button className={classes.languageSection} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         <span>{language}</span>
-                        <LanguageIcon className={classes.languageIcon}/>
+                        <LanguageIcon className={classes.languageIcon} />
                     </Button>
                     <Menu
                         elevation={0}
@@ -90,13 +101,13 @@ const NavBar = (props: {sideOpen: boolean, setSideOpen: any}) : JSX.Element => {
                         anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'center',
-                          }}
+                        }}
                         transformOrigin={{
                             vertical: 'top',
                             horizontal: 'center',
-                          }}
+                        }}
                         onClose={handleClose(language)}
-                        >
+                    >
                         <MenuItem onClick={handleClose("EN")}>ENG</MenuItem>
                         <MenuItem onClick={handleClose("FR")}>FR</MenuItem>
                     </Menu>
