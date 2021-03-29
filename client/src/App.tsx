@@ -7,6 +7,7 @@ import Connection from './pages/connection';
 import Disconnection from './pages/disconnect';
 import Menu from './pages/menu';
 import Game from './pages/game';
+import Profile from './pages/profile';
 
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
             </Route>
             <Route path="/menu">
               <Menu/>
+            </Route>
+            <Route path="/profile">
+              <Profile/>
             </Route>
             <Route path="/exercice/1">
               <Game id={0}/>
