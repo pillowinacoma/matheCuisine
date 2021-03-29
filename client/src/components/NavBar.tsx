@@ -4,7 +4,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { LangContext } from '../engine/translation/i18n';
 import LanguageIcon from '@material-ui/icons/Language';
 
-import { UserContext } from '../engine/profile/profile'
+import {UserContext} from '../engine/profile/profile'
+import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles((theme) => ({
     toolbar: {
@@ -111,7 +112,7 @@ const NavBar = (props: { sideOpen: boolean, setSideOpen: any }): JSX.Element => 
                         <MenuItem onClick={handleClose("EN")}>ENG</MenuItem>
                         <MenuItem onClick={handleClose("FR")}>FR</MenuItem>
                     </Menu>
-                    <Button color="inherit">{translate('login')}</Button>
+                    <Button color="inherit" component={Link} to="/connect">{translate('login')}</Button>
                 </Toolbar>
             </AppBar>
         </React.Fragment>
