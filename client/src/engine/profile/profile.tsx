@@ -15,14 +15,16 @@ const userReducer = (state: UserState, action: UserAction) => {
         case ActionType.ADD_EXO:
             state.doneExos.concat(action.payload.doneExos);
             break;
+        case ActionType.DELETE_LOGIN:
+            state = action.payload;
+            break;
         default:
             break;
     }
     return state;
 }
 
-const localStorageUser = localStorage.getItem('user');
-const initialUser: UserState = localStorageUser ? JSON.parse(localStorageUser) : { login: "", score: 0, doneExercises: [] };
+const initialUser: UserState = { login: "", score: 0, doneExos: [] };
 
 export const UserContext = React.createContext({} as ContextProps);
 
@@ -31,14 +33,20 @@ const User: React.FC<UserStateProps> = ({ children }) => {
 
     const setLogin = (newLogin: string) => {
 
-        const initLoginUser = { ...initialUser, login: newLogin }; // je sais pas si c'est bon en vrai
 
         dispatch({
             type: ActionType.SET_LOGIN,
-            payload: initLoginUser
+            payload: { ...initialUser, login: newLogin }
         });
 
-        return initLoginUser.login;
+    }
+
+    const deleteLogin = () => {
+
+        dispatch({
+            type : ActionType.DELETE_LOGIN,
+            payload : {login : "", score : 0, doneExos : []}
+        })
     }
 
     const plusScore = (scoreToAdd : number) => {
@@ -75,7 +83,7 @@ const User: React.FC<UserStateProps> = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{ state, setLogin, plusScore, minusScore, addExo}}>
+        <UserContext.Provider value={{ state, setLogin, plusScore, minusScore, addExo, deleteLogin}}>
             {children}
         </UserContext.Provider>
     );

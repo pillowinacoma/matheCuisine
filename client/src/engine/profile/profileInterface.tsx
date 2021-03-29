@@ -7,7 +7,8 @@ export enum ActionType {
     PLUS_SCORE = "PLUS_SCORE",
     MINUS_SCORE = "MINUS_SCORE",
     ADD_EXO = "ADD_EXO",
-    GET_EXOS = "GET_EXOS"
+    GET_EXOS = "GET_EXOS",
+    DELETE_LOGIN = "DELETE_LOGIN"
 }
 
 export interface UserState {
@@ -36,7 +37,8 @@ export interface UserAction {
 export interface ContextProps {
     state: UserState;
     //dispatch : (payload : UserState) => any|null|undefined
-    setLogin: (login: string) => string;
+    setLogin: (login: string) => void;
+    deleteLogin: () => void;
     plusScore: (pointsToAdd: number) => number;
     minusScore: (opintsToAbduct: number) => number;
     addExo: (exerciceToAdd: Exo) => Array<Exo>;
