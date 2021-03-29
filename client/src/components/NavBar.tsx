@@ -4,6 +4,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { LangContext } from '../engine/translation/i18n';
 import LanguageIcon from '@material-ui/icons/Language';
 
+import {UserContext} from '../engine/profile/profile'
+
 const useStyle = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
