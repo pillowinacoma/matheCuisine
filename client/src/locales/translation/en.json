@@ -1,6 +1,7 @@
 {
     "login": "Login",
     "connection": "Connection",
+    "deconnection" : "Log Out",
     "loginCaution": "<strong>Never share</strong> your login detail.",
     "loginDetail": "Login",
     "password": "Password",

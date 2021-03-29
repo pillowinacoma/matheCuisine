@@ -4,27 +4,23 @@ import { ActionType, ContextProps, UserAction, UserState, UserStateProps, Exo } 
 const userReducer = (state: UserState, action: UserAction) => {
     switch (action.type) {
         case ActionType.SET_LOGIN:
-            state.login = action.payload.login;
-            break;
+            return {...state, login : action.payload.login};
         case ActionType.PLUS_SCORE:
-            state.score += action.payload.score;
-            break;
+            return {...state, score : state.score + action.payload.score}
         case ActionType.MINUS_SCORE:
-            state.score -= action.payload.score;
-            break;
+            return {...state, score : state.score - action.payload.score}
         case ActionType.ADD_EXO:
-            state.doneExos.concat(action.payload.doneExos);
-            break;
+            return {...state, doneExos : state.doneExos.concat(action.payload.doneExos)}
         case ActionType.DELETE_LOGIN:
-            state = action.payload;
-            break;
+            return action.payload;
         default:
-            break;
+            return state;
     }
-    return state;
 }
 
-const initialUser: UserState = { login: "", score: 0, doneExos: [] };
+
+const localStorageUser = localStorage.getItem('user');
+const initialUser: UserState = localStorageUser ? JSON.parse(localStorageUser) : { login: "", score: 0, doneExos: [] };
 
 export const UserContext = React.createContext({} as ContextProps);
 
@@ -33,7 +29,7 @@ const User: React.FC<UserStateProps> = ({ children }) => {
 
     const setLogin = (newLogin: string) => {
 
-
+        localStorage.setItem('user', JSON.stringify({...state, login : newLogin}));
         dispatch({
             type: ActionType.SET_LOGIN,
             payload: { ...initialUser, login: newLogin }
@@ -47,6 +43,8 @@ const User: React.FC<UserStateProps> = ({ children }) => {
             type : ActionType.DELETE_LOGIN,
             payload : {login : "", score : 0, doneExos : []}
         })
+
+        localStorage.removeItem('user');
     }
 
     const plusScore = (scoreToAdd : number) => {
