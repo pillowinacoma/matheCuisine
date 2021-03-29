@@ -3,6 +3,7 @@ import { Drawer, Divider, Paper, List, ListItem, ListItemIcon, makeStyles, ListI
 import { LangContext } from '../engine/translation/i18n';
 import {Link} from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Star';
+import {Exo} from '../engine/ExerciceInterface';
 
 const useStyles = makeStyles((theme) => ({
     scrollBar: {
@@ -52,14 +53,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Listing = (props: {classes: any, translate: any}) => {
+    var json1 = require ('../locales/exercices/difficulty_1.json');
+    var json2 = require ('../locales/exercices/difficulty_2.json');
+    var json3 = require ('../locales/exercices/difficulty_3.json');
+
+    let data1 : {[key: string] : Exo} = {};
+    data1 = json1;
+
+    
+
+    console.log(data1);
 
     return (
         <Paper className={props.classes.scrollBar}>
             <List>
-                <ListItem button component={Link} to="/" className={props.classes.listItem} key={"1"} alignItems="center">
-                    <ListItemText primary={"Exercice 1"} />
-                    <ListItemIcon className={props.classes.icon}><StarIcon/></ListItemIcon>
-                </ListItem>
+                {/*data1 => {
+                    return (
+                        <ListItem button component={Link} to="/" className={props.classes.listItem} key={"1"} alignItems="center">
+                            <ListItemText primary={element.type} />
+                            <ListItemIcon className={props.classes.icon}><StarIcon/></ListItemIcon>
+                        </ListItem>
+                    );
+                })*/}
+               
             </List>
         </Paper>
     );

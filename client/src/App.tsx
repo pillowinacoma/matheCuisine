@@ -33,7 +33,7 @@ function App() {
               <Profile/>
             </Route>
             <Route path="/exercice/1">
-              <Game id={0}/>
+              <Game id={1} difficulty={1}/>
             </Route>
           </Switch>
         </Layout>
