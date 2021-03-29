@@ -57,24 +57,45 @@ const Listing = (props: {classes: any, translate: any}) => {
     var json2 = require ('../locales/exercices/difficulty_2.json');
     var json3 = require ('../locales/exercices/difficulty_3.json');
 
-    let data1 : {[key: string] : Exo} = {};
-    data1 = json1;
-
-    
-
-    console.log(data1);
 
     return (
         <Paper className={props.classes.scrollBar}>
             <List>
-                {/*data1 => {
-                    return (
-                        <ListItem button component={Link} to="/" className={props.classes.listItem} key={"1"} alignItems="center">
-                            <ListItemText primary={element.type} />
-                            <ListItemIcon className={props.classes.icon}><StarIcon/></ListItemIcon>
-                        </ListItem>
-                    );
-                })*/}
+                {    
+                    Object.entries(json1).map((element) => {
+                        let key = element[0];
+                        let value = element[1];
+                        return (
+                            <ListItem button component={Link} to="/" className={props.classes.listItem} key={key} alignItems="center">
+                                <ListItemText primary={key} />
+                                <ListItemIcon className={props.classes.icon}><StarIcon/></ListItemIcon>
+                            </ListItem>
+                        );
+                    
+                    })
+                 }{ Object.entries(json2).map((element) => {
+                        let key = element[0];
+                        let value = element[1];
+                        return (
+                            <ListItem button component={Link} to="/" className={props.classes.listItem} key={key} alignItems="center">
+                                <ListItemText primary={key} />
+                                <ListItemIcon className={props.classes.icon}><StarIcon/><StarIcon/></ListItemIcon>
+                            </ListItem>
+                        );
+                    
+                    })}
+                  {  Object.entries(json3).map((element) => {
+                        let key = element[0];
+                        let value = element[1];
+                        return (
+                            <ListItem button component={Link} to="/" className={props.classes.listItem} key={key} alignItems="center">
+                                <ListItemText primary={key} />
+                                <ListItemIcon className={props.classes.icon}><StarIcon/><StarIcon/><StarIcon/></ListItemIcon>
+                            </ListItem>
+                        );
+                    
+                    })
+                }
                
             </List>
         </Paper>
