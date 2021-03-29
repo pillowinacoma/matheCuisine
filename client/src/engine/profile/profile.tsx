@@ -10,7 +10,7 @@ const userReducer = (state: UserState, action: UserAction) => {
             state.score += action.payload.score;
             break;
         case ActionType.MINUS_SCORE:
-            state.score - + action.payload.score;
+            state.score -= action.payload.score;
             break;
         case ActionType.ADD_EXO:
             state.doneExos.concat(action.payload.doneExos);
