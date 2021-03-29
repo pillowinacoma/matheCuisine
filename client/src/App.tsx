@@ -5,6 +5,8 @@ import Layout from './components/Layout';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Connection from './pages/connection';
 import Disconnection from './pages/disconnect';
+import Menu from './pages/menu';
+import Game from './pages/game';
 
 
 function App() {
@@ -22,6 +24,12 @@ function App() {
             </Route>
             <Route path="/disconnect">
               <Disconnection/>
+            </Route>
+            <Route path="/menu">
+              <Menu/>
+            </Route>
+            <Route path="/exercice/1">
+              <Game id={0}/>
             </Route>
           </Switch>
         </Layout>
