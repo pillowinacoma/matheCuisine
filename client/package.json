@@ -18,10 +18,15 @@
     "list-files": "^1.1.4",
     "list-react-files": "^0.2.0",
     "react": "^17.0.1",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^17.0.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-three-fiber": "^6.0.13",
+    "rxjs": "^6.6.7",
+    "three": "^0.127.0",
     "typescript": "^4.2.2",
     "web-vitals": "^1.1.0"
   },
@@ -51,6 +56,7 @@
   },
   "devDependencies": {
     "@types/node": "^12.20.7",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "@types/three": "^0.127.1"
   }
 }

@@ -1,5 +1,5 @@
 {
-    "ex_1": {
+    "Exercice-1": {
         "type": 0,
         "difficulty": 5,
         "id": 1,
@@ -8,7 +8,7 @@
             "multiplication"
         ]
     },
-    "ex_2": {
+    "Exercice-2": {
         "type": 0,
         "difficulty": 5,
         "id": 1,

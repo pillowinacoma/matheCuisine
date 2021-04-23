@@ -65,8 +65,9 @@ const Listing = (props: {classes: any, translate: any}) => {
                     Object.entries(json1).map((element) => {
                         let key = element[0];
                         let value = element[1];
+                        console.log(key);
                         return (
-                            <ListItem button component={Link} to="/" className={props.classes.listItem} key={key} alignItems="center">
+                            <ListItem button component={Link} to={"/difficulty-1/"+key} className={props.classes.listItem} key={key} alignItems="center">
                                 <ListItemText primary={key} />
                                 <ListItemIcon className={props.classes.icon}><StarIcon/></ListItemIcon>
                             </ListItem>
@@ -77,7 +78,7 @@ const Listing = (props: {classes: any, translate: any}) => {
                         let key = element[0];
                         let value = element[1];
                         return (
-                            <ListItem button component={Link} to="/" className={props.classes.listItem} key={key} alignItems="center">
+                            <ListItem button component={Link} to={"/difficulty-2/"+key} className={props.classes.listItem} key={key} alignItems="center">
                                 <ListItemText primary={key} />
                                 <ListItemIcon className={props.classes.icon}><StarIcon/><StarIcon/></ListItemIcon>
                             </ListItem>
@@ -88,7 +89,7 @@ const Listing = (props: {classes: any, translate: any}) => {
                         let key = element[0];
                         let value = element[1];
                         return (
-                            <ListItem button component={Link} to="/" className={props.classes.listItem} key={key} alignItems="center">
+                            <ListItem button component={Link} to={"/difficulty-3/"+key} className={props.classes.listItem} key={key} alignItems="center">
                                 <ListItemText primary={key} />
                                 <ListItemIcon className={props.classes.icon}><StarIcon/><StarIcon/><StarIcon/></ListItemIcon>
                             </ListItem>
