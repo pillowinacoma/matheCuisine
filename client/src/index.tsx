@@ -11,13 +11,16 @@ import I18n from './engine/translation/i18n';
  */
 import Theme from './components/Theme';
 import { CssBaseline } from '@material-ui/core';
+import User from './engine/profile/profile';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline/>
+    <CssBaseline />
     <Theme>
       <I18n>
-        <App />
+        <User>
+          <App />
+        </User>
       </I18n>
     </Theme>
   </React.StrictMode>,

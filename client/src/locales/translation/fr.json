@@ -1,6 +1,7 @@
 {
     "login": "Se connecter",
     "connection": "Connexion",
+    "deconnection" : "Déconnexion",
     "loginCaution": "<strong>Ne divulgez jamais</strong> vos identifiants.",
     "loginDetail": "Identifiant",
     "password": "Mot de passe",
