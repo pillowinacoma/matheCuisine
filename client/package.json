@@ -12,6 +12,7 @@
     "@types/jest": "^26.0.20",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "drei": "^2.2.21",
     "file-system": "^2.2.2",
     "filelist": "^1.0.2",
     "fs": "0.0.1-security",
