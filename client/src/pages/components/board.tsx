@@ -13,7 +13,6 @@ const Board = (props: {children: any}) => {
         <Canvas camera={{ position: [0, 0, 10] }}>
             <ambientLight intensity={.75} />
             <spotLight intensity={0.8} position={[300, 300, 400]} />
-            
             {props.children}
         </Canvas>
     );

@@ -22,14 +22,20 @@ export const Model = (props:{file: string, position?: [number, number, number],
   frame?: (gltf: GLTF) => void | undefined 
 }) => {
 
-    const [pos, setPos] = React.useState(props.position);
+    const [pos, setPos] = React.useState(props.position != null ? props.position : [0,0,0]);
+    const [gltf, setGltf] = React.useState<GLTF>()
     const glb = '/models/'+props.file+'.glb';
     var group = React.useRef();
-    const gltf = useLoader(GLTFLoader, glb);
+    //const gltf = useLoader(GLTFLoader, glb);
 
+    const loader = new GLTFLoader();
+    loader.load(glb, (result) => {
+      if(gltf == undefined)
+        setGltf(result);
+    })
 
     useFrame(() => {
-      if(props.frame != undefined) 
+      if(props.frame != undefined && gltf != undefined) 
         props.frame(gltf);
     });
     return (
@@ -47,7 +53,8 @@ export const Model = (props:{file: string, position?: [number, number, number],
         onDoubleClick = {props.onDoubleClick}
         onWheel = {props.onWheel}
       >
-        <primitive object={gltf.scene} position={pos ? pos : [0,0,0]} scale={props.scale ? props.scale : [1,1,1]}/>
+        {gltf ? <primitive object={ gltf.scene } position={pos} scale={props.scale ? props.scale : [1,1,1]}/> : ""}
+        
       </group>
     )
 }
