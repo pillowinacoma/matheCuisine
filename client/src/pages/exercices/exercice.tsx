@@ -3,6 +3,9 @@ import Type1 from './type1';
 import Type2 from './type2';
 import classes from '*.module.css';
 import { makeStyles } from '@material-ui/core';
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
+import CancelIcon from '@material-ui/icons/Cancel';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 const type = [
     Type1,
@@ -12,6 +15,18 @@ const type = [
 const useStyle = makeStyles((theme) => ({
     gameBox: {
         height: '100vh'
+    },
+    hourGlass: {
+        fontSize: "20px",
+        color: "yellow"
+    },
+    indice: {
+        fontSize: "20px",
+        color: "red"
+    },
+    cancel: {
+        fontSize: "20px",
+        color: "blue"
     }
 }));
 
@@ -21,8 +36,15 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
 
     let Type = type[json[props.ex].type]
 
+
+
+
+
     return (
         <div className={classes.gameBox}>
+            <EmojiObjectsIcon className={classes.indice}/>
+            <CancelIcon className={classes.cancel}/>
+            <HourglassEmptyIcon className={classes.hourGlass}/>
             <Type params={json[props.ex]}/>
         </div>
     );

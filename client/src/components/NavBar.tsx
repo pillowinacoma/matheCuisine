@@ -22,6 +22,8 @@ const useStyle = makeStyles((theme) => ({
     title: {
         textAlign: "start",
         flexGrow: 1,
+        "text-decoration": "inherit",
+        color: "whitesmoke"
     },
 
     languageSection: {
@@ -76,7 +78,7 @@ const NavBar = (props: { sideOpen: boolean, setSideOpen: any }): JSX.Element => 
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toogleSide}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.title} component={Link} to={"/menu"}>
                         MatheCuisine
                     </Typography>
 
