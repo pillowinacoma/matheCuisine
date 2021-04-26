@@ -1,8 +1,15 @@
-import React, { useRef, useState, Fragment, MutableRefObject } from "react";
+import React, {
+    useRef,
+    useState,
+    Fragment,
+    MutableRefObject,
+    useEffect,
+} from "react";
 import { Canvas, useFrame } from "react-three-fiber";
 import { OrbitControls } from "@react-three/drei";
 
 const scale = 1;
+const cameraDistance = 2;
 
 const Box: React.FC = (props) => {
     const [active, setActive] = useState(false);
@@ -18,25 +25,25 @@ const Box: React.FC = (props) => {
 };
 
 const Face: React.FC = (props) => {
-    const radius = 3;
+    const radius = 2;
 
     return (
-        <mesh position={[0, 0, 0]} rotation={[90, 0, 0]}>
+        <mesh position={[0, -0.5, 0]} rotation={[0, Math.PI / 12, 0]}>
             <cylinderGeometry
                 attach="geometry"
-                args={[radius, radius, 1, 20]}
+                args={[radius, radius, 1, 12]}
             />
             <meshBasicMaterial attach="material" color="#737373" />
         </mesh>
     );
 };
 
-const Hand: React.FC<{ type: number; color: string }> = (props) => {
+const Hand: React.FC<{ type: number; color: string; time: Date }> = (props) => {
     const group = useRef<any | null>(null);
-    /*useFrame(() => {
+    useFrame(() => {
         const m = group.current;
         if (m) {
-            const now = new Date();
+            const now = props.time;
             let totalSeconds =
                 now.getHours() * 3600 +
                 now.getMinutes() * 60 +
@@ -52,31 +59,32 @@ const Hand: React.FC<{ type: number; color: string }> = (props) => {
             }
             m.rotation.y = -value * 2 * Math.PI + Math.PI / 2;
         }
-    });*/
+    });
 
     const size = 0.5 + 0.5 * props.type;
 
     return (
         <group
             ref={group}
-            rotation={[90, props.type, 0]}
-            position={[0, -props.type, 0]}
+            rotation={[0, props.type, 0]}
+            position={[0, props.type * 0.05, 0]}
         >
-            <mesh position={[size - 0.1, 0, 0]}>
-                <boxGeometry args={[size * 2, 1, 0.5]} />
+            <mesh position={[size / 2 - 0.1 * size, 0, 0]}>
+                <boxGeometry args={[size, 0.01, -0.03 + 0.15 / size]} />
                 <meshBasicMaterial attach="material" color={props.color} />
             </mesh>
         </group>
     );
 };
 
-const ClockGroup: React.FC = (props) => {
+const ClockGroup: React.FC<{
+    time: Date;
+}> = (props) => {
     const group = useRef<any | null>(null);
-
     return (
         <group
             ref={group}
-            rotation={[0, 0, 0]}
+            rotation={[90, 0, 0]}
             scale={[scale, scale, scale]}
             /*onPointerDown={(e) => {
                 console.log(group.current.children);
@@ -85,9 +93,9 @@ const ClockGroup: React.FC = (props) => {
             }}*/
         >
             <Face />
-            <Hand type={1} color="#eeeef0" />
-            <Hand type={2} color="#d6d6db" />
-            <Hand type={3} color="#d11c00" />
+            <Hand type={1} color="#eeeef0" time={props.time} />
+            <Hand type={2} color="#d6d6db" time={props.time} />
+            <Hand type={3} color="hotpink" time={props.time} />
         </group>
     );
 };
@@ -99,14 +107,27 @@ export function getMousePos(e: { clientX: number; clientY: number }) {
 const Clock = () => {
     const w = { x: window.innerWidth, y: window.innerHeight };
     const mouse = useRef({ x: w.x / 2, y: w.y / 2 });
-    const [smooth, setSmooth] = useState(false);
+
+    let [time, setTime] = useState(new Date());
     return (
         <Fragment>
-            <h1>Hello BIATCH</h1>
-            <Canvas>
-                <ClockGroup />
+            <h1>Clock</h1>
+            <Canvas
+            camera={{ position: [0, 0, cameraDistance] }}
+            >
+                <ClockGroup time={time} />
                 <OrbitControls />
             </Canvas>
+            <button
+                onClick={() => {
+                    console.log(time);                    
+                    const tmpTime = time;
+                    tmpTime.setSeconds(time.getSeconds() + 1);
+                    setTime(tmpTime);
+                }}
+            >
+                increment
+            </button>
         </Fragment>
     );
 };
