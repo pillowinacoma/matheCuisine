@@ -29,14 +29,14 @@ const Face: React.FC = (props) => {
             <ClockTicks
                 tickNumber={12}
                 diam={radius}
-                color="hotpink"
+                color="black"
                 id="big"
                 size={[0.3, 0.1]}
             />
             <ClockTicks
                 tickNumber={60}
                 diam={radius}
-                color="orange"
+                color="black"
                 id="small"
                 size={[0.3, 0.01]}
             />
@@ -143,14 +143,14 @@ const ClockGroup = (props: {
             }}
             onWheel={(event) => {
                 const tmpTime = props.time;
-                tmpTime.setSeconds(props.time.getSeconds() + (event.deltaY < 0 ? -1 : 1));
+                tmpTime.setSeconds(props.time.getSeconds() + (event.deltaY / 3 * 60));
                 props.setTime(tmpTime);
             }}
         >
             <Face />
             <Hand type={1} color="#eeeef0" time={props.time} />
             <Hand type={2} color="#d6d6db" time={props.time} />
-            <Hand type={3} color="hotpink" time={props.time} />
+            <Hand type={3} color="green" time={props.time} />
         </group>
     );
 };
