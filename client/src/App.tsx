@@ -34,9 +34,6 @@ function App() {
                         <Route path="/profile">
                             <Profile />
                         </Route>
-                        <Route path="/clock">
-                          <Clock/>
-                        </Route>
                         <Route path="/exercice/1">
                             <Game id={1} difficulty={1} />
                         </Route>

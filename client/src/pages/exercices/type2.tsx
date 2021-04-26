@@ -1,9 +1,9 @@
-import * as React from 'react';
+import Clock from '../components/clock';
 
 const Type2 = (props: {params: any}) : JSX.Element => {
 
     return (
-        <div></div>
+        <Clock/>
     );
 }
 

@@ -16,5 +16,16 @@
             "addition",
             "multiplication"
         ]
+    },
+    "Exercice-3" : {
+        "type" : 1,
+        "difficulty" : 5,
+        "id" : 10,
+        "notions" : [
+            "temps",
+            "addition",
+            "soustraction"
+        ]
+
     }
 }
