@@ -1,4 +1,11 @@
-import React, { useRef, useState, Fragment } from "react";
+import React, {
+    useRef,
+    useState,
+    Fragment,
+    MutableRefObject,
+    Dispatch,
+    SetStateAction,
+} from "react";
 import { GroupProps, useFrame } from "react-three-fiber";
 import { OrbitControls } from "@react-three/drei";
 import Board from "./board";
@@ -12,15 +19,27 @@ const Face: React.FC = (props) => {
 
     return (
         <Fragment>
-            <mesh position={[0, -0.5, 0]} rotation={[0, 0, 0]}>
+            <mesh position={[0, -0.1, 0]} rotation={[0, 0, 0]}>
                 <cylinderGeometry
                     attach="geometry"
-                    args={[radius, radius, 1, 12]}
+                    args={[radius, radius, 0.15, 100]}
                 />
                 <meshStandardMaterial attach="material" color="#737373" />
             </mesh>
-            <ClockTicks tickNumber={12} diam={radius} color="hotpink" id="big" size={[.3, .1]}/>
-            <ClockTicks tickNumber={60} diam={radius} color="orange" id="small" size={[.3, .01]}/>
+            <ClockTicks
+                tickNumber={12}
+                diam={radius}
+                color="hotpink"
+                id="big"
+                size={[0.3, 0.1]}
+            />
+            <ClockTicks
+                tickNumber={60}
+                diam={radius}
+                color="orange"
+                id="small"
+                size={[0.3, 0.01]}
+            />
         </Fragment>
     );
 };
@@ -28,9 +47,9 @@ const Face: React.FC = (props) => {
 const ClockTicks = (props: {
     tickNumber: number;
     diam: number;
-    color :string;
-    id : string;
-    size : any;
+    color: string;
+    id: string;
+    size: any;
 }): JSX.Element => {
     let result = [];
     const far = props.diam;
@@ -45,9 +64,12 @@ const ClockTicks = (props: {
             <mesh
                 key={`${props.id}-${index}`}
                 position={[0, (pos1 + nPos1) / 2, (pos2 + nPos2) / 2]}
-                rotation={[index * pi * 2 / num, 0, 0]}
+                rotation={[(index * pi * 2) / num, 0, 0]}
             >
-                <boxGeometry attach="geometry" args={[.1, props.size[0], props.size[1]]} />
+                <boxGeometry
+                    attach="geometry"
+                    args={[0.1, props.size[0], props.size[1]]}
+                />
                 <meshStandardMaterial attach="material" color={props.color} />
             </mesh>
         );
@@ -95,20 +117,35 @@ const Hand: React.FC<{ type: number; color: string; time: Date }> = (props) => {
     );
 };
 
-const ClockGroup: React.FC<{
+const ClockGroup = (props: {
     time: Date;
-}> = (props) => {
+    setTime: Dispatch<SetStateAction<Date>>;
+}): JSX.Element => {
     const group = useRef<any | null>(null);
+    let mouse: { x: number; y: number };
+
+    useFrame(() => {
+        const m = group.current;
+        if (m && mouse) {
+            const coords = { x: window.innerWidth, y: window.innerHeight };
+            m.rotation.x = (mouse.y - coords.y / 2) / 300 / pi + pi / 2;
+            m.rotation.z = (mouse.x - coords.x / 2) * 0.001;
+        }
+    });
+
     return (
         <group
             ref={group}
-            rotation={[pi/2, 0, 0]}
+            rotation={[pi / 2, 0, 0]}
             scale={[scale, scale, scale]}
-            /*onPointerDown={(e) => {
-                console.log(group.current.children);
-                console.log("clientX", e.clientX);
-                console.log("clientY", e.clientY);
-            }}*/
+            onPointerMove={(event) => {
+                mouse = { x: event.clientX, y: event.clientY };
+            }}
+            onWheel={(event) => {
+                const tmpTime = props.time;
+                tmpTime.setSeconds(props.time.getSeconds() + (event.deltaY < 0 ? -1 : 1));
+                props.setTime(tmpTime);
+            }}
         >
             <Face />
             <Hand type={1} color="#eeeef0" time={props.time} />
@@ -129,30 +166,8 @@ const Clock = () => {
     let [time, setTime] = useState(new Date());
     return (
         <Fragment>
-            <h1>Clock</h1>
-            <button
-                onClick={() => {
-                    console.log(time);
-                    const tmpTime = time;
-                    tmpTime.setSeconds(time.getSeconds() + 1);
-                    setTime(tmpTime);
-                }}
-            >
-                increment
-            </button>
-            <button
-                onClick={() => {
-                    console.log(time);
-                    const tmpTime = time;
-                    tmpTime.setSeconds(time.getSeconds() - 1);
-                    setTime(tmpTime);
-                }}
-            >
-                decrement
-            </button>
             <Board camera={{ position: [0, 0, cameraDistance] }}>
-                <ClockGroup time={time} />
-                <OrbitControls />
+                <ClockGroup time={time} setTime={setTime} />
             </Board>
         </Fragment>
     );
