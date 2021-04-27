@@ -188,7 +188,7 @@ const ClockGroup = (props: {
                 console.log(event.deltaY);
                 //console.log(props.time);
                 const tmpTime = props.time;
-                tmpTime.setSeconds(props.time.getSeconds() + 1);
+                tmpTime.setSeconds(props.time.getSeconds() + (event.deltaY > 0 ? 1 : -1) * 60 );
                 props.setTime(tmpTime);
             }}
         >
