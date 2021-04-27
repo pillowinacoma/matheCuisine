@@ -5,10 +5,14 @@ import React, {
     MutableRefObject,
     Dispatch,
     SetStateAction,
+    useMemo,
 } from "react";
 import { GroupProps, useFrame } from "react-three-fiber";
 import { OrbitControls } from "@react-three/drei";
 import Board from "./board";
+import { useLoader } from "react-three-fiber";
+import * as THREE from "three";
+import { Suspense } from "react";
 
 const scale = 1;
 const pi = Math.PI;
@@ -26,22 +30,61 @@ const Face: React.FC = (props) => {
                 />
                 <meshStandardMaterial attach="material" color="#737373" />
             </mesh>
-            <ClockTicks
+            <ClockNumbers
                 tickNumber={12}
-                diam={radius}
-                color="black"
-                id="big"
+                diam={radius + 0.5}
+                color="hotpink"
+                id="numbers"
                 size={[0.3, 0.1]}
             />
             <ClockTicks
                 tickNumber={60}
                 diam={radius}
-                color="black"
+                color="orange"
                 id="small"
                 size={[0.3, 0.01]}
             />
+            <ClockTicks
+                tickNumber={12}
+                diam={radius}
+                color="orange"
+                id="big"
+                size={[0.7, 0.1]}
+            />
         </Fragment>
     );
+};
+
+const ClockNumbers = (props: {
+    tickNumber: number;
+    diam: number;
+    color: string;
+    id: string;
+    size: any;
+}): JSX.Element => {
+    let result = [];
+    const far = props.diam;
+    const num = props.tickNumber;
+
+    for (let index = 0; index < props.tickNumber; index++) {
+        let pos1 = far * Math.cos(((2 * pi) / num) * index);
+        let pos2 = far * Math.sin(((2 * pi) / num) * index);
+        let nPos1 = far * Math.cos(((2 * pi) / num) * index);
+        let nPos2 = far * Math.sin(((2 * pi) / num) * index);
+        result.push(
+            <Text
+                key={`num${index}`}
+                color={props.color}
+                position={[
+                    0,
+                    (pos1 + nPos1) / 2 + 0.17,
+                    (pos2 + nPos2) / 2 + 0.1,
+                ]}
+            >{`${12 - ((index + 3) % 12)}`}</Text>
+        );
+    }
+
+    return <group rotation={[0, 0, pi / 2]}>{result}</group>;
 };
 
 const ClockTicks = (props: {
@@ -142,15 +185,48 @@ const ClockGroup = (props: {
                 mouse = { x: event.clientX, y: event.clientY };
             }}
             onWheel={(event) => {
+                console.log(event.deltaY);
+                //console.log(props.time);
                 const tmpTime = props.time;
-                tmpTime.setSeconds(props.time.getSeconds() + (event.deltaY / 3 * 60));
+                tmpTime.setSeconds(props.time.getSeconds() + 1);
                 props.setTime(tmpTime);
             }}
         >
             <Face />
             <Hand type={1} color="#eeeef0" time={props.time} />
             <Hand type={2} color="#d6d6db" time={props.time} />
-            <Hand type={3} color="green" time={props.time} />
+            <Hand type={3} color="hotpink" time={props.time} />
+        </group>
+    );
+};
+
+const Text = ({
+    children = "",
+    size = 1.5,
+    color = "#00ff00",
+    ...props
+}): JSX.Element => {
+    const font = useLoader(THREE.FontLoader, "/fonts/bold.blob");
+    const config = useMemo(
+        () => ({
+            font,
+            size: 40,
+            height: 10,
+            curveSegments: 32,
+            bevelEnabled: true,
+            bevelThickness: 6,
+            bevelSize: 2.5,
+            bevelOffset: 0,
+            bevelSegments: 8,
+        }),
+        [font]
+    );
+    return (
+        <group {...props} scale={[0.005 * size, 0.005 * size, 0.005]}>
+            <mesh rotation={[0, pi / 2, -pi / 2]} position={props.position}>
+                <textGeometry args={[children, config]} />
+                <meshStandardMaterial color={color} />
+            </mesh>
         </group>
     );
 };
@@ -167,7 +243,9 @@ const Clock = () => {
     return (
         <Fragment>
             <Board camera={{ position: [0, 0, cameraDistance] }}>
-                <ClockGroup time={time} setTime={setTime} />
+                <Suspense fallback={"loading"}>
+                    <ClockGroup time={time} setTime={setTime} />
+                </Suspense>
             </Board>
         </Fragment>
     );
