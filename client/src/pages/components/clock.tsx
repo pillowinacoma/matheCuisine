@@ -12,6 +12,7 @@ import Board from "./board";
 import { useLoader } from "react-three-fiber";
 import * as THREE from "three";
 import { Suspense } from "react";
+import { useEffect } from "react";
 
 const scale = 1;
 const pi = Math.PI;
@@ -183,11 +184,11 @@ const ClockGroup = (props: {
             onPointerMove={(event) => {
                 mouse = { x: event.clientX, y: event.clientY };
             }}
-            onWheel={(event) => {
-                console.log(event.deltaY);
-                //console.log(props.time);
-                const tmpTime = props.time;
-                tmpTime.setSeconds(props.time.getSeconds() + (event.deltaY > 0 ? 1 : -1) * 60 );
+            onWheel={(event) => {           
+                const tmpTime = props.time; 
+                tmpTime.setSeconds(
+                    props.time.getSeconds() + (event.deltaY > 0 ? 1 : -1) * 60
+                );
                 props.setTime(tmpTime);
             }}
         >

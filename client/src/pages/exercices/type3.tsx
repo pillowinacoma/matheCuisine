@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Board from "../components/board";
 import Clock from "../components/clock";
 import Paquet from "../components/paquet";
-import {Plus} from "../components/plus";
+import { Plus, Equals, Times, Minus, DividedBy } from "../components/operationSigns";
 
 const Type3 = (props: { params: any }): JSX.Element => {
     return (
@@ -12,18 +12,18 @@ const Type3 = (props: { params: any }): JSX.Element => {
                 <Paquet
                     file="banana"
                     center={[0, 0, 0]}
-                    dimensions={[1, 5, 16]}
+                    dimensions={[5, 1, 5]}
                     distance={[10, 5, 5]}
                     scale={1}
                 />
 
-                <Plus/>
+                <DividedBy position={[-50, 20, 60]} size={15} />
 
                 <Paquet
                     file="banana"
-                    center={[-40, 0, 0]}
-                    dimensions={[2, 5, 16]}
-                    distance={[20, 5, 5]}
+                    center={[-90, 0, 0]}
+                    dimensions={[5, 1, 5]}
+                    distance={[10, 5, 5]}
                     scale={1}
                 />
                 <OrbitControls />
