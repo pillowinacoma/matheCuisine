@@ -6,10 +6,12 @@ import { makeStyles } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import Type3 from './type3';
 
 const type = [
     Type1,
-    Type2
+    Type2,
+    Type3
 ];
 
 const useStyle = makeStyles((theme) => ({

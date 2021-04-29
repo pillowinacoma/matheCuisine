@@ -29,7 +29,6 @@ const Type1 = () : JSX.Element => {
     return (
         <Board>
             <Suspense fallback={'loading'}>
-                    {model2}
                     {model1}
             </Suspense>
         </Board>
