@@ -12,12 +12,12 @@ const Type3 = (props: { params: any }): JSX.Element => {
                 <Paquet
                     file="banana"
                     center={[0, 0, 0]}
-                    dimensions={[5, 1, 5]}
+                    dimensions={[5, 5, 1]}
                     distance={[10, 5, 5]}
                     scale={1}
                 />
 
-                <DividedBy position={[-50, 20, 60]} size={15} />
+                <Times position={[-50, 20, 60]} size={15} />
 
                 <Paquet
                     file="banana"
@@ -26,6 +26,16 @@ const Type3 = (props: { params: any }): JSX.Element => {
                     distance={[10, 5, 5]}
                     scale={1}
                 />
+                <Equals position={[120, 10, 60]} size={15} />
+
+                <Paquet
+                    file="banana"
+                    center={[100, 0, 0]}
+                    dimensions={[5, 5, 5]}
+                    distance={[10, 5, 5]}
+                    scale={1}
+                />
+
                 <OrbitControls />
             </Suspense>
         </Board>
