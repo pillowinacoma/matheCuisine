@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Type1 from './type1';
 import Type2 from './type2';
-import classes from '*.module.css';
 import { makeStyles } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -38,7 +37,7 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
 
 
 
-
+    generator(json[props.ex]);
 
     return (
         <div className={classes.gameBox}>
@@ -48,6 +47,41 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
             <Type params={json[props.ex]}/>
         </div>
     );
+
+}
+
+function getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+const generator = (detail: any) => {
+
+    const vars: Array<number> = detail.vars;
+    var coefResponse = detail.coef;
+    var eq = 0;
+    var result = detail.result;
+    var generateVar: Array<number> = [];
+
+    var restart = false;
+    while(restart) {
+        generateVar = [];
+        for(let i = 0; i < vars.length; i++) {
+            var x = Math.floor(getRandomInt(result));
+            generateVar.push(x);
+            eq += vars[i] * generateVar[i] ;
+        }
+
+        
+        if(detail.decimal === "yes") {
+            if(((result - eq) % coefResponse) !== 0) {
+                restart = true;
+            }
+        }
+        console.log("eq : "+vars[0]*generateVar[0]+" + "+vars[1]*generateVar[1]+" + "+vars[2]*generateVar[2]+" + "+coefResponse+" * x = "+(vars[0]*generateVar[0]+vars[1]*generateVar[1]+vars[2]*generateVar[2])+" + "+coefResponse+" * x = "+detail.result)
+    }
+
+
+    console.log("eq : "+vars[0]*generateVar[0]+" + "+vars[1]*generateVar[1]+" + "+vars[2]*generateVar[2]+" + "+coefResponse+" * x = "+(vars[0]*generateVar[0]+vars[1]*generateVar[1]+vars[2]*generateVar[2])+" + "+coefResponse+" * x = "+detail.result)
 
 }
 

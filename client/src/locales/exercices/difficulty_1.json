@@ -6,7 +6,15 @@
         "notions": [
             "addition",
             "multiplication"
-        ]
+        ],
+        "decimal": "yes",
+        "vars": [
+            12,
+            3,
+            4
+        ],
+        "coef": 2,
+        "result": 100
     },
     "Exercice-2": {
         "type": 0,

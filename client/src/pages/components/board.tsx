@@ -1,14 +1,8 @@
 import * as React from 'react';
-import * as THREE from 'three'
-import {Canvas, useFrame} from "react-three-fiber";
-import { PartyModeSharp } from '@material-ui/icons';
+import {Canvas} from "react-three-fiber";
 
 
 const Board = (props: {children: any, camera? : any|undefined}) => {
-
-   
-
-
 
     return (
         <Canvas camera={props.camera ? props.camera : { position: [0, 0, 10] }}>

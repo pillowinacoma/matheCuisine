@@ -11,7 +11,7 @@ const Connection = () => {
     const {setLogin} = React.useContext(UserContext);
 
     const [login, changeLogin] = React.useState("");
-    const [error, setError] = React.useState("");
+    const [error] = React.useState("");
     
     const handleConnexion = () => {
         setLogin(login);
@@ -23,7 +23,7 @@ const Connection = () => {
 
     return (
         <div>
-            <TextField id="standard-basic" label={translate("loginDetail")} onChange={handleChange} autoComplete="off" placeholder="jean" error={error != "" ? true : false } helperText={error != "" ? error : ""}/>
+            <TextField id="standard-basic" label={translate("loginDetail")} onChange={handleChange} autoComplete="off" placeholder="jean" error={error !== "" ? true : false } helperText={error !== "" ? error : ""}/>
             <Button variant="contained" color="primary" onClick={handleConnexion} component={Link} to='/'>
                 {translate('connection')}
             </Button>

@@ -58,7 +58,7 @@ const Menu = () => {
                     <span>progression</span>
                 </Paper>
             </Button>
-            <a href="https://fr.wikibooks.org/wiki/Catégorie:Recettes_de_cuisine_par_ingrédient" target="_blank">
+            <a href="https://fr.wikibooks.org/wiki/Catégorie:Recettes_de_cuisine_par_ingrédient" rel="noreferrer" target="_blank">
             <Button className={classes.buttonDouble}>
                 <Paper elevation={0} >
                     <KitchenIcon className={classes.logo}/>
