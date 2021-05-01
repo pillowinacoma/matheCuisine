@@ -16,6 +16,14 @@
         "coef": 2,
         "result": 100
     },
+    "Exercice-4": {
+        "type": 2,
+        "difficulty": 5,
+        "id": 1,
+        "notions": [
+            "multiplication"
+        ]
+    },
     "Exercice-2": {
         "type": 0,
         "difficulty": 5,
