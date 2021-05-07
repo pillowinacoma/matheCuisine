@@ -188,7 +188,7 @@ const generator = (detail: any, difficulty: number) => {
 
     }
 
-    console.log(rpn);
+    return rpn;
 
 }
 
