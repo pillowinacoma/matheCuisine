@@ -39,7 +39,7 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
 
 
 
-    generator(json[props.ex]);
+    generator(json[props.ex], props.difficulty);
 
     return (
         <div className={classes.gameBox}>
@@ -54,36 +54,141 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
-  }
+}
 
-const generator = (detail: any) => {
-
-    const vars: Array<number> = detail.vars;
-    var coefResponse = detail.coef;
-    var eq = 0;
-    var result = detail.result;
-    var generateVar: Array<number> = [];
-
-    var restart = false;
-    while(restart) {
-        generateVar = [];
-        for(let i = 0; i < vars.length; i++) {
-            var x = Math.floor(getRandomInt(result));
-            generateVar.push(x);
-            eq += vars[i] * generateVar[i] ;
-        }
-
-        
-        if(detail.decimal === "yes") {
-            if(((result - eq) % coefResponse) !== 0) {
-                restart = true;
-            }
-        }
-        console.log("eq : "+vars[0]*generateVar[0]+" + "+vars[1]*generateVar[1]+" + "+vars[2]*generateVar[2]+" + "+coefResponse+" * x = "+(vars[0]*generateVar[0]+vars[1]*generateVar[1]+vars[2]*generateVar[2])+" + "+coefResponse+" * x = "+detail.result)
+function selectOp(notions: Array<string>) {
+    let randOp = Math.floor(getRandomInt(10));
+    let choose = notions[randOp % (notions.length)];
+    console.log(randOp % (notions.length));
+    switch(choose) {
+        case 'addition':
+            return '+';
+        case 'multiplication':
+            return '*';
+        case 'division':
+            return '/';
+        case 'soustraction':
+            return '-';
+        default:
+            return '+';
     }
 
+}
 
-    console.log("eq : "+vars[0]*generateVar[0]+" + "+vars[1]*generateVar[1]+" + "+vars[2]*generateVar[2]+" + "+coefResponse+" * x = "+(vars[0]*generateVar[0]+vars[1]*generateVar[1]+vars[2]*generateVar[2])+" + "+coefResponse+" * x = "+detail.result)
+const generator = (detail: any, difficulty: number) => {
+
+    const vars: Array<any> = detail.vars;
+    var coefResponse = detail.coef;
+
+    var result = detail.result;
+    var generateVar: Array<any> = [];
+    var rpn = [];
+    var rpnTmpOp = [];
+
+    var acceptBrackets = false;
+    var openBrackets = 0;
+
+    var alreadyPlaceVar = false;
+
+    if(difficulty > 2) {
+        acceptBrackets = true;
+    }
+
+    var restart = true;
+    while(restart) {
+        restart = false;
+        generateVar = [];
+        rpn = [];
+        rpnTmpOp = [];
+
+
+        for(let i = 0; i < vars.length; i++) {
+            var toPlace = 0;
+            if(vars[i] === "r") {
+                alreadyPlaceVar = true;
+                generateVar.push( 'r' );
+            } else {
+                let x = getRandomInt(result);
+                generateVar.push( vars[i] * x );
+            }
+
+            if(i > 0) {
+                let op = selectOp(detail.notions);
+                switch(op) {
+                    case '*':
+                        for(const [key, value] of Object.entries(generateVar)) {
+                            rpn.push(value);
+                        }
+                        for(const [key, value] of Object.entries(rpnTmpOp)) {
+                            rpn.push(value);
+                        }
+                        generateVar = [];
+                        rpnTmpOp = [];
+                        rpn.push('*');
+                        break;
+                    case '/':
+                        for(const [key, value] of Object.entries(generateVar)) {
+                            rpn.push(value);
+                        }
+                        for(const [key, value] of Object.entries(rpnTmpOp)) {
+                            rpn.push(value);
+                        }
+                        generateVar = [];
+                        rpnTmpOp = [];
+                        rpn.push('/');
+                        break;
+                    default:
+                        rpnTmpOp.push(op);
+                        break;
+                }
+            }
+            if(acceptBrackets) {
+                let rand = Math.floor(Math.random() * 10);
+                if(rand >= 9 - 1*difficulty) {
+                    openBrackets++;
+                }
+            }
+
+            if(openBrackets > 0) {
+                let rand = Math.floor(Math.random() * 10);
+                if(rand >= 5) {
+                    openBrackets--;
+                    for(const [key, value] of Object.entries(generateVar)) {
+                        rpn.push(value);
+                    }
+                    for(const [key, value] of Object.entries(rpnTmpOp)) {
+                        rpn.push(value);
+                    }
+                    generateVar = [];
+                    rpnTmpOp = [];
+                }
+            }
+        }
+        
+        if(generateVar.length != 0) {
+            for(const [key, value] of Object.entries(generateVar)) {
+                rpn.push(value);
+            }
+            if(rpnTmpOp.length == 0){ 
+                restart = true;
+            } else {
+                for(const [key, value] of Object.entries(rpnTmpOp)) {
+                    rpn.push(value);
+                }
+            }
+        }
+
+        if(detail.decimal === "yes") {
+
+        }
+
+        if(detail.acceptNegatif === "no") {
+            
+        }
+
+    }
+
+    console.log(rpn);
 
 }
 

@@ -5,13 +5,18 @@
         "id": 1,
         "notions": [
             "addition",
+            "soustraction",
             "multiplication"
         ],
         "decimal": "yes",
+        "acceptNegatif": "no",
+        "acceptBrackets": false,
         "vars": [
-            12,
-            3,
-            4
+            1,
+            1,
+            "r",
+            2, 
+            7
         ],
         "coef": 2,
         "result": 100
@@ -22,7 +27,16 @@
         "id": 1,
         "notions": [
             "multiplication"
-        ]
+        ],
+        "decimal": "yes",
+        "acceptNegatif": "no",
+        "vars": [
+            1,
+            1,
+            1
+        ],
+        "coef": 2,
+        "result": 100
     },
     "Exercice-2": {
         "type": 0,
