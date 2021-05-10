@@ -6,8 +6,7 @@ import React, {
     SetStateAction,
     useMemo,
 } from "react";
-import { GroupProps, useFrame } from "react-three-fiber";
-import { OrbitControls } from "@react-three/drei";
+import { useFrame } from "react-three-fiber";
 import Board from "./board";
 import { useLoader } from "react-three-fiber";
 import * as THREE from "three";
@@ -236,8 +235,6 @@ export function getMousePos(e: { clientX: number; clientY: number }) {
 }
 
 const Clock = () => {
-    const w = { x: window.innerWidth, y: window.innerHeight };
-    const mouse = useRef({ x: w.x / 2, y: w.y / 2 });
 
     let [time, setTime] = useState(new Date());
     return (

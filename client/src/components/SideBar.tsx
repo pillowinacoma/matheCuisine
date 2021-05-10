@@ -3,7 +3,6 @@ import { Drawer, Divider, Paper, List, ListItem, ListItemIcon, makeStyles, ListI
 import { LangContext } from '../engine/translation/i18n';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Star';
-import { Exo } from '../engine/ExerciceInterface';
 
 const useStyles = makeStyles((theme) => ({
     scrollBar: {
@@ -64,8 +63,6 @@ const Listing = (props: { classes: any, translate: any }) => {
                 {    
                     Object.entries(json1).map((element) => {
                         let key = element[0];
-                        let value = element[1];
-                        console.log(key);
                         return (
                             <ListItem button component={Link} to={"/difficulty-1/"+key} className={props.classes.listItem} key={key} alignItems="center">
                                 <ListItemText primary={key} />
@@ -76,7 +73,6 @@ const Listing = (props: { classes: any, translate: any }) => {
                     })
                  }{ Object.entries(json2).map((element) => {
                         let key = element[0];
-                        let value = element[1];
                         return (
                             <ListItem button component={Link} to={"/difficulty-2/"+key} className={props.classes.listItem} key={key} alignItems="center">
                                 <ListItemText primary={key} />
@@ -87,7 +83,6 @@ const Listing = (props: { classes: any, translate: any }) => {
                     })}
                   {  Object.entries(json3).map((element) => {
                         let key = element[0];
-                        let value = element[1];
                         return (
                             <ListItem button component={Link} to={"/difficulty-3/"+key} className={props.classes.listItem} key={key} alignItems="center">
                                 <ListItemText primary={key} />

@@ -1,10 +1,6 @@
 import * as React from 'react';
-import { useLoader, useFrame, applyProps, RenderCallback } from 'react-three-fiber';
+import { useFrame } from 'react-three-fiber';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-
-
-import { Suspense } from 'react';
-import { Vector3 } from 'three';
 
 export const Model = (props:{file: string, position?: [number, number, number],
   scale?: [number, number, number],
@@ -22,20 +18,19 @@ export const Model = (props:{file: string, position?: [number, number, number],
   frame?: (gltf: GLTF) => void | undefined 
 }) => {
 
-    const [pos, setPos] = React.useState(props.position != null ? props.position : [0,0,0]);
+    const [pos] = React.useState(props.position != null ? props.position : [0,0,0]);
     const [gltf, setGltf] = React.useState<GLTF>()
     const glb = '/models/'+props.file+'.glb';
     var group = React.useRef();
     //const gltf = useLoader(GLTFLoader, glb);
-
     const loader = new GLTFLoader();
     loader.load(glb, (result) => {
-      if(gltf == undefined)
+      if(gltf === undefined)
         setGltf(result);
     })
 
     useFrame(() => {
-      if(props.frame != undefined && gltf != undefined) 
+      if(props.frame !== undefined && gltf !== undefined) 
         props.frame(gltf);
     });
     return (

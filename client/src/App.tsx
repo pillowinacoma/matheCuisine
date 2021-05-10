@@ -9,7 +9,6 @@ import Menu from "./pages/menu";
 import Game from "./pages/game";
 import Profile from "./pages/profile";
 import Exercice from "./pages/exercices/exercice";
-import Clock from "./pages/components/clock";
 
 function App() {
     var json1 = require("./locales/exercices/difficulty_1.json");
@@ -39,7 +38,6 @@ function App() {
                         </Route>
                         {Object.entries(json1).map((element) => {
                             let key = element[0];
-                            let value = element[1];
                             let path = "/difficulty-1/" + key;
                             return (
                                 <Route path={path}>
@@ -49,7 +47,6 @@ function App() {
                         })}
                         {Object.entries(json2).map((element) => {
                             let key = element[0];
-                            let value = element[1];
                             let path = "/difficulty-2/" + key;
                             return (
                                 <Route path={path}>
@@ -59,7 +56,6 @@ function App() {
                         })}
                         {Object.entries(json3).map((element) => {
                             let key = element[0];
-                            let value = element[1];
                             let path = "/difficulty-3/" + key;
                             return (
                                 <Route path={path}>
