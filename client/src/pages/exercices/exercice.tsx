@@ -324,7 +324,7 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
 
     }
 
-    return [reponse == tmpResult, searchVar ? tmpResult : tempVar[0]];
+    return [searchVar ? reponse == tmpResult : reponse == tempVar[0], searchVar ? tmpResult : tempVar[0]];
 
 }
 
