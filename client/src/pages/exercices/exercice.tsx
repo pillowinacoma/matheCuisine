@@ -42,7 +42,8 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
 
     var rpn = generator(json[props.ex], props.difficulty);
 
-    solveur(rpn, json[props.ex].result, 100);
+    var [correct, resultat] = solveur(rpn, json[props.ex].result, 100);
+
 
     return (
         <div className={classes.gameBox}>
@@ -234,6 +235,8 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
 
     var tmpRpn = [];
 
+    var searchVar = false;
+
   /*  for(let i = 0; i < rpn.length; i++) {
         if(rpn[i] == "*" || rpn[i] == "/") {
             tmpOpP.push(i);
@@ -255,81 +258,73 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
                 tempVar.push(c);
                 tempVar.reverse();
             } else {
+                searchVar = true;
                 tempVar.forEach((elem) => {tmpRpn.push(elem)});
                 for(let j = i; j < rpn.length; j++) {
                     tmpRpn.push(rpn[j]);
                 }
                 i = 999;
-                
             }
            
-
         }
 
     }
 
-    for(let i = tmpRpn.length - 1; i >= 0; i--) {
-        if(isOp(tmpRpn[i])) {
-            tmpOp.push(tmpRpn[i]);
-            tmpRpn.pop();
-        }
-
-        if(isNumber(tmpRpn[i])) {
-            tmpOp.reverse();
-            let a = tmpRpn.pop();
-            switch(tmpOp.pop()) {
-                case "+":
-                    tmpResult = calc(tmpResult, a, "-");
-                    break;
-                case "-":
-                    tmpResult = calc(tmpResult, a, "+");
-                    break;
-                case "*":
-                    tmpResult = calc(tmpResult, a, "/");
-                    break;
-                case "/":
-                    tmpResult = calc(tmpResult, a, "*");
-                    break;
-                default:
-                    throw ("Je ne connais pas cette opérateur");
-            }
-            tmpOp.reverse();
-        }
-
-        if(tmpRpn[i] == "r") {
-
-            console.log(tmpOp);
-
-            switch(tmpOp[0]) {
-                case '+':
-                    tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
-                    break;
-                case '-':
-                    tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
-                    tmpResult = -tmpResult;
-                    break;
-                case '*':
-                    tmpResult = calc(tmpResult, tmpRpn[i - 1], "/");
-                    break;
-                case '/':
-                    tmpResult = calc(tmpResult, tmpRpn[i - 1], "*");
-                    break;
+    if(searchVar) {
+        for(let i = tmpRpn.length - 1; i >= 0; i--) {
+            if(isOp(tmpRpn[i])) {
+                tmpOp.push(tmpRpn[i]);
+                tmpRpn.pop();
             }
 
-            i = -1;
+            if(isNumber(tmpRpn[i])) {
+                tmpOp.reverse();
+                let a = tmpRpn.pop();
+                switch(tmpOp.pop()) {
+                    case "+":
+                        tmpResult = calc(tmpResult, a, "-");
+                        break;
+                    case "-":
+                        tmpResult = calc(tmpResult, a, "+");
+                        break;
+                    case "*":
+                        tmpResult = calc(tmpResult, a, "/");
+                        break;
+                    case "/":
+                        tmpResult = calc(tmpResult, a, "*");
+                        break;
+                    default:
+                        throw ("Je ne connais pas cette opérateur");
+                }
+                tmpOp.reverse();
+            }
+
+            if(tmpRpn[i] == "r") {
+
+                switch(tmpOp[0]) {
+                    case '+':
+                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
+                        break;
+                    case '-':
+                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
+                        tmpResult = -tmpResult;
+                        break;
+                    case '*':
+                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "/");
+                        break;
+                    case '/':
+                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "*");
+                        break;
+                }
+
+                i = -1;
+            }
         }
 
 
-    } 
-    console.log(rpn);
-    console.log(tmpResult);
-
-    if(reponse == tmpResult) {
-        return [true, tmpResult];
     }
 
-    return [false, tmpResult];
-
+    return [searchVar ? reponse == tmpResult : reponse == tempVar[0], searchVar ? tmpResult : tempVar[0]];
 
 }
 
