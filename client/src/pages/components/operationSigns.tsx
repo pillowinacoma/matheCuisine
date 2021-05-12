@@ -1,5 +1,6 @@
 import { FixedLengthArray } from "./helper/fixedArray";
 import { Euler, Vector3 } from "three";
+import React from "react";
 
 const pi = Math.PI;
 

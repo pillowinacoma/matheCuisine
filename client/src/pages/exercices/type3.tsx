@@ -1,11 +1,10 @@
 import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
 import Board from "../components/board";
-import Clock from "../components/clock";
 import Paquet from "../components/paquet";
-import { Plus, Equals, Times, Minus, DividedBy } from "../components/operationSigns";
+import { Equals, Times} from "../components/operationSigns";
 
-const Type3 = (props: { params: any }): JSX.Element => {
+const Type3 = (props: { params: any, gen: any }): JSX.Element => {
     return (
         <Board>
             <Suspense fallback={"loading"}>

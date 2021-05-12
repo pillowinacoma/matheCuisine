@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Model } from "./models";
 
 const Paquet = ({ ...props }): JSX.Element => {
