@@ -6,6 +6,15 @@
         "notions": [
             "addition",
             "multiplication"
-        ]
+        ],
+        "decimal": "yes",
+        "acceptNegatif": "no",
+        "vars": [
+            1,
+            1,
+            1
+        ],
+        "coef": 2,
+        "result": 100
     }
 }

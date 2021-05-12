@@ -85,14 +85,14 @@ const generator = (detail: any, difficulty: number) => {
 
     var result = detail.result;
     var generateVar: Array<any> = [];
-    var rpn = [];
+    var rpn : any[] = [];
     var rpnTmpOp = [];
 
     var acceptBrackets = false;
     var openBrackets = 0;
 
     var alreadyPlaceVar = false;
-
+/*
     if(difficulty > 2) {
         acceptBrackets = true;
     }
@@ -190,7 +190,7 @@ const generator = (detail: any, difficulty: number) => {
         }
 
     }
-
+*/
     return rpn;
 
 }
