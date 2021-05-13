@@ -1,0 +1,66 @@
+{
+    "Calcule-1": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            2
+        ]
+    },
+    "Calcule-2": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            1
+        ]
+    },
+    "Calcule-3" : {
+        "type" : 10,
+        "difficulty" : 1,
+        "id" : 10,
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            1
+        ],
+        "notions" : [
+            "multiplication"
+        ]
+
+    },
+    "Calcule-4": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "division"
+        ],
+        "decimal": "yes",
+        "acceptNegatif": "no",
+        "vars": [
+            1,
+            1,
+            1
+        ]
+    }
+}

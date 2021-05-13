@@ -1,0 +1,141 @@
+{
+    "Calcule-1": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition",
+            "soustraction",
+            "multiplication"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            2
+        ]
+    },
+    "Calcule-2": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition",
+            "soustraction",
+            "division"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            2
+        ]
+    },
+    "Calcule-3": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition",
+            "multiplication",
+            "division"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            2
+        ]
+    },
+    "Equation-1": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "multiplication"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            3,
+            2,
+            1,
+            "r",
+            6,
+            1,
+            4
+        ]
+    },
+    "Equation-2": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "multiplication"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            3,
+            2,
+            1,
+            "r",
+            6,
+            1,
+            4
+        ]
+    },
+    "Equation-3": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            3,
+            2,
+            "r",
+            1,
+            6,
+            1,
+            4
+        ]
+    },
+    "Equation-4": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            3,
+            2,
+            1,
+            6,
+            1,
+            "r",
+            4
+        ]
+    }
+
+}

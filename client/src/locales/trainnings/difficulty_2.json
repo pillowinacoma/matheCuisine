@@ -1,0 +1,131 @@
+{
+    "Calcule-1": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition",
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            2
+        ]
+    },
+    "Calcule-2": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition",
+            "division"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            1
+        ]
+    },
+    "Calcule-3" : {
+        "type" : 10,
+        "difficulty" : 1,
+        "id" : 10,
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            1
+        ],
+        "notions" : [
+            "addition",
+            "multiplication"
+        ]
+
+    },
+    "Calcule-4": {
+        "type": 11,
+        "difficulty": 1,
+        "id": 1,
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            1
+        ],
+        "notions" : [
+            "soustraction",
+            "multiplication"
+        ]
+    },
+    "Calcule-5": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "addition"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            1,
+            2,
+            5,
+            6,
+            1,
+            4
+        ]
+    },
+    "Calcule-6": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            3,
+            2,
+            1,
+            6,
+            1,
+            4
+        ]
+    },
+    "Calcule-7": {
+        "type": 10,
+        "difficulty": 1,
+        "id": 1,
+        "notions": [
+            "multiplication"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "random": true,
+        "maxRand": 10,
+        "vars": [
+            3,
+            2,
+            1,
+            6,
+            1,
+            4
+        ]
+    }
+}
