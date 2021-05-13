@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Vector3 } from "three";
+import { FixedLengthArray } from "./helper/fixedArray";
 import { Model } from "./models";
  
 
 const Draggable = ({ ...props }) => {
     const scale = 1;
-    const scaleArray = [scale, scale, scale];
+    const scaleArray : FixedLengthArray<[number, number, number]> = [scale, scale, scale];
 
     const baseModel = ([x = 0, y = 0, z = 0]) => {
         return (
