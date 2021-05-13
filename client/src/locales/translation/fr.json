@@ -11,5 +11,10 @@
     "server": "Serveur",
     "begin": "Commencer",
     "lesson": "Cours",
-    "close": "Fermer"
+    "close": "Fermer",
+    "trainning": "Entrainement",
+    "difficulty": "Difficulté",
+    "easy" : "facile",
+    "medium" : "moyen",
+    "hard" : "dur"
 }

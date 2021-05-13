@@ -1,17 +1,27 @@
 import * as React from 'react';
 import Type1 from './type1';
 import Type2 from './type2';
+import Type3 from './type3';
+import TType1 from './ttype1';
+import TType2 from './ttype2';
+import TType3 from './ttype3';
 import { makeStyles } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
-import Type3 from './type3';
+
 import { isNumber } from 'util';
 
 const type = [
     Type1,
     Type2,
     Type3
+];
+
+const trtype = [
+    TType1,
+    TType2,
+    TType3
 ];
 
 const useStyle = makeStyles((theme) => ({
@@ -32,11 +42,22 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-const Exercice = (props: {difficulty: number, ex: string}) => {
+const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) => {
     const classes = useStyle();
-    var json = require ('../../locales/exercices/difficulty_'+props.difficulty+'.json');
+    var json: any;
+    if(!props.trainning) 
+        json = require ('../../locales/exercices/difficulty_'+props.difficulty+'.json');
+    else 
+        json = require ('../../locales/trainnings/difficulty_'+props.difficulty+'.json');
 
-    let Type = type[json[props.ex].type]
+
+    let Type: any;
+
+    if(!props.trainning) {
+        Type = type[json[props.ex].type]
+    } else {
+        Type = trtype[json[props.ex].type % 10]
+    }
 
 
    

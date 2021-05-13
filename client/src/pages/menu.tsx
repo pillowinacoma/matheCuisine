@@ -7,6 +7,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import DoneIcon from '@material-ui/icons/Done';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import KitchenIcon from '@material-ui/icons/Kitchen';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import { TransitionProps } from '@material-ui/core/transitions/transition';
 import Help from './components/help';
 import Lesson from './components/lesson';
@@ -98,10 +99,10 @@ const Menu = () => {
                     <h2>{translate("help")}</h2>
                 </Paper>
             </Button>
-            <Button className={classes.button} component={Link} to={"/difficulty-1/Exercice-1"}>
+            <Button className={classes.button} component={Link} to={"/trainnings"}>
                 <Paper elevation={0}>
-                    <DoneIcon className={classes.logo}/>
-                    <h2>{translate("begin")}</h2>
+                    <FitnessCenterIcon className={classes.logo}/>
+                    <h2>{translate("trainning")}</h2>
                 </Paper>
             </Button>
             <Button className={classes.button} onClick={handleClickLesson}>

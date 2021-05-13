@@ -11,5 +11,10 @@
     "server": "Server",
     "begin": "Begin",
     "lesson": "Lesson",
-    "close": "Close"
+    "close": "Close",
+    "trainning": "Trainning",
+    "difficulty": "Difficulty",
+    "easy" : "easy",
+    "medium" : "medium",
+    "hard" : "hard"
 }
