@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Board from "../components/board";
 import Paquet from "../components/paquet";
 import Draggable from "../components/draggable";
+import Droppable from "../components/droppable";
 import {
     Plus,
     Equals,
@@ -45,9 +46,14 @@ const Type3 = (props: { params: any }): JSX.Element => {
         </Suspense>
     );
 
-    const draggableObj = <Draggable file="banana"/>;
+    const draggableObj = <Draggable file="banana" />;
+    const droppableObj = <Droppable file="banana" />;
 
-    return <Board camera={{position : [0,0,100]}}>{draggableObj}</Board>;
+    return (
+        <Board camera={{ position: [0, 0, 50] }}>
+            <Droppable file="banana" />
+        </Board>
+    );
 };
 
 export default Type3;

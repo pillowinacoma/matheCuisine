@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useFrame } from "react-three-fiber";
+import { Object3D } from "three";
 import { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 export const Model = (props: {
     file: string;
     position?: [number, number, number];
     scale?: [number, number, number];
+    ref?:React.MutableRefObject<Object3D | undefined>;
     onPointerDown?: ((event: any) => void) | undefined;
     onPointerCancel?: ((event: any) => void) | undefined;
     onPointerMove?: ((event: any) => void) | undefined;
@@ -56,6 +58,7 @@ export const Model = (props: {
                     object={gltf.scene}
                     position={pos}
                     scale={props.scale ? props.scale : [1, 1, 1]}
+                    ref={props.ref ? props.ref : undefined}
                 />
             ) : (
                 ""
