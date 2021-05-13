@@ -1,7 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
 import Board from "../components/board";
-import Clock from "../components/clock";
 import Paquet from "../components/paquet";
 import Draggable from "../components/draggable";
 import {

@@ -39,18 +39,62 @@ const Exercice = (props: {difficulty: number, ex: string}) => {
     let Type = type[json[props.ex].type]
 
 
+   
 
-    var rpn = generator(json[props.ex], props.difficulty);
 
-    var [correct, resultat] = solveur(rpn, json[props.ex].result, 100);
+    /**
+     * L'ajout du generateur en amont, si l'on utilise un type non définini dans le switch il faudra ajouter le générateur directement dans le composant. 
+     * Les parametre de l'exercice sont automatique passé en paramètre.
+     */
+    var gen = () => {};
+    switch(json[props.ex].type) { 
+        case 0: //equation et calcule simple avec mini jeux    
+            gen = () => {
+                var rpn;
+                do {
+                    rpn = generator(json[props.ex], props.difficulty);
+                    var [correct, resultat] = solveur(rpn, json[props.ex].result, 100); // atention bien que result soit passé en paramètre il peut être nul.
+                    console.log(resultat);
+                } while((!json[props.ex].acceptNegatif && resultat < 0));
+                return [rpn, resultat, solveur];
+            }
+            break;
+        case 1: //equation et calcule simple en qcm
+            gen = () => {
+                var rpn;
+                do {
+                    rpn = generator(json[props.ex], props.difficulty);
+                    var [correct, resultat] = solveur(rpn, json[props.ex].result, 100); // atention bien que result soit passé en paramètre il peut être nul.
+                    console.log(resultat);
+                } while((!json[props.ex].acceptNegatif && resultat < 0));
+                return [rpn, resultat, solveur];
+            }
+            break;
+        case 2: // convertion avec mini jeux
+            gen = () => {
 
+            }
+            break;
+        case 3: // convertion en qcm
+            gen = () => {
+
+            }
+            break;
+        default:
+            gen = () => {
+
+            }
+            break;
+    }
+
+    
 
     return (
         <div className={classes.gameBox}>
             <EmojiObjectsIcon className={classes.indice}/>
             <CancelIcon className={classes.cancel}/>
             <HourglassEmptyIcon className={classes.hourGlass}/>
-            <Type params={json[props.ex]}/>
+            <Type params={json[props.ex]} gen={gen}/>
         </div>
     );
 
@@ -82,9 +126,8 @@ function selectOp(notions: Array<string>) {
 const generator = (detail: any, difficulty: number) => {
 
     const vars: Array<any> = detail.vars;
-    var coefResponse = detail.coef;
 
-    var result = detail.result;
+    var maxRand = detail.maxRand;
     var generateVar: Array<any> = [];
     var rpn : any[] = [];
     var rpnTmpOp = [];
@@ -92,8 +135,6 @@ const generator = (detail: any, difficulty: number) => {
     var acceptBrackets = false;
     var openBrackets = 0;
 
-    var alreadyPlaceVar = false;
-/*
     if(difficulty > 2) {
         acceptBrackets = true;
     }
@@ -109,10 +150,13 @@ const generator = (detail: any, difficulty: number) => {
         for(let i = 0; i < vars.length; i++) {
 
             if(vars[i] === "r") {
-                alreadyPlaceVar = true;
                 generateVar.push( 'r' );
             } else {
-                let x = getRandomInt(result);
+                let x = 1;
+                if(detail.random) {
+                    x = getRandomInt(maxRand);
+                }
+                
                 generateVar.push( vars[i] * x );
             }
 
@@ -120,9 +164,11 @@ const generator = (detail: any, difficulty: number) => {
                 let op = selectOp(detail.notions);
                 switch(op) {
                     case '*':
+                        // eslint-disable-next-line
                         for(const [key, value] of Object.entries(generateVar)) {
                             rpn.push(value);
                         }
+                        // eslint-disable-next-line
                         for(const [key, value] of Object.entries(rpnTmpOp)) {
                             rpn.push(value);
                         }
@@ -131,9 +177,11 @@ const generator = (detail: any, difficulty: number) => {
                         rpn.push('*');
                         break;
                     case '/':
+                        // eslint-disable-next-line
                         for(const [key, value] of Object.entries(generateVar)) {
                             rpn.push(value);
                         }
+                        // eslint-disable-next-line
                         for(const [key, value] of Object.entries(rpnTmpOp)) {
                             rpn.push(value);
                         }
@@ -157,9 +205,11 @@ const generator = (detail: any, difficulty: number) => {
                 let rand = Math.floor(Math.random() * 10);
                 if(rand >= 5) {
                     openBrackets--;
+                    // eslint-disable-next-line
                     for(const [key, value] of Object.entries(generateVar)) {
                         rpn.push(value);
                     }
+                    // eslint-disable-next-line
                     for(const [key, value] of Object.entries(rpnTmpOp)) {
                         rpn.push(value);
                     }
@@ -169,25 +219,19 @@ const generator = (detail: any, difficulty: number) => {
             }
         }
         
-        if(generateVar.length != 0) {
+        if(generateVar.length !== 0) {
+            // eslint-disable-next-line
             for(const [key, value] of Object.entries(generateVar)) {
                 rpn.push(value);
             }
-            if(rpnTmpOp.length == 0){ 
+            if(rpnTmpOp.length === 0){ 
                 restart = true;
             } else {
+                // eslint-disable-next-line
                 for(const [key, value] of Object.entries(rpnTmpOp)) {
                     rpn.push(value);
                 }
             }
-        }
-
-        if(detail.decimal === "yes") {
-
-        }
-
-        if(detail.acceptNegatif === "no") {
-            
         }
 
     }
@@ -245,12 +289,12 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
 
     for(let i = 0; i < rpn.length; i++) {
 
-        if(isNumber(rpn[i]) ||rpn[i] == "r" ) {
+        if(isNumber(rpn[i]) ||rpn[i] === "r" ) {
             tempVar.push(rpn[i]);
         }
 
         if(isOp(rpn[i]) && tempVar.length > 1) {
-            if(!(tempVar[0] == "r") && !(tempVar[1] == "r")) {
+            if(!(tempVar[0] === "r") && !(tempVar[1] === "r")) {
                 tempVar.reverse();
                 let a = tempVar.pop();
                 let b = tempVar.pop();
@@ -299,7 +343,7 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
                 tmpOp.reverse();
             }
 
-            if(tmpRpn[i] == "r") {
+            if(tmpRpn[i] === "r") {
 
                 switch(tmpOp[0]) {
                     case '+':
@@ -324,7 +368,7 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
 
     }
 
-    return [searchVar ? reponse == tmpResult : reponse == tempVar[0], searchVar ? tmpResult : tempVar[0]];
+    return [searchVar ? reponse === tmpResult : reponse === tempVar[0], searchVar ? tmpResult : tempVar[0]];
 
 }
 

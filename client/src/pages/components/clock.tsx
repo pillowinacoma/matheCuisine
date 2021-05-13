@@ -11,7 +11,6 @@ import Board from "./board";
 import { useLoader } from "react-three-fiber";
 import * as THREE from "three";
 import { Suspense } from "react";
-import { useEffect } from "react";
 
 const scale = 1;
 const pi = Math.PI;

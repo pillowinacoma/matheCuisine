@@ -3,6 +3,8 @@ import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Menu, Menu
 import MenuIcon from '@material-ui/icons/Menu';
 import { LangContext } from '../engine/translation/i18n';
 import LanguageIcon from '@material-ui/icons/Language';
+import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { UserContext } from '../engine/profile/profile'
 import { Link } from 'react-router-dom';
@@ -82,12 +84,6 @@ const NavBar = (props: { sideOpen: boolean, setSideOpen: any }): JSX.Element => 
                         MatheCuisine
                     </Typography>
 
-                    {state.login !== "" ?
-                        <Typography>
-                            login : {state.login}
-                        </Typography> : ""
-                    }
-
                     <Button className={classes.languageSection} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         <span>{language}</span>
                         <LanguageIcon className={classes.languageIcon} />
@@ -112,10 +108,15 @@ const NavBar = (props: { sideOpen: boolean, setSideOpen: any }): JSX.Element => 
                         <MenuItem onClick={handleClose("EN")}>ENG</MenuItem>
                         <MenuItem onClick={handleClose("FR")}>FR</MenuItem>
                     </Menu>
+                    {state.login !== "" ?
+                        <Typography>
+                           <Button color="inherit" component={Link} to="/menu">{state.login} <PersonIcon/></Button> 
+                        </Typography> : ""
+                    }
                     {state.login === "" ? 
                         <Button color="inherit" component={Link} to="/connect">{translate('login')}</Button>
                         :
-                        <Button color="inherit" component={Link} to="/disconnect"> {translate('deconnection')}</Button>
+                        <Button color="inherit" component={Link} to="/disconnect"> {translate('deconnection')} <ExitToAppIcon/></Button>
                     }
                 </Toolbar>
             </AppBar>
