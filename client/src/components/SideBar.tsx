@@ -102,8 +102,8 @@ const BottomList = (props: { classes: any, translate: (key: string) => string })
     <div className={props.classes.bottomList}>
         <div className={props.classes.infos}>
 
-            <p>Version: <strong>MC.03.2021</strong></p>
-            <p>{props.translate("server")}: <strong>Server: Artic Edu</strong></p>
+            <p>Version: <strong>SBDA.03.2021</strong></p>
+            <p>{props.translate("server")}: <strong>Artic.Edu</strong></p>
         </div>
     </div>
 );
