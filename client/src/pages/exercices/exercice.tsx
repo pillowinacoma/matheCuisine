@@ -59,18 +59,13 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
         Type = trtype[json[props.ex].type % 10]
     }
 
-
-   
-
-    /*let*/ Type = type[json[props.ex].type];
-
     /**
      * L'ajout du generateur en amont, si l'on utilise un type non définini dans le switch il faudra ajouter le générateur directement dans le composant.
      * Les parametre de l'exercice sont automatique passé en paramètre.
      */
     var gen = () => {};
-    switch (json[props.ex].type) {
-        case 0: //equation et calcule simple avec mini jeux
+    switch(json[props.ex].type % 10) { 
+        case 0: //equation et calcule simple avec mini jeux    
             gen = () => {
                 var rpn;
                 do {
@@ -258,9 +253,10 @@ const generator = (detail: any, difficulty: number) => {
     return rpn;
 };
 
-const isOp = (elem: any) => {
-    switch (elem) {
-        case "+":
+export const isOp = (elem: any) => {
+
+    switch(elem) {
+        case '+':
             return true;
         case "-":
             return true;
@@ -307,14 +303,12 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
             tempVar.push(rpn[i]);
         }
 
-        if (isOp(rpn[i]) && tempVar.length > 1) {
-            if (!(tempVar[0] === "r") && !(tempVar[1] === "r")) {
-                tempVar.reverse();
-                let a = tempVar.pop();
+        if(isOp(rpn[i]) && tempVar.length > 1) {
+            if(!(tempVar[0] === "r") && !(tempVar[1] === "r")) {
                 let b = tempVar.pop();
-                let c = calc(a, b, rpn[i]);
+                let a = tempVar.pop();
+                let c = calc(a,b, rpn[i]);
                 tempVar.push(c);
-                tempVar.reverse();
             } else {
                 searchVar = true;
                 tempVar.forEach((elem) => {
