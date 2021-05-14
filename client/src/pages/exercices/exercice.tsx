@@ -68,7 +68,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
      * Les parametre de l'exercice sont automatique passé en paramètre.
      */
     var gen = () => {};
-    switch(json[props.ex].type) { 
+    switch(json[props.ex].type % 10) { 
         case 0: //equation et calcule simple avec mini jeux    
             gen = () => {
                 var rpn;
@@ -261,7 +261,7 @@ const generator = (detail: any, difficulty: number) => {
 
 }
 
-const isOp = (elem: any) => {
+export const isOp = (elem: any) => {
 
     switch(elem) {
         case '+':
@@ -316,12 +316,10 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
 
         if(isOp(rpn[i]) && tempVar.length > 1) {
             if(!(tempVar[0] === "r") && !(tempVar[1] === "r")) {
-                tempVar.reverse();
-                let a = tempVar.pop();
                 let b = tempVar.pop();
+                let a = tempVar.pop();
                 let c = calc(a,b, rpn[i]);
                 tempVar.push(c);
-                tempVar.reverse();
             } else {
                 searchVar = true;
                 tempVar.forEach((elem) => {tmpRpn.push(elem)});

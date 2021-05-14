@@ -81,7 +81,7 @@ function App() {
                                     let path = "/trainning/difficulty-1/" + key;
                                     return (
                                         <Route path={path}>
-                                            <Exercice difficulty={3} ex={key} trainning={true}/>
+                                            <Exercice difficulty={1} ex={key} trainning={true}/>
                                         </Route>
                                     );
                                 })}
@@ -90,7 +90,7 @@ function App() {
                                     let path = "/trainning/difficulty-2/" + key;
                                     return (
                                         <Route path={path}>
-                                            <Exercice difficulty={3} ex={key} trainning={true}/>
+                                            <Exercice difficulty={2} ex={key} trainning={true}/>
                                         </Route>
                                     );
                                 })}
