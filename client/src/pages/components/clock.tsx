@@ -11,6 +11,8 @@ import Board from "./board";
 import { useLoader } from "react-three-fiber";
 import * as THREE from "three";
 import { Suspense } from "react";
+import { a, useSpring } from "@react-spring/three";
+import { Text } from "@react-three/drei";
 
 const scale = 1;
 const pi = Math.PI;
@@ -70,7 +72,7 @@ const ClockNumbers = (props: {
         let nPos1 = far * Math.cos(((2 * pi) / num) * index);
         let nPos2 = far * Math.sin(((2 * pi) / num) * index);
         result.push(
-            <Text
+            <Textee
                 key={`num${index}`}
                 color={props.color}
                 position={[
@@ -78,7 +80,7 @@ const ClockNumbers = (props: {
                     (pos1 + nPos1) / 2 + 0.17,
                     (pos2 + nPos2) / 2 + 0.1,
                 ]}
-            >{`${12 - ((index + 3) % 12)}`}</Text>
+            >{`${12 - ((index + 3) % 12)}`}</Textee>
         );
     }
 
@@ -158,11 +160,60 @@ const Hand: React.FC<{ type: number; color: string; time: Date }> = (props) => {
     );
 };
 
+const Button = ({ ...props }) => {
+    const [active, setActive] = useState(0);
+
+    const { spring } = useSpring({
+        spring: active,
+        config: { mass: 1, tension: 1000, friction: 100, pricision: 0.0001 },
+    });
+
+    const scale = spring.to([0, 1], [0.3, 0.5]);
+    const digitScale = spring.to([0, 1], [0, 1]);
+    const position_y = spring.to([0, 1], [1, 1.1]);
+    const rotation = spring.to([0, 1], [0, Math.PI]);
+    const color = spring.to([0, 1], ["#84a02b", "#d6482f"]);
+    const opacity = spring.to([0, 1], [1, 1]);
+
+    return (
+        <a.group position={[0, 0, -3]} rotation-z={rotation} >
+            <a.mesh
+                rotation-z={0}
+                scale-x={scale}
+                scale-y={scale}
+                scale-z={0.3}
+                onClick={() => {
+                    if (!active) console.log("time is : ", props?.time.getHours() + "H" + props?.time.getMinutes());
+                    setActive(Number(!active));
+                    props.startClock?.();
+                }}
+            >
+                <cylinderBufferGeometry
+                    attach="geometry"
+                    args={[0.5, 1, 1, 30]}
+                />
+                <a.meshStandardMaterial
+                    transparent={true}
+                    opacity={opacity}
+                    roughness={0.5}
+                    attach="material"
+                    color={color}
+                />
+            </a.mesh>
+            <a.group rotation={[0,0,-pi/2]} position={[0.65,-0.2,0]} scale={digitScale}>
+                <Textee>{`${("0" + props?.time.getHours()).slice(-2)}H${("0" + props?.time.getMinutes()).slice(-2)}`}</Textee>
+            </a.group>
+        </a.group>
+    );
+};
+
 const ClockGroup = (props: {
+    speed: number;
     time: Date;
     setTime: Dispatch<SetStateAction<Date>>;
 }): JSX.Element => {
     const group = useRef<any | null>(null);
+    const [active, setActive] = useState(true);
     let mouse: { x: number; y: number };
 
     useFrame(() => {
@@ -171,6 +222,17 @@ const ClockGroup = (props: {
             const coords = { x: window.innerWidth, y: window.innerHeight };
             m.rotation.x = (mouse.y - coords.y / 2) / 300 / pi + pi / 2;
             m.rotation.z = (mouse.x - coords.x / 2) * 0.001;
+        }
+
+        if (active) {
+            props.setTime(
+                new Date(
+                    props.time.setSeconds(
+                        props.time.getSeconds() +
+                            (props?.speed ? props.speed : 1)
+                    )
+                )
+            );
         }
     });
 
@@ -182,23 +244,17 @@ const ClockGroup = (props: {
             onPointerMove={(event) => {
                 mouse = { x: event.clientX, y: event.clientY };
             }}
-            onWheel={(event) => {
-                const tmpTime = props.time;
-                tmpTime.setSeconds(
-                    props.time.getSeconds() + (event.deltaY > 0 ? 1 : -1) * 60
-                );
-                props.setTime(tmpTime);
-            }}
         >
             <Face />
             <Hand type={1} color="#eeeef0" time={props.time} />
             <Hand type={2} color="#d6d6db" time={props.time} />
-            <Hand type={3} color="hotpink" time={props.time} />
+            {/*<Hand type={3} color="hotpink" time={props.time} />*/}
+            <Button startClock={() => setActive(!active)} time={props.time} />
         </group>
     );
 };
 
-const Text = ({
+const Textee = ({
     children = "",
     size = 1.5,
     color = "#00ff00",
@@ -234,13 +290,12 @@ export function getMousePos(e: { clientX: number; clientY: number }) {
 }
 
 const Clock = () => {
-
     let [time, setTime] = useState(new Date());
     return (
         <Fragment>
             <Board camera={{ position: [0, 0, cameraDistance] }}>
                 <Suspense fallback={"loading"}>
-                    <ClockGroup time={time} setTime={setTime} />
+                    <ClockGroup time={time} setTime={setTime} speed={30} />
                 </Suspense>
             </Board>
         </Fragment>

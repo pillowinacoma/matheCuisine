@@ -42,13 +42,6 @@ const useStyle = makeStyles((theme) => ({
     },
 }));
 
-<<<<<<< HEAD
-const Exercice = (props: { difficulty: number; ex: string }) => {
-    const classes = useStyle();
-    var json = require("../../locales/exercices/difficulty_" +
-        props.difficulty +
-        ".json");
-=======
 const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) => {
     const classes = useStyle();
     var json: any;
@@ -68,9 +61,8 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
 
 
    
->>>>>>> f8b29f939ff672306522fabba9abf1619e54eb3a
 
-    let Type = type[json[props.ex].type];
+    /*let*/ Type = type[json[props.ex].type];
 
     /**
      * L'ajout du generateur en amont, si l'on utilise un type non définini dans le switch il faudra ajouter le générateur directement dans le composant.

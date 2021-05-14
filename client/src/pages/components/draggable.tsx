@@ -6,7 +6,6 @@ import { Model } from "./models";
 import { useThree } from "@react-three/fiber";
 import { useSpring, a } from "@react-spring/three";
 
-
 const Draggable = ({ ...props }) => {
     const scale = 1;
     const scaleArray: FixedLengthArray<[number, number, number]> = [
@@ -23,19 +22,20 @@ const Draggable = ({ ...props }) => {
         rotation: [0, 0, 0],
         config: { friction: 10 },
     }));
+
     const bind = useGesture({
         onDrag: ({ offset: [x, y] }) =>
             set({
                 position: [x / aspect, -y / aspect, 0],
-                rotation: [0, (x + y) / aspect, 0],
+                rotation: [0, (x + y) / aspect / 10, 0],
             }),
         onHover: ({ hovering }) =>
-            set({ scale: hovering ? [1.2, 1.2, 1.2] : [1, 1, 1] }),
+            set({ scale: hovering ? [1.1, 1.1, 1.1] : [1, 1, 1] }),
     });
 
     return (
         //@ts-ignore
-        <a.group {...spring} {...bind()} >
+        <a.group {...spring} {...bind()}>
             <Model
                 key={`model-${props.file}-${0}-${0}-${0}`}
                 file={props.file}
