@@ -26,20 +26,20 @@ const trtype = [
 
 const useStyle = makeStyles((theme) => ({
     gameBox: {
-        height: '100vh'
+        height: "100vh",
     },
     hourGlass: {
         fontSize: "20px",
-        color: "yellow"
+        color: "yellow",
     },
     indice: {
         fontSize: "20px",
-        color: "red"
+        color: "red",
     },
     cancel: {
         fontSize: "20px",
-        color: "blue"
-    }
+        color: "blue",
+    },
 }));
 
 const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) => {
@@ -59,12 +59,8 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
         Type = trtype[json[props.ex].type % 10]
     }
 
-
-   
-
-
     /**
-     * L'ajout du generateur en amont, si l'on utilise un type non définini dans le switch il faudra ajouter le générateur directement dans le composant. 
+     * L'ajout du generateur en amont, si l'on utilise un type non définini dans le switch il faudra ajouter le générateur directement dans le composant.
      * Les parametre de l'exercice sont automatique passé en paramètre.
      */
     var gen = () => {};
@@ -74,52 +70,51 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
                 var rpn;
                 do {
                     rpn = generator(json[props.ex], props.difficulty);
-                    var [correct, resultat] = solveur(rpn, json[props.ex].result, 100); // atention bien que result soit passé en paramètre il peut être nul.
+                    var [correct, resultat] = solveur(
+                        rpn,
+                        json[props.ex].result,
+                        100
+                    ); // atention bien que result soit passé en paramètre il peut être nul.
                     console.log(resultat);
-                } while((!json[props.ex].acceptNegatif && resultat < 0));
+                } while (!json[props.ex].acceptNegatif && resultat < 0);
                 return [rpn, resultat, solveur];
-            }
+            };
             break;
         case 1: //equation et calcule simple en qcm
             gen = () => {
                 var rpn;
                 do {
                     rpn = generator(json[props.ex], props.difficulty);
-                    var [correct, resultat] = solveur(rpn, json[props.ex].result, 100); // atention bien que result soit passé en paramètre il peut être nul.
+                    var [correct, resultat] = solveur(
+                        rpn,
+                        json[props.ex].result,
+                        100
+                    ); // atention bien que result soit passé en paramètre il peut être nul.
                     console.log(resultat);
-                } while((!json[props.ex].acceptNegatif && resultat < 0));
+                } while (!json[props.ex].acceptNegatif && resultat < 0);
                 return [rpn, resultat, solveur];
-            }
+            };
             break;
         case 2: // convertion avec mini jeux
-            gen = () => {
-
-            }
+            gen = () => {};
             break;
         case 3: // convertion en qcm
-            gen = () => {
-
-            }
+            gen = () => {};
             break;
         default:
-            gen = () => {
-
-            }
+            gen = () => {};
             break;
     }
 
-    
-
     return (
         <div className={classes.gameBox}>
-            <EmojiObjectsIcon className={classes.indice}/>
-            <CancelIcon className={classes.cancel}/>
-            <HourglassEmptyIcon className={classes.hourGlass}/>
-            <Type params={json[props.ex]} gen={gen}/>
+            <EmojiObjectsIcon className={classes.indice} />
+            <CancelIcon className={classes.cancel} />
+            <HourglassEmptyIcon className={classes.hourGlass} />
+            <Type params={json[props.ex]} gen={gen} />
         </div>
     );
-
-}
+};
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -127,111 +122,111 @@ function getRandomInt(max: number) {
 
 function selectOp(notions: Array<string>) {
     let randOp = Math.floor(getRandomInt(10));
-    let choose = notions[randOp % (notions.length)];
+    let choose = notions[randOp % notions.length];
 
-    switch(choose) {
-        case 'addition':
-            return '+';
-        case 'multiplication':
-            return '*';
-        case 'division':
-            return '/';
-        case 'soustraction':
-            return '-';
+    switch (choose) {
+        case "addition":
+            return "+";
+        case "multiplication":
+            return "*";
+        case "division":
+            return "/";
+        case "soustraction":
+            return "-";
         default:
-            return '+';
+            return "+";
     }
-
 }
 
 const generator = (detail: any, difficulty: number) => {
-
     const vars: Array<any> = detail.vars;
 
     var maxRand = detail.maxRand;
     var generateVar: Array<any> = [];
-    var rpn = [];
+    var rpn: any[] = [];
     var rpnTmpOp = [];
 
     var acceptBrackets = false;
     var openBrackets = 0;
 
-    if(difficulty > 2) {
+    if (difficulty > 2) {
         acceptBrackets = true;
     }
 
     var restart = true;
-    while(restart) {
+    while (restart) {
         restart = false;
         generateVar = [];
         rpn = [];
         rpnTmpOp = [];
 
-
-        for(let i = 0; i < vars.length; i++) {
-
-            if(vars[i] === "r") {
-                generateVar.push( 'r' );
+        for (let i = 0; i < vars.length; i++) {
+            if (vars[i] === "r") {
+                generateVar.push("r");
             } else {
                 let x = 1;
-                if(detail.random) {
+                if (detail.random) {
                     x = getRandomInt(maxRand);
                 }
-                
-                generateVar.push( vars[i] * x );
+
+                generateVar.push(vars[i] * x);
             }
 
-            if(i > 0) {
+            if (i > 0) {
                 let op = selectOp(detail.notions);
-                switch(op) {
-                    case '*':
+                switch (op) {
+                    case "*":
                         // eslint-disable-next-line
-                        for(const [key, value] of Object.entries(generateVar)) {
+                        for (const [key, value] of Object.entries(
+                            generateVar
+                        )) {
                             rpn.push(value);
                         }
                         // eslint-disable-next-line
-                        for(const [key, value] of Object.entries(rpnTmpOp)) {
+                        for (const [key, value] of Object.entries(rpnTmpOp)) {
                             rpn.push(value);
                         }
                         generateVar = [];
                         rpnTmpOp = [];
-                        rpn.push('*');
+                        rpn.push("*");
                         break;
-                    case '/':
+                    case "/":
                         // eslint-disable-next-line
-                        for(const [key, value] of Object.entries(generateVar)) {
+                        for (const [key, value] of Object.entries(
+                            generateVar
+                        )) {
                             rpn.push(value);
                         }
                         // eslint-disable-next-line
-                        for(const [key, value] of Object.entries(rpnTmpOp)) {
+                        for (const [key, value] of Object.entries(rpnTmpOp)) {
                             rpn.push(value);
                         }
                         generateVar = [];
                         rpnTmpOp = [];
-                        rpn.push('/');
+                        rpn.push("/");
                         break;
                     default:
                         rpnTmpOp.push(op);
                         break;
                 }
             }
-            if(acceptBrackets) {
+            if (acceptBrackets) {
                 let rand = Math.floor(Math.random() * 10);
-                if(rand >= 9 - 1*difficulty) {
+                if (rand >= 9 - 1 * difficulty) {
                     openBrackets++;
                 }
             }
 
-            if(openBrackets > 0) {
+            if (openBrackets > 0) {
                 let rand = Math.floor(Math.random() * 10);
-                if(rand >= 5) {
+                if (rand >= 5) {
                     openBrackets--;
                     // eslint-disable-next-line
-                    for(const [key, value] of Object.entries(generateVar)) {
+                    for (const [key, value] of Object.entries(generateVar)) {
                         rpn.push(value);
                     }
                     // eslint-disable-next-line
-                    for(const [key, value] of Object.entries(rpnTmpOp)) {
+                    for (const [key, value] of Object.entries(rpnTmpOp)) {
                         rpn.push(value);
                     }
                     generateVar = [];
@@ -239,61 +234,56 @@ const generator = (detail: any, difficulty: number) => {
                 }
             }
         }
-        
-        if(generateVar.length !== 0) {
+
+        if (generateVar.length !== 0) {
             // eslint-disable-next-line
-            for(const [key, value] of Object.entries(generateVar)) {
+            for (const [key, value] of Object.entries(generateVar)) {
                 rpn.push(value);
             }
-            if(rpnTmpOp.length === 0){ 
+            if (rpnTmpOp.length === 0) {
                 restart = true;
             } else {
                 // eslint-disable-next-line
-                for(const [key, value] of Object.entries(rpnTmpOp)) {
+                for (const [key, value] of Object.entries(rpnTmpOp)) {
                     rpn.push(value);
                 }
             }
         }
-
     }
-
     return rpn;
-
-}
+};
 
 export const isOp = (elem: any) => {
 
     switch(elem) {
         case '+':
             return true;
-        case '-':
+        case "-":
             return true;
-        case '*':
+        case "*":
             return true;
-        case '/':
+        case "/":
             return true;
         default:
             return false;
     }
-
-}
+};
 const calc = (a: number, b: number, op: any) => {
-    switch(op) {
-        case '+':
+    switch (op) {
+        case "+":
             return a + b;
-        case '-':
+        case "-":
             return a - b;
-        case '*':
+        case "*":
             return a * b;
-        case '/':
+        case "/":
             return a / b;
         default:
-            throw ("je ne connais pas cette opérateur");
+            throw "je ne connais pas cette opérateur";
     }
-}
+};
 
 const solveur = (rpn: any[], result: number, reponse: number) => {
-
     var tempVar = [];
     var tmpOp = [];
     var tmpResult = result;
@@ -302,15 +292,14 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
 
     var searchVar = false;
 
-  /*  for(let i = 0; i < rpn.length; i++) {
+    /*  for(let i = 0; i < rpn.length; i++) {
         if(rpn[i] == "*" || rpn[i] == "/") {
             tmpOpP.push(i);
         }
     }*/
 
-    for(let i = 0; i < rpn.length; i++) {
-
-        if(isNumber(rpn[i]) ||rpn[i] === "r" ) {
+    for (let i = 0; i < rpn.length; i++) {
+        if (isNumber(rpn[i]) || rpn[i] === "r") {
             tempVar.push(rpn[i]);
         }
 
@@ -322,28 +311,28 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
                 tempVar.push(c);
             } else {
                 searchVar = true;
-                tempVar.forEach((elem) => {tmpRpn.push(elem)});
-                for(let j = i; j < rpn.length; j++) {
+                tempVar.forEach((elem) => {
+                    tmpRpn.push(elem);
+                });
+                for (let j = i; j < rpn.length; j++) {
                     tmpRpn.push(rpn[j]);
                 }
                 i = 999;
             }
-           
         }
-
     }
 
-    if(searchVar) {
-        for(let i = tmpRpn.length - 1; i >= 0; i--) {
-            if(isOp(tmpRpn[i])) {
+    if (searchVar) {
+        for (let i = tmpRpn.length - 1; i >= 0; i--) {
+            if (isOp(tmpRpn[i])) {
                 tmpOp.push(tmpRpn[i]);
                 tmpRpn.pop();
             }
 
-            if(isNumber(tmpRpn[i])) {
+            if (isNumber(tmpRpn[i])) {
                 tmpOp.reverse();
                 let a = tmpRpn.pop();
-                switch(tmpOp.pop()) {
+                switch (tmpOp.pop()) {
                     case "+":
                         tmpResult = calc(tmpResult, a, "-");
                         break;
@@ -357,25 +346,24 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
                         tmpResult = calc(tmpResult, a, "*");
                         break;
                     default:
-                        throw ("Je ne connais pas cette opérateur");
+                        throw "Je ne connais pas cette opérateur";
                 }
                 tmpOp.reverse();
             }
 
-            if(tmpRpn[i] === "r") {
-
-                switch(tmpOp[0]) {
-                    case '+':
+            if (tmpRpn[i] === "r") {
+                switch (tmpOp[0]) {
+                    case "+":
                         tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
                         break;
-                    case '-':
+                    case "-":
                         tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
                         tmpResult = -tmpResult;
                         break;
-                    case '*':
+                    case "*":
                         tmpResult = calc(tmpResult, tmpRpn[i - 1], "/");
                         break;
-                    case '/':
+                    case "/":
                         tmpResult = calc(tmpResult, tmpRpn[i - 1], "*");
                         break;
                 }
@@ -383,12 +371,12 @@ const solveur = (rpn: any[], result: number, reponse: number) => {
                 i = -1;
             }
         }
-
-
     }
 
-    return [searchVar ? reponse === tmpResult : reponse === tempVar[0], searchVar ? tmpResult : tempVar[0]];
-
-}
+    return [
+        searchVar ? reponse === tmpResult : reponse === tempVar[0],
+        searchVar ? tmpResult : tempVar[0],
+    ];
+};
 
 export default Exercice;

@@ -182,8 +182,8 @@ const ClockGroup = (props: {
             onPointerMove={(event) => {
                 mouse = { x: event.clientX, y: event.clientY };
             }}
-            onWheel={(event) => {           
-                const tmpTime = props.time; 
+            onWheel={(event) => {
+                const tmpTime = props.time;
                 tmpTime.setSeconds(
                     props.time.getSeconds() + (event.deltaY > 0 ? 1 : -1) * 60
                 );

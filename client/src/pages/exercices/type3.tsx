@@ -2,41 +2,56 @@ import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
 import Board from "../components/board";
 import Paquet from "../components/paquet";
-import { Equals, Times} from "../components/operationSigns";
+import Draggable from "../components/draggable";
+import Droppable from "../components/droppable";
+import {
+    Plus,
+    Equals,
+    Times,
+    Minus,
+    DividedBy,
+} from "../components/operationSigns";
 
-const Type3 = (props: { params: any, gen: any }): JSX.Element => {
+const Type3 = (props: { params: any }): JSX.Element => {
+    const bananaMentions = (
+        <Suspense fallback={"loading"}>
+            <Paquet
+                file="banana"
+                center={[0, 0, 0]}
+                dimensions={[5, 5, 1]}
+                distance={[10, 5, 5]}
+                scale={1}
+            />
+
+            <Times position={[-50, 20, 60]} size={15} />
+
+            <Paquet
+                file="banana"
+                center={[-90, 0, 0]}
+                dimensions={[5, 1, 5]}
+                distance={[10, 5, 5]}
+                scale={1}
+            />
+            <Equals position={[120, 10, 60]} size={15} />
+
+            <Paquet
+                file="banana"
+                center={[100, 0, 0]}
+                dimensions={[5, 5, 5]}
+                distance={[10, 5, 5]}
+                scale={1}
+            />
+
+            <OrbitControls />
+        </Suspense>
+    );
+
+    const draggableObj = <Draggable file="banana" />;
+    const droppableObj = <Droppable file="banana" />;
+
     return (
-        <Board>
-            <Suspense fallback={"loading"}>
-                <Paquet
-                    file="banana"
-                    center={[0, 0, 0]}
-                    dimensions={[5, 5, 1]}
-                    distance={[10, 5, 5]}
-                    scale={1}
-                />
-
-                <Times position={[-50, 20, 60]} size={15} />
-
-                <Paquet
-                    file="banana"
-                    center={[-90, 0, 0]}
-                    dimensions={[5, 1, 5]}
-                    distance={[10, 5, 5]}
-                    scale={1}
-                />
-                <Equals position={[120, 10, 60]} size={15} />
-
-                <Paquet
-                    file="banana"
-                    center={[100, 0, 0]}
-                    dimensions={[5, 5, 5]}
-                    distance={[10, 5, 5]}
-                    scale={1}
-                />
-
-                <OrbitControls />
-            </Suspense>
+        <Board camera={{ position: [0, 0, 50] }}>
+            <Droppable file="banana" />
         </Board>
     );
 };
