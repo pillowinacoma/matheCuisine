@@ -65,6 +65,8 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
     const [attemptR, setAttemptR] = React.useState<number>(Infinity);
     const [incorrect, setIncorrect] = React.useState(false);
     const [letter, setLetter] = React.useState("");
+
+
     React.useEffect(() => {
         var  [_rpn, _r, _resultat] = props.gen();
         setRpn(_rpn);
@@ -103,13 +105,22 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
         if(props.solveur != undefined) {
             if(rpn != undefined ) {
                 var [correct, result] = props.solveur(rpn, attemptR, parseFloat(reponse));
-                if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
-                    props.setFinish(true);
-                } else if(correct) {
-                    props.setFinish(true);
+                if(equation) {
+                    if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
+                        props.setFinish(true);
+                    } else if(correct) {
+                        props.setFinish(true);
+                    } else {
+                        setIncorrect(true);
+                        props.setNbError(props.nbError + 1);
+                    }
                 } else {
-                    setIncorrect(true);
-                    props.setNbError(props.nbError + 1);
+                    if(result == parseFloat(reponse)) {
+                        props.setFinish(true)
+                    } else {
+                        setIncorrect(true);
+                        props.setNbError(props.nbError + 1);
+                    }
                 }
             }
 
@@ -143,7 +154,7 @@ const translationRpn = (rpn: any[], letter: string) => {
 
     if(rpn !== undefined)   {
         for(let i = 0; i < rpn?.length ; i++) {
-            
+
             if(isNumber(rpn[i]) || rpn[i] === "r") {
                 
                 if(tempOp.length != 0) {
