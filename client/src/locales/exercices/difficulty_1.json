@@ -10,6 +10,7 @@
         ],
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -37,6 +38,7 @@
         "id" : 10,
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -57,6 +59,7 @@
         ],
         "decimal": "yes",
         "acceptNegatif": "no",
+        "acceptFloat": false,
         "vars": [
             1,
             1,
