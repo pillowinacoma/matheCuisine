@@ -1,3 +1,4 @@
+import { Modal } from "@material-ui/core";
 import React from "react";
 import { Model } from "./models";
 
@@ -5,32 +6,39 @@ const Paquet = ({ ...props }): JSX.Element => {
     const scale = props.scale;
     const scaleArray = [scale, scale, scale];
 
-    const baseModel = ([x = 0, y = 0, z = 0]) => {
+    const baseModel = () => {
         return (
-            <Model
-                key={`model-${props.file}-${x}-${y}-${z}`}
-                file={props.file}
-                position={[x, y, z]}
-                scale={[scaleArray[0], scaleArray[1], scaleArray[2]]}
-            />
+            props?.children ?? (
+                <Model
+                    key={`model-${props.file}-${Math.floor(
+                        Math.random() * 99999
+                    )}`}
+                    file={props.file}
+                    position={[0, 0, 0]}
+                />
+            )
         );
     };
 
     const arrayModel = () => {
-        const dims = props.dimensions;
-        const dist = props.distance;
-        const center = props.center;
+        const dims = props?.dimensions ?? [2, 2, 2];
+        const dist = props?.distance ?? [1, 1, 1];
+        const center = props?.center ?? [0, 0, 0];
         const result: JSX.Element[] = [];
 
         for (let i = 0; i < dims[0]; i++) {
             for (let j = 0; j < dims[1]; j++) {
                 for (let k = 0; k < dims[2]; k++) {
                     result.push(
-                        baseModel([
-                            center[0] + i * dist[0],
-                            center[1] + j * dist[1],
-                            center[2] + k * dist[2],
-                        ])
+                        <group
+                            position={[
+                                center[0] + i * dist[0],
+                                center[1] + j * dist[1],
+                                center[2] + k * dist[2],
+                            ]}
+                        >
+                            {baseModel()}
+                        </group>
                     );
                 }
             }
@@ -39,7 +47,7 @@ const Paquet = ({ ...props }): JSX.Element => {
         return result;
     };
 
-    return <group>{arrayModel()}</group>;
+    return <group scale={props?.scale ?? [1,1,1]} >{arrayModel()}</group>;
 };
 
 export default Paquet;

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Vector3 } from "three";
 import { useGesture } from "react-use-gesture";
-import { FixedLengthArray } from "./helper/fixedArray";
-import { Model } from "./models";
-import { useThree } from "@react-three/fiber";
 import { useSpring, a } from "@react-spring/three";
 
 const Cible = ({ ...props }) => {
