@@ -26,21 +26,21 @@ const useStyle = makeStyles((theme) => ({
         width: "60%"
     },
     valid: {
-        width: "20%",
-        marginLeft: "40%",
+        width: "100%",
         marginRight: "40%",
         border: "2px solid #58D68D",
-        maxWidth: "20%",
+        maxWidth: "100%",
+        backgroundColor: "#D5F5E3",
         "& p": {
+            fontSize: 20,
             marginLeft: 0,
-            width: "calc(100% - 60px)",
+            width: "calc(100% - 150px)",
             color: "#58D68D",
-            textAlign: "start"
+            textAlign: "center"
         }
     },
     validIcon: {
         fontSize: 40,
-
         color: "#58D68D",
         width: 50
     },

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Type1 from './type1';
 import Type2 from './type2';
-import Type3 from './type3';
+import Type3 from './type1';
 import TType1 from './ttype1';
 import TType2 from './ttype2';
 import TType3 from './ttype3';
+import recette from '../../locales/recettes.json';
 import { makeStyles } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -135,7 +136,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
     var gen = () => {};
     var solve;
     switch(json[props.ex].type % 10) { 
-        case 0: //equation et calcule simple avec mini jeux    
+        case 0: //equation et calcule simple avec mini jeux et qcm  
             gen = () => {
      
                 var {rpn, r} = generator(json[props.ex], props.difficulty);
@@ -150,23 +151,19 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             };
             solve = solveur;
             break;
-        case 1: //equation et calcule simple en qcm
+        case 1: // jeux et qcm avec temps
             gen = () => {
-        
-                var {rpn, r} = generator(json[props.ex], props.difficulty);
-                var rpnG = rpn;
-                var rG: number = r;
-                var [correct, resultat] = solveur(
-                    rpnG,
-                    rG
-                );
-            
-                return [rpn, rG, resultat];
+                var {startTime, values} = generateurTime();
+
+                return [startTime, values];
             };
-            solve = solveur;
+            solve = solveurTime;
             break;
         case 2: // convertion avec mini jeux
-            gen = () => {};
+            gen = () => {
+
+            };
+
             break;
         case 3: // convertion en qcm
             gen = () => {};
@@ -426,6 +423,64 @@ const recCalc = (tabVar: any[], tabOp: any[]) : number => {
     }
     else
         return a; 
+
+}
+
+const generateurTime = () => {
+
+
+    var nbVar = 1 + getRandomInt(4);
+    var nbVarUseless = getRandomInt(2);
+    var values: [any, any, any, any][] = [];
+
+    var recettes = recette.recettes;
+    var startTime = {hour:getRandomInt(12), min: getRandomInt(59) };
+
+    for(let i = 0; i < nbVar; i++) {
+        let randRecette = getRandomInt(recettes.length);
+        values.push([recettes[randRecette][0], recettes[randRecette][1], recettes[randRecette][2], recettes[randRecette][3] ] );
+    }
+
+    return {startTime, values};
+
+}
+
+const solveurTime = (startTime: {hour:number, min: number},values: any[], reponse?: {hour: number, min: number}): [boolean,  {hour: number, min: number}] => {
+
+
+    var endTime = {hour: startTime.hour, min: startTime.min}
+
+    var correct = false;
+
+    for(let i = 0; i < values.length; i++) {
+        
+        
+        endTime.min += values[i][1] ;
+        if(values[i][2] != undefined)
+            endTime.min += + values[i][2];
+        if(endTime.min > 59) {
+            let reste = endTime.min % 60;
+            let qoef = endTime.min / 60;
+            endTime.hour += Math.floor(qoef);
+            endTime.min = reste;
+        }
+
+    }
+
+    if(endTime.hour > 23) {
+        endTime.hour = endTime.hour % 24;
+    }
+    
+
+    if(reponse != undefined) {
+
+        correct = endTime.hour === reponse.hour && endTime.min === reponse.min;
+
+    }
+
+    console.log(endTime)
+
+    return [correct, endTime];
 
 }
 

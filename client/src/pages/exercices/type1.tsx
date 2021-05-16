@@ -1,24 +1,57 @@
-import * as React from 'react';
-import Board from '../components/board';
+import { OrbitControls } from "@react-three/drei";
+import { Suspense } from "react";
+import Board from "../components/board";
+import Paquet from "../components/paquet";
+import Draggable from "../components/draggable";
+import Cible from "../components/cible";
+import {
+    Plus,
+    Equals,
+    Times,
+    Minus,
+    DividedBy,
+} from "../components/operationSigns";
 
-import {Model} from '../components/models';
-import { Suspense } from 'react';
+const Type1 = (props: { params: any }): JSX.Element => {
+    const bananaMentions = (
+        <Suspense fallback={"loading"}>
+            <Paquet
+                file="banana"
+                center={[0, 0, 0]}
+                dimensions={[5, 5, 1]}
+                distance={[10, 5, 5]}
+                scale={1}
+            />
 
-const Type1 = (props: {params: any, gen: any}) : JSX.Element => {
+            <Times position={[-50, 20, 60]} size={15} />
 
-    const frame = (gltf: any) =>  {
-        gltf.scene.rotateY(0.03);   
-    }
+            <Paquet
+                file="banana"
+                center={[-90, 0, 0]}
+                dimensions={[5, 1, 5]}
+                distance={[10, 5, 5]}
+                scale={1}
+            />
+            <Equals position={[120, 10, 60]} size={15} />
 
-    const model1 = <Model file={"banana"} position={[-1,-1,0]} scale={[.75,.75,.75]} frame={frame}/>;
-    return (
-        <Board>
-            <Suspense fallback={'loading'}>
-                    {model1}
-            </Suspense>
-        </Board>
+            <Paquet
+                file="banana"
+                center={[100, 0, 0]}
+                dimensions={[5, 5, 5]}
+                distance={[10, 5, 5]}
+                scale={1}
+            />
+
+            <OrbitControls />
+        </Suspense>
     );
 
-}
+    return (
+        <Board camera={{ position: [0, 0, 50] }}>
+            <Draggable file="banana"/>
+            <Cible position={[30,0,0]}/>
+        </Board>
+    );
+};
 
 export default Type1;
