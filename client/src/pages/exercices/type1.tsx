@@ -15,6 +15,8 @@ import {
 import { makeStyles } from "@material-ui/core";
 import { isNumber } from 'util';
 import { isOp } from './utile_type1';
+import { genEffect } from './utile_type1';
+import { checkResult } from './utile_type1';
 
 
 const useStyle = makeStyles((theme) => ({
@@ -50,21 +52,9 @@ const Type1 = (props: { params: any, gen: any, setFinish: any, nbError:number, s
     const [letter, setLetter] = React.useState("");
 
     React.useEffect(() => {
-        var  [_rpn, _r, _resultat] = props.gen();
-        setRpn(_rpn);
-        setAttemptR(_r);
-        setResultat(_resultat);
-        if(_rpn != undefined)
-            Object.entries(_rpn).forEach((value: [string, any], index: number, array: [string, any][]) => {
-                if(value[1] === "r") setEquation(true);
-            });
-
-            
-        const alphabet = "abcdefghijklmnopqrstuvwxyz"
-
-        setLetter(alphabet[Math.floor(Math.random() * alphabet.length)])
-
+        genEffect(setRpn, setAttemptR, setResultat, setEquation, setLetter, props.gen);
     }, []);
+
 
 
     React.useEffect(() => {
@@ -73,31 +63,7 @@ const Type1 = (props: { params: any, gen: any, setFinish: any, nbError:number, s
     }, [letter]);
 
     const checkReponse = () => {
-        console.log(rpn)
-        console.log(attemptR)
-        if(props.solveur != undefined) {
-            if(rpn != undefined ) {
-                var [correct, result] = props.solveur(rpn, attemptR, parseFloat(reponse));
-                if(equation) {
-                    if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
-                        props.setFinish(true);
-                    } else if(correct) {
-                        props.setFinish(true);
-                    } else {
-                        setIncorrect(true);
-                        props.setNbError(props.nbError + 1);
-                    }
-                } else {
-                    if(result == parseFloat(reponse)) {
-                        props.setFinish(true)
-                    } else {
-                        setIncorrect(true);
-                        props.setNbError(props.nbError + 1);
-                    }
-                }
-            }
-
-        }
+        checkResult(rpn, eq, equation, attemptR, resultat, reponse, props.setNbError, props.nbError, props.setFinish, setIncorrect );
     }
     
     return (

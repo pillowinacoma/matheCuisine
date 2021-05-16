@@ -313,3 +313,43 @@ export const recCalc = (tabVar: any[], tabOp: any[]) : number => {
         return a; 
 
 }
+
+export const genEffect = (setRpn: any, setAttemptR: any, setResultat: any, setEquation: any, setLetter: any, gen: any) => {
+    var  [_rpn, _r, _resultat] = gen();
+    setRpn(_rpn);
+    setAttemptR(_r);
+    setResultat(_resultat);
+    if(_rpn != undefined)
+        Object.entries(_rpn).forEach((value: [string, any], index: number, array: [string, any][]) => {
+            if(value[1] === "r") setEquation(true);
+        });
+
+        
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+    setLetter(alphabet[Math.floor(Math.random() * alphabet.length)])
+}
+
+export const checkResult = (rpn: any, eq: any, equation: boolean, attemptR: any, resultat:any, reponse: any,  setNbError: any, nbError: number, setFinish: any, setIncorrect: any) => {
+        if(rpn != undefined ) {
+            var [correct, result] = solveur(rpn, attemptR, parseFloat(reponse));
+            if(equation) {
+                if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
+                    setFinish(true);
+                } else if(correct) {
+                    setFinish(true);
+                } else {
+                    setIncorrect(true);
+                    setNbError(nbError + 1);
+                }
+            } else {
+                if(result == parseFloat(reponse)) {
+                    setFinish(true)
+                } else {
+                    setIncorrect(true);
+                    setNbError(nbError + 1);
+                }
+            }
+        }
+    
+}
