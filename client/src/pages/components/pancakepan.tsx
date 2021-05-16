@@ -4,7 +4,6 @@ import Flippable from "../components/flippable";
 import Paquet from "../components/paquet";
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useFrame, useThree } from "react-three-fiber";
-import * as THREE from "three";
 const pi = Math.PI;
 
 const Pan = ({ ...props }) => {
@@ -22,23 +21,20 @@ const PancakePan = ({ ...props }) => {
         viewport: { width, height },
     } = useThree();
     const dims = props?.dimensions ?? [5, 5];
-    const scale = Math.min(width / 10 / dims[0], height / 10 / dims[1]);
-    const [pos, setPos] = useState([
-        (-scale * 6 * dims[0]) / 2,
-        (scale * 6 * dims[1]) / 2,
-    ]);
+    const scale = Math.min(width / 10 / dims[0], height / 10 / dims[1]) * 0.7;
+    const [pos, setPos] = useState([(-scale * 3) * dims[0], scale * 3 * dims[1]]);
     const bigPan = useRef<any | null>(null);
     const [flipped, setFlipped] = useState(0);
     const [total, setTotal] = useState(dims[1] * dims[0]);
     let mouse: { x: number; y: number };
-
 
     useFrame(() => {
         const m = bigPan.current;
 
         if (m && mouse) {
             const coords = { x: window.innerWidth, y: window.innerHeight };
-            m.rotation.x = (mouse.y - coords.y / 2) / 300 / pi + pi / 2;
+            m.rotation.x =
+                -pi / 6 + (mouse.y - coords.y / 2) / 300 / pi + pi / 2;
             m.rotation.z = (mouse.x - coords.x / 2) * 0.0005;
         }
     });
@@ -54,7 +50,7 @@ const PancakePan = ({ ...props }) => {
         <group
             scale={scale}
             ref={bigPan}
-            rotation={props?.rotation ?? [Math.PI / 2, 0, 0]}
+            rotation={props?.rotation ?? [pi / 3, 0, 0]}
             position={[pos[0], pos[1], 0]}
             onPointerMove={(event) => {
                 mouse = { x: event.clientX, y: event.clientY };
