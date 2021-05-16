@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
-
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import { isNumber } from 'util';
 
 const type = [
@@ -27,24 +27,93 @@ const trtype = [
 const useStyle = makeStyles((theme) => ({
     gameBox: {
         height: "100vh",
+        position: "relative"
     },
     hourGlass: {
-        fontSize: "20px",
-        color: "yellow",
+        fontSize: "40px",
+        marginLeft: "calc(50% - 20px)",
+        marginTop: 10,
+        color: "#154360",
     },
     indice: {
-        fontSize: "20px",
-        color: "red",
+        marginLeft: "calc(50% - 20px)",
+        fontSize: "40px",
+        marginTop: 10,
+        color: "#F1C40F",
     },
     cancel: {
-        fontSize: "20px",
-        color: "blue",
+        marginLeft: "calc(50% - 20px)",
+        marginTop: 10,
+        fontSize: "40px",
+        color: "#CB4335",
     },
+    exHeader: {
+        position: "relative",
+        display: "flex",
+        width: 500,
+        marginLeft: "calc(50% - 250px)",
+        "& div": {
+            margin: "auto",
+            marginTop: 25,
+            marginBottom: 25,
+            width: 150,
+            height: 100,
+            border: "2px solid dimgray",
+            borderRadius: 10,
+            "& p": {
+                width: "50%",
+                fontSize: 20,
+                margin: 0,
+                marginLeft: "25%",
+                marginRight: "25%",
+                textAlign: "center"
+            }
+        }
+    },
+    reussite: {
+        position: "relative",
+        duisplay: "block",
+        width: "50%",
+        marginLeft: "25%",
+        marginRight: "25%",
+        textAlign: "center",
+        border: "5px solid #58D68D ",
+        borderRadius: 15,
+    },
+    satisfiedIcon: {
+        fontSize: 60,
+        width: "100%",
+        color: "#58D68D"
+    }
 }));
+
+
+const Timer = (props:{finish: boolean}) => {
+    const [time, setTime] = React.useState(0.00);
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            if(!props.finish)
+                setTime(time + 0.01);
+        }, 10)
+
+        return () => clearTimeout(timer);
+    },[time]) 
+
+    return (<p>{time.toFixed(2)}</p>);
+
+}
+
 
 const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) => {
     const classes = useStyle();
     var json: any;
+
+    const [finish, setFinish] = React.useState(false);
+
+    const [nbError, setNbError] = React.useState(0);
+    const [nbIndice, setNbIndice] = React.useState(0);
+
     if(!props.trainning) 
         json = require ('../../locales/exercices/difficulty_'+props.difficulty+'.json');
     else 
@@ -64,36 +133,37 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
      * Les parametre de l'exercice sont automatique passé en paramètre.
      */
     var gen = () => {};
+    var solve;
     switch(json[props.ex].type % 10) { 
         case 0: //equation et calcule simple avec mini jeux    
             gen = () => {
-                var rpn;
-                do {
-                    rpn = generator(json[props.ex], props.difficulty);
-                    var [correct, resultat] = solveur(
-                        rpn,
-                        json[props.ex].result,
-                        100
-                    ); // atention bien que result soit passé en paramètre il peut être nul.
-                    console.log(resultat);
-                } while (!json[props.ex].acceptNegatif && resultat < 0);
-                return [rpn, resultat, solveur];
+     
+                var {rpn, r} = generator(json[props.ex], props.difficulty);
+                var rpnG = rpn;
+                var rG: number = r;
+                var [correct, resultat] = solveur(
+                    rpnG,
+                    rG
+                );
+             
+                return [rpn, rG, resultat];
             };
+            solve = solveur;
             break;
         case 1: //equation et calcule simple en qcm
             gen = () => {
-                var rpn;
-                do {
-                    rpn = generator(json[props.ex], props.difficulty);
-                    var [correct, resultat] = solveur(
-                        rpn,
-                        json[props.ex].result,
-                        100
-                    ); // atention bien que result soit passé en paramètre il peut être nul.
-                    console.log(resultat);
-                } while (!json[props.ex].acceptNegatif && resultat < 0);
-                return [rpn, resultat, solveur];
+        
+                var {rpn, r} = generator(json[props.ex], props.difficulty);
+                var rpnG = rpn;
+                var rG: number = r;
+                var [correct, resultat] = solveur(
+                    rpnG,
+                    rG
+                );
+            
+                return [rpn, rG, resultat];
             };
+            solve = solveur;
             break;
         case 2: // convertion avec mini jeux
             gen = () => {};
@@ -106,15 +176,35 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             break;
     }
 
+
+
+
+
+
     return (
         <div className={classes.gameBox}>
-            <EmojiObjectsIcon className={classes.indice} />
-            <CancelIcon className={classes.cancel} />
-            <HourglassEmptyIcon className={classes.hourGlass} />
-            <Type params={json[props.ex]} gen={gen} />
+            <div className={classes.exHeader}>
+                <div>
+                    <EmojiObjectsIcon className={classes.indice}/>
+                    <p>{nbIndice}</p>
+                </div>
+                <div>
+                    <CancelIcon className={classes.cancel} />
+                    <p>{nbError}</p>
+                </div>
+                <div>
+                    <HourglassEmptyIcon className={classes.hourGlass} />
+                    <Timer finish={finish}/>
+                </div>
+            </div>
+
+            {finish ? <div className={classes.reussite}><SentimentVerySatisfiedIcon className={classes.satisfiedIcon}/> Vous avez trouvé la bonne réponse !</div> : ""}
+
+            <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve}/>
         </div>
     );
 };
+
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -154,6 +244,9 @@ const generator = (detail: any, difficulty: number) => {
     }
 
     var restart = true;
+
+    var r = parseFloat((Math.random() * (maxRand + 50)).toFixed(detail.acceptFloat ? 3 : 0));
+
     while (restart) {
         restart = false;
         generateVar = [];
@@ -161,7 +254,7 @@ const generator = (detail: any, difficulty: number) => {
         rpnTmpOp = [];
 
         for (let i = 0; i < vars.length; i++) {
-            if (vars[i] === "r") {
+            if (vars[i] === "r") {   
                 generateVar.push("r");
             } else {
                 let x = 1;
@@ -250,7 +343,7 @@ const generator = (detail: any, difficulty: number) => {
             }
         }
     }
-    return rpn;
+    return {rpn, r};
 };
 
 export const isOp = (elem: any) => {
@@ -283,100 +376,57 @@ const calc = (a: number, b: number, op: any) => {
     }
 };
 
-const solveur = (rpn: any[], result: number, reponse: number) => {
+const solveur = (rpn: any[], attemptResult: number, reponse?: number): [boolean, number] => {
     var tempVar = [];
-    var tmpOp = [];
-    var tmpResult = result;
-
-    var tmpRpn = [];
-
-    var searchVar = false;
-
-    /*  for(let i = 0; i < rpn.length; i++) {
-        if(rpn[i] == "*" || rpn[i] == "/") {
-            tmpOpP.push(i);
-        }
-    }*/
-
-    for (let i = 0; i < rpn.length; i++) {
-        if (isNumber(rpn[i]) || rpn[i] === "r") {
-            tempVar.push(rpn[i]);
-        }
-
-        if(isOp(rpn[i]) && tempVar.length > 1) {
-            if(!(tempVar[0] === "r") && !(tempVar[1] === "r")) {
-                let b = tempVar.pop();
-                let a = tempVar.pop();
-                let c = calc(a,b, rpn[i]);
-                tempVar.push(c);
-            } else {
-                searchVar = true;
-                tempVar.forEach((elem) => {
-                    tmpRpn.push(elem);
-                });
-                for (let j = i; j < rpn.length; j++) {
-                    tmpRpn.push(rpn[j]);
-                }
-                i = 999;
-            }
-        }
+    var tmpResult = 0;
+    var correct = false;
+    var tmpR = attemptResult;
+    if(reponse != undefined) {
+        correct = attemptResult == reponse;
+        tmpR = reponse;
     }
 
-    if (searchVar) {
-        for (let i = tmpRpn.length - 1; i >= 0; i--) {
-            if (isOp(tmpRpn[i])) {
-                tmpOp.push(tmpRpn[i]);
-                tmpRpn.pop();
+    for (let i = 0; i < rpn?.length; i++) {
+        if (isNumber(rpn[i]) || rpn[i] === "r") {
+            if(rpn[i] === "r") {
+                tempVar.push(tmpR);
+            } else {
+                tempVar.push(rpn[i]);
             }
 
-            if (isNumber(tmpRpn[i])) {
-                tmpOp.reverse();
-                let a = tmpRpn.pop();
-                switch (tmpOp.pop()) {
-                    case "+":
-                        tmpResult = calc(tmpResult, a, "-");
-                        break;
-                    case "-":
-                        tmpResult = calc(tmpResult, a, "+");
-                        break;
-                    case "*":
-                        tmpResult = calc(tmpResult, a, "/");
-                        break;
-                    case "/":
-                        tmpResult = calc(tmpResult, a, "*");
-                        break;
-                    default:
-                        throw "Je ne connais pas cette opérateur";
-                }
-                tmpOp.reverse();
-            }
-
-            if (tmpRpn[i] === "r") {
-                switch (tmpOp[0]) {
-                    case "+":
-                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
-                        break;
-                    case "-":
-                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "-");
-                        tmpResult = -tmpResult;
-                        break;
-                    case "*":
-                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "/");
-                        break;
-                    case "/":
-                        tmpResult = calc(tmpResult, tmpRpn[i - 1], "*");
-                        break;
-                }
-
-                i = -1;
-            }
         }
+
+        if(isOp(rpn[i]) && tempVar.length > 0) {
+            let b = tempVar.pop();
+            let a = tempVar.pop();
+            let c = calc(a,b, rpn[i]);
+            tempVar.push(c);
+        }
+    }   
+
+    tmpResult = tempVar[0];
+
+    if(!correct && reponse != undefined) {
+
+        var [ok, res] = solveur(rpn, attemptResult);
+        correct = (tmpResult == res);
     }
 
     return [
-        searchVar ? reponse === tmpResult : reponse === tempVar[0],
-        searchVar ? tmpResult : tempVar[0],
+        correct,
+        tmpResult
     ];
 };
+
+const recCalc = (tabVar: any[], tabOp: any[]) : number => {
+    var a = tabVar.pop();
+    if(tabVar.length > 0) {
+        var op = tabOp.pop();
+        return calc(a,recCalc(tabVar, tabOp), op);
+    }
+    else
+        return a; 
+
+}
 
 export default Exercice;

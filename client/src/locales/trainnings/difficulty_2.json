@@ -9,6 +9,7 @@
         ],
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -26,6 +27,7 @@
         ],
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -39,6 +41,7 @@
         "id" : 10,
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -57,6 +60,7 @@
         "id": 1,
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -77,6 +81,7 @@
         ],
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -97,6 +102,7 @@
         ],
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
@@ -117,6 +123,7 @@
         ],
         "decimal": false,
         "acceptNegatif": false,
+        "acceptFloat": false,
         "random": true,
         "maxRand": 10,
         "vars": [
