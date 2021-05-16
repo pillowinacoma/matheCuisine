@@ -17,6 +17,7 @@ import { isNumber } from 'util';
 import { isOp } from './utile_type1';
 import { genEffect } from './utile_type1';
 import { checkResult } from './utile_type1';
+import { translationRpn } from './utile_type1';
 
 
 const useStyle = makeStyles((theme) => ({
@@ -42,7 +43,6 @@ const Type1 = (props: { params: any, gen: any, setFinish: any, nbError:number, s
 
     const classes = useStyle();
     const [reponse, setReponse] = React.useState<string>("");
-    const [errorFormat, setErrorFormat] = React.useState(false);
     const [eq, setEq] = React.useState("");
     const [equation, setEquation] = React.useState(false);
     const [rpn, setRpn] = React.useState<any[]>();
@@ -116,95 +116,3 @@ const bananaMentions = (
     </Suspense>
 );
 
-const translationRpn = (rpn: any[], letter: string) => {
-
-    var tempVar = [];
-    var tempOp  = [];
-    var tempStr: string[] = [];
-
-    if(rpn !== undefined)   {
-        for(let i = 0; i < rpn?.length ; i++) {
-
-            if(isNumber(rpn[i]) || rpn[i] === "r") {
-                
-                if(tempOp.length != 0) {
-                    var str = "";
-                   // if(tempVar.length > 1 || tempOp.length > tempVar.length)
-                    //    str += " ( ";
-                    tempOp.reverse();
-                    let z = 0;
-                    while(tempVar.length !== 0) {
-                        var a = tempVar.pop();
-                        if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
-                            var b = tempVar.pop();
-                            str = str + b + " " + tempOp.pop() + " " + a + " ";
-                            z++;
-                        }
-                        else {
-                            if((tempOp[tempOp.length - 1] == "*" || tempOp[tempOp.length - 1] == "*") && str != "") str = " ( " + str + " ) ";
-                            str = str + " " + tempOp.pop() + " " + a + " ";
-                        }
-                    }
-                    tempOp.reverse();
-                    if(str.includes(" ( "))
-                        str += " ) "
-                    if(tempOp.length >= 1) {
-                        str = tempOp.pop() + " ( " + str + " ) ";
-                    }
-                    tempStr.push(str);
-                }
-                tempVar.push(rpn[i]);
-            }
-
-            if(isOp(rpn[i]))
-            {
-                tempOp.push(rpn[i]);
-            }
-
-
-
-        // console.log(translation);
-        //  console.log(i)
-        }
-    }
-
-    if(tempOp.length != 0) {
-        var str = "";
-        tempOp.reverse();
-        while(tempVar.length !== 0) {
-            var a = tempVar.pop();
-            if(tempOp.length > 0 && tempVar.length > 0) {
-                var b = tempVar.pop();
-                str = str + b + " " + tempOp.pop() + " " + a + " ";
-            }
-            else
-                str = str + " " + tempOp.pop() + " " + a + " ";
-        }
-        tempOp.reverse();
-
-        if(tempOp.length >= 1) {
-            str = tempOp.pop() + " ( " + str + " ) ";
-        }
-
-        tempStr.push(str);
-    }
-
-
-    var finalEq = "";
-
-    for(let i = 0; i < tempStr.length; i++) {
-
-
-        if(tempStr[i].startsWith("* ") || tempStr[i].startsWith("/ ")) {
-            finalEq = " ( " + finalEq + " ) " + tempStr[i];
-        } else {
-            finalEq += tempStr[i];
-        }
-
-
-    }
-
-    finalEq = finalEq.replace("r", letter);
-    return finalEq;
-
-}
