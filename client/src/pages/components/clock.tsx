@@ -13,10 +13,11 @@ import * as THREE from "three";
 import { Suspense } from "react";
 import { a, useSpring } from "@react-spring/three";
 import { Text } from "@react-three/drei";
+import { useEffect } from "react";
 
 const scale = 1;
 const pi = Math.PI;
-const cameraDistance = 5;
+const cameraDistance = 3.5;
 
 const Face: React.FC = (props) => {
     const radius = 2;
@@ -176,14 +177,20 @@ const Button = ({ ...props }) => {
     const opacity = spring.to([0, 1], [1, 1]);
 
     return (
-        <a.group position={[0, 0, -3]} rotation-z={rotation} >
+        <a.group position={[0, 0, -3]} rotation-z={rotation}>
             <a.mesh
                 rotation-z={0}
                 scale-x={scale}
                 scale-y={scale}
                 scale-z={0.3}
                 onClick={() => {
-                    if (!active) console.log("time is : ", props?.time.getHours() + "H" + props?.time.getMinutes());
+                    if (!active)
+                        console.log(
+                            "time is : ",
+                            props?.time.getHours() +
+                                "H" +
+                                props?.time.getMinutes()
+                        );
                     setActive(Number(!active));
                     props.startClock?.();
                 }}
@@ -200,8 +207,14 @@ const Button = ({ ...props }) => {
                     color={color}
                 />
             </a.mesh>
-            <a.group rotation={[0,0,-pi/2]} position={[0.65,-0.2,0]} scale={digitScale}>
-                <Textee>{`${("0" + props?.time.getHours()).slice(-2)}H${("0" + props?.time.getMinutes()).slice(-2)}`}</Textee>
+            <a.group
+                rotation={[0, 0, -pi / 2]}
+                position={[0.65, -0.2, 0]}
+                scale={digitScale}
+            >
+                <Textee>{`${("0" + props?.time.getHours()).slice(-2)}H${(
+                    "0" + props?.time.getMinutes()
+                ).slice(-2)}`}</Textee>
             </a.group>
         </a.group>
     );
@@ -211,6 +224,8 @@ const ClockGroup = (props: {
     speed: number;
     time: Date;
     setTime: Dispatch<SetStateAction<Date>>;
+    setResponse: any;
+    setClicked: any;
 }): JSX.Element => {
     const group = useRef<any | null>(null);
     const [active, setActive] = useState(true);
@@ -235,6 +250,13 @@ const ClockGroup = (props: {
             );
         }
     });
+
+    useEffect(() => {
+        if (!active) {
+            props.setResponse(dateToTime(props.time));
+        }
+        props.setClicked(active);
+    }, [active]);
 
     return (
         <group
@@ -288,14 +310,43 @@ const Textee = ({
 export function getMousePos(e: { clientX: number; clientY: number }) {
     return { x: e.clientX, y: e.clientY };
 }
+const timeToDate = (entry: { hour: number; min: number }) => {
+    const res = new Date();
+    res.setHours(entry.hour);
+    res.setMinutes(entry.min);
+    return res;
+};
 
-const Clock = () => {
-    let [time, setTime] = useState(new Date());
+const dateToTime = (entry: Date) => {
+    return {
+        hour: entry.getHours(),
+        min: entry.getMinutes(),
+    };
+};
+
+const Clock = (props: {
+    time: { hour: number; min: number };
+    setResponse: any;
+    setClicked: any;
+}) => {
+    let [time, setTime] = useState<Date>(new Date());
+
+    useEffect(() => {
+        setTime(timeToDate(props.time));
+        console.log(time);
+    }, [props.time.hour, props.time.min]);
+
     return (
         <Fragment>
             <Board camera={{ position: [0, 0, cameraDistance] }}>
                 <Suspense fallback={"loading"}>
-                    <ClockGroup time={time} setTime={setTime} speed={30} />
+                    <ClockGroup
+                        time={time}
+                        setTime={setTime}
+                        setResponse={props.setResponse}
+                        setClicked={props.setClicked}
+                        speed={5}
+                    />
                 </Suspense>
             </Board>
         </Fragment>
