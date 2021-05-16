@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Board from "../components/board";
 import Paquet from "../components/paquet";
 import Draggable from "../components/draggable";
+import PancakePan from "../components/pancakepan";
 import Cible from "../components/cible";
 import {
     Plus,
@@ -38,7 +39,7 @@ const Type3 = (props: { params: any }): JSX.Element => {
                 file="banana"
                 center={[100, 0, 0]}
                 dimensions={[5, 5, 5]}
-                distance={[10, 5, 5]}
+                distance={[10, 50, 5]}
                 scale={1}
             />
 
@@ -48,8 +49,8 @@ const Type3 = (props: { params: any }): JSX.Element => {
 
     return (
         <Board camera={{ position: [0, 0, 50] }}>
-            <Draggable file="banana"/>
-            <Cible position={[30,0,0]}/>
+            <PancakePan dimensions={[6,5]} />
+            <OrbitControls />
         </Board>
     );
 };
