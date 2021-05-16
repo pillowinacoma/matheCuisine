@@ -4,6 +4,7 @@ import Draggable from "../components/draggable";
 import Cible from "../components/cible";
 import { makeStyles } from "@material-ui/core";
 import { isNumber } from 'util';
+import recette from '../../locales/recettes.json';
 
 const useStyle = makeStyles((theme) => ({
 
@@ -35,6 +36,7 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
     const [attemptR, setAttemptR] = React.useState<number>(Infinity);
     const [incorrect, setIncorrect] = React.useState(false);
     const [letter, setLetter] = React.useState("");
+    const [question, setQuestion] = React.useState<string|JSX.Element>("");
 
     React.useEffect(() => {
         var  [_rpn, _r, _resultat] = props.gen();
@@ -54,8 +56,11 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 
 
     React.useEffect(() => {
-        if(rpn != undefined)
+        if(rpn != undefined) {
             setEq(translationRpn(rpn, letter));
+            setQuestion(selectQuestion(rpn, equation, "banane"));
+        }
+
     }, [letter]);
 
     const handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +97,7 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
     return (
         <div>
             <div className={classes.problem}>
-                ok
+                {question}
             </div>
             <Board camera={{ position: [0, 0, 50] }}>
 
@@ -106,6 +111,72 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 };
 
 export default Type1;
+
+const selectQuestion = (rpn: any[], equation: boolean, model: string) => {
+
+    const unities = [
+        "gramme",
+        "kilo",
+        "",
+    ];
+
+    var count = 0;
+
+    var tmpOp: string[] = [];
+
+    var question = "";
+    var ret = <div></div>;
+    var recettes: any[] = recette.recettes;
+
+    var randRecette: any[] = recettes[Math.floor(Math.random() * recettes.length)];
+    var randGarniture = randRecette[4][Math.floor(Math.random() * randRecette[4].length)];
+    var unity = "gramme";
+
+    var randUnity = Math.floor(Math.random() * 3);
+
+    rpn.forEach(element => {
+        if(isNumber(element) || element == "r") count++;
+        if(isOp(element)) tmpOp.push(element);
+    });
+
+    if(count == 2 && !equation) {
+        switch(tmpOp[0]) {
+            case "+":
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{rpn[0]} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour un des éléments composant le plat plus <strong>{rpn[1]} {model}{rpn[1] > 1 ? "s" : ""}</strong></p>
+                    <p>Combien avez vous d'aliments au final ?</p>
+                </div>
+                break;
+            case "-":
+                ret = <div>
+                    <p>Vous avez actuellement <strong>{rpn[0]}  {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong> et vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{rpn[1]} {randGarniture}{rpn[1] > 1 ? "s" : ""}</strong>  pour un des éléments composant le plat</p>
+                    <p>Combien vous reste t-il de {randGarniture}{rpn[0] > 1 ? "s" : ""} ?</p>
+                </div>
+                break;
+            case "*":
+                break;
+            case "/":
+                break;
+        }
+    }
+
+    if(count == 2 && equation) {
+        switch(tmpOp[0]) {
+            case "+":
+                question = "Vous préparé "
+                break;
+            case "-":
+                break;
+            case "*":
+                break;
+            case "/":
+                break;
+        }
+    }
+
+    return ret;
+
+}
 
 const translationRpn = (rpn: any[], letter: string) => {
 
