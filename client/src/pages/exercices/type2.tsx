@@ -1,6 +1,6 @@
-import Clock from '../components/clock';
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core';
+import Clock from '../components/clock';
 
 
 const useStyle = makeStyles((theme) => ({
