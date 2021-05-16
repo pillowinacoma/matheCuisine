@@ -13,11 +13,7 @@ import {
     DividedBy,
 } from "../components/operationSigns";
 import { makeStyles } from "@material-ui/core";
-import { isNumber } from 'util';
-import { isOp } from './utile_type1';
-import { genEffect } from './utile_type1';
-import { checkResult } from './utile_type1';
-import { translationRpn } from './utile_type1';
+import { genEffect, translationRpn, checkResult } from './exercice';
 
 
 const useStyle = makeStyles((theme) => ({
@@ -77,7 +73,6 @@ const Type1 = (props: { params: any, gen: any, setFinish: any, nbError:number, s
                 <Cible position={[30,0,0]}/>
             </Board>
         </div>
-        
     );
 };
 

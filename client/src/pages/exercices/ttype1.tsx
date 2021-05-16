@@ -6,8 +6,7 @@ import { Equation } from '../components/lesson';
 import { isNumber } from 'util';
 import { makeStyles, InputBase, TextField, Button } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
-import { translationRpn, isOp } from './utile_type1';
-import { checkResult, genEffect } from './utile_type1';
+import { genEffect, translationRpn, checkResult } from './exercice';
 
 const useStyle = makeStyles((theme) => ({
 
