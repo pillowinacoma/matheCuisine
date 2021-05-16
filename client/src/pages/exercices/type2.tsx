@@ -70,7 +70,7 @@ const Type2 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 
                     return (
                         <li>
-                        <p>Il vous faudra <strong>{values[1][1]} minutes</strong> pour préparer {values[1][3] ? "vos" : "votre"} {cook} {values[1][2] != 0 ? <span>et <strong>{values[1][2]} minutes</strong> pour la cuisson</span> : ""}</p>
+                            <p>Il vous faudra <strong>{values[1][1]} minutes</strong> pour préparer {values[1][3] ? "vos" : "votre"} {cook} {values[1][2] != 0 ? <span>et <strong>{values[1][2]} minutes</strong> pour la cuisson</span> : ""}</p>
                         </li>
                     )
                 })}
