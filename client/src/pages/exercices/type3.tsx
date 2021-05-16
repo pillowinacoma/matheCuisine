@@ -12,6 +12,8 @@ import {
     Minus,
     DividedBy,
 } from "../components/operationSigns";
+import pancakeImg from "../../img/pancakes.jpg";
+import BackgroundImage from "../components/bgImage";
 
 const Type3 = (props: { params: any }): JSX.Element => {
     const bananaMentions = (
@@ -49,8 +51,10 @@ const Type3 = (props: { params: any }): JSX.Element => {
 
     return (
         <Board camera={{ position: [0, 0, 50] }}>
-            <PancakePan dimensions={[6,5]} />
-            <OrbitControls />
+            <Suspense fallback={() => <h1>Loading</h1>}>
+                <BackgroundImage img={pancakeImg}/>
+            </Suspense>
+            <PancakePan dimensions={[7, 5]} />
         </Board>
     );
 };
