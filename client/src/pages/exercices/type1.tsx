@@ -99,6 +99,7 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
         <div>
             <div className={classes.problem}>
                 {question}
+                {equation ? <p>Trouvez <strong>{letter}</strong> ce sera la quantité dont vous aurez besoin ;).</p>: ""}
             </div>
             <Board camera={{ position: [0, 0, 50] }}>
 
