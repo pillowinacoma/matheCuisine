@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Type2 = (props: {params: any, gen:any}) : JSX.Element => {
+const Type3 = (props: {params: any, gen:any}) : JSX.Element => {
 
 
     return (
@@ -8,4 +8,4 @@ const Type2 = (props: {params: any, gen:any}) : JSX.Element => {
     );
 }
 
-export default Type2;
+export default Type3;

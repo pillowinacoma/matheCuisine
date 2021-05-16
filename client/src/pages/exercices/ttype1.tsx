@@ -3,10 +3,10 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import CloseIcon from '@material-ui/icons/Close';
 import { Equation } from '../components/lesson';
-import { isOp } from './exercice';
 import { isNumber } from 'util';
 import { makeStyles, InputBase, TextField, Button } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import { translationRpn, isOp } from './utile_type1';
 
 const useStyle = makeStyles((theme) => ({
 
@@ -146,95 +146,3 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
 
 export default TType1;
 
-const translationRpn = (rpn: any[], letter: string) => {
-
-    var tempVar = [];
-    var tempOp  = [];
-    var tempStr: string[] = [];
-
-    if(rpn !== undefined)   {
-        for(let i = 0; i < rpn?.length ; i++) {
-
-            if(isNumber(rpn[i]) || rpn[i] === "r") {
-                
-                if(tempOp.length != 0) {
-                    var str = "";
-                   // if(tempVar.length > 1 || tempOp.length > tempVar.length)
-                    //    str += " ( ";
-                    tempOp.reverse();
-                    let z = 0;
-                    while(tempVar.length !== 0) {
-                        var a = tempVar.pop();
-                        if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
-                            var b = tempVar.pop();
-                            str = str + b + " " + tempOp.pop() + " " + a + " ";
-                            z++;
-                        }
-                        else {
-                            if((tempOp[tempOp.length - 1] == "*" || tempOp[tempOp.length - 1] == "*") && str != "") str = " ( " + str + " ) ";
-                            str = str + " " + tempOp.pop() + " " + a + " ";
-                        }
-                    }
-                    tempOp.reverse();
-                    if(str.includes(" ( "))
-                        str += " ) "
-                    if(tempOp.length >= 1) {
-                        str = tempOp.pop() + " ( " + str + " ) ";
-                    }
-                    tempStr.push(str);
-                }
-                tempVar.push(rpn[i]);
-            }
-
-            if(isOp(rpn[i]))
-            {
-                tempOp.push(rpn[i]);
-            }
-
-
-
-        // console.log(translation);
-        //  console.log(i)
-        }
-    }
-
-    if(tempOp.length != 0) {
-        var str = "";
-        tempOp.reverse();
-        while(tempVar.length !== 0) {
-            var a = tempVar.pop();
-            if(tempOp.length > 0 && tempVar.length > 0) {
-                var b = tempVar.pop();
-                str = str + b + " " + tempOp.pop() + " " + a + " ";
-            }
-            else
-                str = str + " " + tempOp.pop() + " " + a + " ";
-        }
-        tempOp.reverse();
-
-        if(tempOp.length >= 1) {
-            str = tempOp.pop() + " ( " + str + " ) ";
-        }
-
-        tempStr.push(str);
-    }
-
-
-    var finalEq = "";
-
-    for(let i = 0; i < tempStr.length; i++) {
-
-
-        if(tempStr[i].startsWith("* ") || tempStr[i].startsWith("/ ")) {
-            finalEq = " ( " + finalEq + " ) " + tempStr[i];
-        } else {
-            finalEq += tempStr[i];
-        }
-
-
-    }
-
-    finalEq = finalEq.replace("r", letter);
-    return finalEq;
-
-}
