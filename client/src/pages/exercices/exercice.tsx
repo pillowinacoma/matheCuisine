@@ -155,7 +155,7 @@ export const generator = (detail: any, difficulty: number) => {
 
     var restart = true;
 
-    var r = parseFloat((Math.random() * (maxRand + 50)).toFixed(detail.acceptFloat ? 3 : 0));
+    var r = parseFloat((Math.random() * (maxRand)).toFixed(detail.acceptFloat ? 3 : 0));
 
     while (restart) {
         restart = false;
@@ -252,10 +252,22 @@ export const generator = (detail: any, difficulty: number) => {
                 }
             }
         }
+        var [correct, resultat] = solveur(rpn, r);
+
+        if(countDecimals(resultat) > 2 || resultat == Infinity) {
+            restart = true;
+        }
+
     }
     return {rpn, r};
 };
 
+
+const countDecimals = (value: number) => {
+    if (Math.floor(value) !== value)
+        return value.toString().split(".")[1].length || 0;
+    return 0;
+}
 
 export const isOp = (elem: any) => {
 

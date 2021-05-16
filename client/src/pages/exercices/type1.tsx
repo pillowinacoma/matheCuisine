@@ -5,6 +5,7 @@ import Cible from "../components/cible";
 import { makeStyles } from "@material-ui/core";
 import { isNumber } from 'util';
 import recette from '../../locales/recettes.json';
+import { getRandomInt } from './exercice';
 
 const useStyle = makeStyles((theme) => ({
 
@@ -58,7 +59,7 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
     React.useEffect(() => {
         if(rpn != undefined) {
             setEq(translationRpn(rpn, letter));
-            setQuestion(selectQuestion(rpn, equation, "banane"));
+            setQuestion(selectQuestion(rpn, equation, resultat, letter, "banane"));
         }
 
     }, [letter]);
@@ -112,7 +113,7 @@ const Type1 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 
 export default Type1;
 
-const selectQuestion = (rpn: any[], equation: boolean, model: string) => {
+const selectQuestion = (rpn: any[], equation: boolean, resultat: number, letter: string, model: string) => {
 
     const unities = [
         "gramme",
@@ -154,24 +155,91 @@ const selectQuestion = (rpn: any[], equation: boolean, model: string) => {
                 </div>
                 break;
             case "*":
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{rpn[0]} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour un des éléments composant le plat, <br/> au dernier on vous préviens que vous serez plus nombreux pour le repas vous décidez alors de faire le même plat {rpn[1]} fois</p>
+                    <p>Combien vous faut t-il de {randGarniture}{rpn[0] > 1 ? "s" : ""} pour pouvoir réaliser tous vos plats ?</p>
+                </div>
                 break;
             case "/":
+                ret = <div>
+                    <p>Se soir vous n'êtes pas nombreux. Votre recette péféré semble trop copieuse vous décidez alors de diviser par <strong>{rpn[1]} les quantités</strong>.</p>
+                    <p>Votre recette, {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]}{randRecette[3] == true ? "s " : " "}, a besoin normalement de <strong>{rpn[0]} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation.</p>
+                    <p>Combien vous faut t-il de {randGarniture}{rpn[0] > 1 ? "s" : ""} pour pouvoir réaliser votre plats ?</p>
+                </div>
                 break;
         }
-    }
-
-    if(count == 2 && equation) {
+    } else if(count == 2 && equation) {
+        let randVers = Math.floor(Math.random() * 2);
         switch(tmpOp[0]) {
             case "+":
-                question = "Vous préparé "
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation vous en avais déjà sorti <strong>{rpn[0]}</strong></p>
+                    <p>Combien vous manque t'il de {randGarniture}s ?</p>
+                </div>
                 break;
             case "-":
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation vous en avais déjà sorti <strong>{rpn[0]}</strong></p>
+                    <p>Combien avez vous sorti de {randGarniture}s trop ?</p>
+                </div>
                 break;
             case "*":
+                if(randVers == 0) {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien devez vous multipliez le reste des ingrédients pour suivre la recette dans les même proportions ?</p>
+                    </div>
+                } else {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien avez vous multipliez la quantité ?</p>
+                    </div>
+                }
                 break;
             case "/":
+
+               
+                if(randVers == 0) {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien devez vous divisez le reste des ingrédients pour suivre la recette ?</p>
+                    </div>
+                } else {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien avez vous divisez la quantité ?</p>
+                    </div>
+                }
+               
                 break;
         }
+    } else {
+        let randDenom = Math.floor(Math.random() * 8);
+        const denomination = [
+            ["papa", "il"],
+            ["maman", "elle"],
+            ["grand frère", "il"],
+            ["grande soeur", "elle"],
+            ["oncle", "il"],
+            ["tante", "elle"],
+            ["grand mère", "elle"],
+            ["grand père", "il"]
+        ]
+        const smileSentences = [
+            ["C'est bien jolie ! Mais vous ne connaissez pas la recette. Qu'elle idée...", "C'est pas grave vous demandez à votre " + denomination[randDenom][0] + " de vous donnez la recette. Mais pour l'un des ingrédients " + denomination[randDenom][1] +" vous donne " +  (equation ? "cette équation" : "ce calcule :") + " compliqué à résoudre"],
+            ["Ah ah vous vous lancez dans une recette compliqué.", "Votre " + denomination[randDenom][0] + " vous a fait parvenir la recette. Mais pour trouver combien il vous faut de " + randGarniture + " " + denomination[randDenom][1] + " veut que vous resolviez " + (equation ? "cette équation" : "ce calcule :") ],
+            ["Vous êtes sur de vouloir faire cette recette ?", "Bien ! Mais je ne vais pas vous simplifiez la tache pour trouvez combien de  " + randGarniture + "s vous aurez besoin vous allez devoir faire " +  (equation ? "cette équation" : "ce calcule ") + " pour moi."]
+        ];
+        let randSmile = Math.floor(Math.random() * 3);
+        var smile = "";
+
+        console.log(rpn);
+
+        ret = <div>
+                <p>Vous voulez préparer {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]}. {smileSentences[randSmile][0]}</p>
+                <p>{smileSentences[randSmile][1]}</p>
+                <p><strong>{translationRpn(rpn, letter)} = {equation ? resultat : " ? "}</strong></p>
+            </div>
     }
 
     return ret;

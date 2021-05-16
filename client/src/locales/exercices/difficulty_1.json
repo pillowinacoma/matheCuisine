@@ -1,5 +1,5 @@
 {
-    "Exercice-1": {
+    "Calcule-1": {
         "type": 0,
         "notions": [
             "soustraction"
@@ -8,13 +8,13 @@
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
-        "maxRand": 100,
+        "maxRand": 50,
         "vars": [
             1,
             2
         ]
     },
-    "Exercice-2": {
+    "Calcule-2": {
         "type": 0,
         "notions": [
             "addition"
@@ -23,7 +23,37 @@
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
-        "maxRand": 100,
+        "maxRand": 50,
+        "vars": [
+            1,
+            1
+        ]
+    },
+    "Calcule-3": {
+        "type": 0,
+        "notions": [
+            "multiplication"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 50,
+        "vars": [
+            1,
+            1
+        ]
+    },
+    "Calcule-4": {
+        "type": 0,
+        "notions": [
+            "division"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 50,
         "vars": [
             1,
             1
