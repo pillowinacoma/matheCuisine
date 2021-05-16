@@ -1,16 +1,19 @@
 import * as React from 'react';
 import Type1 from './type1';
 import Type2 from './type2';
-import Type3 from './type3';
+import Type3 from './type1';
 import TType1 from './ttype1';
 import TType2 from './ttype2';
 import TType3 from './ttype3';
+import recette from '../../locales/recettes.json';
 import { makeStyles } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import { isNumber } from 'util';
+import { generator } from './utile_type1';
+import { solveur } from './utile_type1';
 
 const type = [
     Type1,
@@ -135,7 +138,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
     var gen = () => {};
     var solve;
     switch(json[props.ex].type % 10) { 
-        case 0: //equation et calcule simple avec mini jeux    
+        case 0: //equation et calcule simple avec mini jeux et qcm  
             gen = () => {
      
                 var {rpn, r} = generator(json[props.ex], props.difficulty);
@@ -150,23 +153,19 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             };
             solve = solveur;
             break;
-        case 1: //equation et calcule simple en qcm
+        case 1: // jeux et qcm avec temps
             gen = () => {
-        
-                var {rpn, r} = generator(json[props.ex], props.difficulty);
-                var rpnG = rpn;
-                var rG: number = r;
-                var [correct, resultat] = solveur(
-                    rpnG,
-                    rG
-                );
-            
-                return [rpn, rG, resultat];
+                var {startTime, values} = generateurTime();
+
+                return [startTime, values];
             };
-            solve = solveur;
+            solve = solveurTime;
             break;
         case 2: // convertion avec mini jeux
-            gen = () => {};
+            gen = () => {
+
+            };
+
             break;
         case 3: // convertion en qcm
             gen = () => {};
@@ -206,226 +205,67 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
 };
 
 
-function getRandomInt(max: number) {
+export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
 }
 
-function selectOp(notions: Array<string>) {
-    let randOp = Math.floor(getRandomInt(10));
-    let choose = notions[randOp % notions.length];
 
-    switch (choose) {
-        case "addition":
-            return "+";
-        case "multiplication":
-            return "*";
-        case "division":
-            return "/";
-        case "soustraction":
-            return "-";
-        default:
-            return "+";
+
+const generateurTime = () => {
+
+
+    var nbVar = 1 + getRandomInt(4);
+    var nbVarUseless = getRandomInt(2);
+    var values: [any, any, any, any][] = [];
+
+    var recettes = recette.recettes;
+    var startTime = {hour:getRandomInt(12), min: getRandomInt(59) };
+
+    for(let i = 0; i < nbVar; i++) {
+        let randRecette = getRandomInt(recettes.length);
+        values.push([recettes[randRecette][0], recettes[randRecette][1], recettes[randRecette][2], recettes[randRecette][3] ] );
     }
+
+    return {startTime, values};
+
 }
 
-const generator = (detail: any, difficulty: number) => {
-    const vars: Array<any> = detail.vars;
+const solveurTime = (startTime: {hour:number, min: number},values: any[], reponse?: {hour: number, min: number}): [boolean,  {hour: number, min: number}] => {
 
-    var maxRand = detail.maxRand;
-    var generateVar: Array<any> = [];
-    var rpn: any[] = [];
-    var rpnTmpOp = [];
 
-    var acceptBrackets = false;
-    var openBrackets = 0;
+    var endTime = {hour: startTime.hour, min: startTime.min}
 
-    if (difficulty > 2) {
-        acceptBrackets = true;
-    }
-
-    var restart = true;
-
-    var r = parseFloat((Math.random() * (maxRand + 50)).toFixed(detail.acceptFloat ? 3 : 0));
-
-    while (restart) {
-        restart = false;
-        generateVar = [];
-        rpn = [];
-        rpnTmpOp = [];
-
-        for (let i = 0; i < vars.length; i++) {
-            if (vars[i] === "r") {   
-                generateVar.push("r");
-            } else {
-                let x = 1;
-                if (detail.random) {
-                    x = getRandomInt(maxRand);
-                }
-
-                generateVar.push(vars[i] * x);
-            }
-
-            if (i > 0) {
-                let op = selectOp(detail.notions);
-                switch (op) {
-                    case "*":
-                        // eslint-disable-next-line
-                        for (const [key, value] of Object.entries(
-                            generateVar
-                        )) {
-                            rpn.push(value);
-                        }
-                        // eslint-disable-next-line
-                        for (const [key, value] of Object.entries(rpnTmpOp)) {
-                            rpn.push(value);
-                        }
-                        generateVar = [];
-                        rpnTmpOp = [];
-                        rpn.push("*");
-                        break;
-                    case "/":
-                        // eslint-disable-next-line
-                        for (const [key, value] of Object.entries(
-                            generateVar
-                        )) {
-                            rpn.push(value);
-                        }
-                        // eslint-disable-next-line
-                        for (const [key, value] of Object.entries(rpnTmpOp)) {
-                            rpn.push(value);
-                        }
-                        generateVar = [];
-                        rpnTmpOp = [];
-                        rpn.push("/");
-                        break;
-                    default:
-                        rpnTmpOp.push(op);
-                        break;
-                }
-            }
-            if (acceptBrackets) {
-                let rand = Math.floor(Math.random() * 10);
-                if (rand >= 9 - 1 * difficulty) {
-                    openBrackets++;
-                }
-            }
-
-            if (openBrackets > 0) {
-                let rand = Math.floor(Math.random() * 10);
-                if (rand >= 5) {
-                    openBrackets--;
-                    // eslint-disable-next-line
-                    for (const [key, value] of Object.entries(generateVar)) {
-                        rpn.push(value);
-                    }
-                    // eslint-disable-next-line
-                    for (const [key, value] of Object.entries(rpnTmpOp)) {
-                        rpn.push(value);
-                    }
-                    generateVar = [];
-                    rpnTmpOp = [];
-                }
-            }
-        }
-
-        if (generateVar.length !== 0) {
-            // eslint-disable-next-line
-            for (const [key, value] of Object.entries(generateVar)) {
-                rpn.push(value);
-            }
-            if (rpnTmpOp.length === 0) {
-                restart = true;
-            } else {
-                // eslint-disable-next-line
-                for (const [key, value] of Object.entries(rpnTmpOp)) {
-                    rpn.push(value);
-                }
-            }
-        }
-    }
-    return {rpn, r};
-};
-
-export const isOp = (elem: any) => {
-
-    switch(elem) {
-        case '+':
-            return true;
-        case "-":
-            return true;
-        case "*":
-            return true;
-        case "/":
-            return true;
-        default:
-            return false;
-    }
-};
-const calc = (a: number, b: number, op: any) => {
-    switch (op) {
-        case "+":
-            return a + b;
-        case "-":
-            return a - b;
-        case "*":
-            return a * b;
-        case "/":
-            return a / b;
-        default:
-            throw "je ne connais pas cette opérateur";
-    }
-};
-
-const solveur = (rpn: any[], attemptResult: number, reponse?: number): [boolean, number] => {
-    var tempVar = [];
-    var tmpResult = 0;
     var correct = false;
-    var tmpR = attemptResult;
+
+    for(let i = 0; i < values.length; i++) {
+        
+        
+        endTime.min += values[i][1] ;
+        if(values[i][2] != undefined)
+            endTime.min += + values[i][2];
+        if(endTime.min > 59) {
+            let reste = endTime.min % 60;
+            let qoef = endTime.min / 60;
+            endTime.hour += Math.floor(qoef);
+            endTime.min = reste;
+        }
+
+    }
+
+    if(endTime.hour > 23) {
+        endTime.hour = endTime.hour % 24;
+    }
+    
+
     if(reponse != undefined) {
-        correct = attemptResult == reponse;
-        tmpR = reponse;
+
+        correct = endTime.hour === reponse.hour && endTime.min === reponse.min;
+
     }
 
-    for (let i = 0; i < rpn?.length; i++) {
-        if (isNumber(rpn[i]) || rpn[i] === "r") {
-            if(rpn[i] === "r") {
-                tempVar.push(tmpR);
-            } else {
-                tempVar.push(rpn[i]);
-            }
+    console.log(endTime)
 
-        }
-
-        if(isOp(rpn[i]) && tempVar.length > 0) {
-            let b = tempVar.pop();
-            let a = tempVar.pop();
-            let c = calc(a,b, rpn[i]);
-            tempVar.push(c);
-        }
-    }   
-
-    tmpResult = tempVar[0];
-
-    if(!correct && reponse != undefined) {
-
-        var [ok, res] = solveur(rpn, attemptResult);
-        correct = (tmpResult == res);
-    }
-
-    return [
-        correct,
-        tmpResult
-    ];
-};
-
-const recCalc = (tabVar: any[], tabOp: any[]) : number => {
-    var a = tabVar.pop();
-    if(tabVar.length > 0) {
-        var op = tabOp.pop();
-        return calc(a,recCalc(tabVar, tabOp), op);
-    }
-    else
-        return a; 
+    return [correct, endTime];
 
 }
 

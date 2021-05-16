@@ -37,7 +37,7 @@ const Trainnings = () => {
                             <tr>
                                 <th><Link to={"trainning/difficulty-1/"+key}>{key}</Link></th>
                                 <th>
-                                {
+                                { 
                                     Object.entries<string>(json1[key].notions).map((notion) => {
                                         let not: string = notion[1];
                                         return (

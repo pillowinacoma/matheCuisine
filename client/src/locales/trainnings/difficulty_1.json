@@ -1,7 +1,6 @@
 {
     "Calcule-1": {
         "type": 10,
-        "difficulty": 1,
         "id": 1,
         "notions": [
             "addition"
@@ -18,7 +17,6 @@
     },
     "Calcule-2": {
         "type": 10,
-        "difficulty": 1,
         "id": 1,
         "notions": [
             "soustraction"
@@ -35,7 +33,6 @@
     },
     "Calcule-3" : {
         "type" : 10,
-        "difficulty" : 1,
         "id" : 10,
         "decimal": false,
         "acceptNegatif": false,
@@ -53,7 +50,6 @@
     },
     "Calcule-4": {
         "type": 10,
-        "difficulty": 1,
         "id": 1,
         "notions": [
             "division"
@@ -64,6 +60,14 @@
             1,
             1,
             1
+        ]
+    },
+    "Calcule-sur-les-temps-1": {
+        "type": 11,
+        "id": 1,
+        "notions": [
+            "temps",
+            "addition"
         ]
     }
 }

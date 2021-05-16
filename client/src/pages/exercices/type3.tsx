@@ -1,62 +1,11 @@
-import { OrbitControls } from "@react-three/drei";
-import { Suspense } from "react";
-import Board from "../components/board";
-import Paquet from "../components/paquet";
-import Draggable from "../components/draggable";
-import PancakePan from "../components/pancakepan";
-import Cible from "../components/cible";
-import {
-    Plus,
-    Equals,
-    Times,
-    Minus,
-    DividedBy,
-} from "../components/operationSigns";
-import pancakeImg from "../../img/pancakes.jpg";
-import BackgroundImage from "../components/bgImage";
+import * as React from 'react';
 
-const Type3 = (props: { params: any }): JSX.Element => {
-    const bananaMentions = (
-        <Suspense fallback={"loading"}>
-            <Paquet
-                file="banana"
-                center={[0, 0, 0]}
-                dimensions={[5, 5, 1]}
-                distance={[10, 5, 5]}
-                scale={1}
-            />
+const Type3 = (props: {params: any, gen:any}) : JSX.Element => {
 
-            <Times position={[-50, 20, 60]} size={15} />
-
-            <Paquet
-                file="banana"
-                center={[-90, 0, 0]}
-                dimensions={[5, 1, 5]}
-                distance={[10, 5, 5]}
-                scale={1}
-            />
-            <Equals position={[120, 10, 60]} size={15} />
-
-            <Paquet
-                file="banana"
-                center={[100, 0, 0]}
-                dimensions={[5, 5, 5]}
-                distance={[10, 50, 5]}
-                scale={1}
-            />
-
-            <OrbitControls />
-        </Suspense>
-    );
 
     return (
-        <Board camera={{ position: [0, 0, 50] }}>
-            <Suspense fallback={() => <h1>Loading</h1>}>
-                <BackgroundImage img={pancakeImg}/>
-            </Suspense>
-            <PancakePan dimensions={[7, 5]} />
-        </Board>
+        <div></div>
     );
-};
+}
 
 export default Type3;

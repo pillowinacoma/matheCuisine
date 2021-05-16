@@ -3,10 +3,11 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import CloseIcon from '@material-ui/icons/Close';
 import { Equation } from '../components/lesson';
-import { isOp } from './exercice';
 import { isNumber } from 'util';
 import { makeStyles, InputBase, TextField, Button } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import { translationRpn, isOp } from './utile_type1';
+import { checkResult, genEffect } from './utile_type1';
 
 const useStyle = makeStyles((theme) => ({
 
@@ -26,21 +27,21 @@ const useStyle = makeStyles((theme) => ({
         width: "60%"
     },
     valid: {
-        width: "20%",
-        marginLeft: "40%",
+        width: "100%",
         marginRight: "40%",
         border: "2px solid #58D68D",
-        maxWidth: "20%",
+        maxWidth: "100%",
+        backgroundColor: "#D5F5E3",
         "& p": {
+            fontSize: 20,
             marginLeft: 0,
-            width: "calc(100% - 60px)",
+            width: "calc(100% - 150px)",
             color: "#58D68D",
-            textAlign: "start"
+            textAlign: "center"
         }
     },
     validIcon: {
         fontSize: 40,
-
         color: "#58D68D",
         width: 50
     },
@@ -68,20 +69,7 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
 
 
     React.useEffect(() => {
-        var  [_rpn, _r, _resultat] = props.gen();
-        setRpn(_rpn);
-        setAttemptR(_r);
-        setResultat(_resultat);
-        if(_rpn != undefined)
-            Object.entries(_rpn).forEach((value: [string, any], index: number, array: [string, any][]) => {
-                if(value[1] === "r") setEquation(true);
-            });
-
-            
-        const alphabet = "abcdefghijklmnopqrstuvwxyz"
-
-        setLetter(alphabet[Math.floor(Math.random() * alphabet.length)])
-
+        genEffect(setRpn, setAttemptR, setResultat, setEquation, setLetter, props.gen);
     }, []);
 
 
@@ -100,31 +88,7 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
     }
 
     const checkReponse = () => {
-        console.log(rpn)
-        console.log(attemptR)
-        if(props.solveur != undefined) {
-            if(rpn != undefined ) {
-                var [correct, result] = props.solveur(rpn, attemptR, parseFloat(reponse));
-                if(equation) {
-                    if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
-                        props.setFinish(true);
-                    } else if(correct) {
-                        props.setFinish(true);
-                    } else {
-                        setIncorrect(true);
-                        props.setNbError(props.nbError + 1);
-                    }
-                } else {
-                    if(result == parseFloat(reponse)) {
-                        props.setFinish(true)
-                    } else {
-                        setIncorrect(true);
-                        props.setNbError(props.nbError + 1);
-                    }
-                }
-            }
-
-        }
+        checkResult(rpn, eq, equation, attemptR, resultat, reponse, props.setNbError, props.nbError, props.setFinish, setIncorrect );
     }
 
     return (
@@ -146,95 +110,3 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
 
 export default TType1;
 
-const translationRpn = (rpn: any[], letter: string) => {
-
-    var tempVar = [];
-    var tempOp  = [];
-    var tempStr: string[] = [];
-
-    if(rpn !== undefined)   {
-        for(let i = 0; i < rpn?.length ; i++) {
-
-            if(isNumber(rpn[i]) || rpn[i] === "r") {
-                
-                if(tempOp.length != 0) {
-                    var str = "";
-                   // if(tempVar.length > 1 || tempOp.length > tempVar.length)
-                    //    str += " ( ";
-                    tempOp.reverse();
-                    let z = 0;
-                    while(tempVar.length !== 0) {
-                        var a = tempVar.pop();
-                        if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
-                            var b = tempVar.pop();
-                            str = str + b + " " + tempOp.pop() + " " + a + " ";
-                            z++;
-                        }
-                        else {
-                            if((tempOp[tempOp.length - 1] == "*" || tempOp[tempOp.length - 1] == "*") && str != "") str = " ( " + str + " ) ";
-                            str = str + " " + tempOp.pop() + " " + a + " ";
-                        }
-                    }
-                    tempOp.reverse();
-                    if(str.includes(" ( "))
-                        str += " ) "
-                    if(tempOp.length >= 1) {
-                        str = tempOp.pop() + " ( " + str + " ) ";
-                    }
-                    tempStr.push(str);
-                }
-                tempVar.push(rpn[i]);
-            }
-
-            if(isOp(rpn[i]))
-            {
-                tempOp.push(rpn[i]);
-            }
-
-
-
-        // console.log(translation);
-        //  console.log(i)
-        }
-    }
-
-    if(tempOp.length != 0) {
-        var str = "";
-        tempOp.reverse();
-        while(tempVar.length !== 0) {
-            var a = tempVar.pop();
-            if(tempOp.length > 0 && tempVar.length > 0) {
-                var b = tempVar.pop();
-                str = str + b + " " + tempOp.pop() + " " + a + " ";
-            }
-            else
-                str = str + " " + tempOp.pop() + " " + a + " ";
-        }
-        tempOp.reverse();
-
-        if(tempOp.length >= 1) {
-            str = tempOp.pop() + " ( " + str + " ) ";
-        }
-
-        tempStr.push(str);
-    }
-
-
-    var finalEq = "";
-
-    for(let i = 0; i < tempStr.length; i++) {
-
-
-        if(tempStr[i].startsWith("* ") || tempStr[i].startsWith("/ ")) {
-            finalEq = " ( " + finalEq + " ) " + tempStr[i];
-        } else {
-            finalEq += tempStr[i];
-        }
-
-
-    }
-
-    finalEq = finalEq.replace("r", letter);
-    return finalEq;
-
-}

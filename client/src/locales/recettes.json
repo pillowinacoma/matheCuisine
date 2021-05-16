@@ -1,0 +1,43 @@
+{
+    "recettes": [
+        ["tempura de poulet", 10, 10, true],
+        ["tarte au citron", 20, 60, false],
+        ["cake au fruit", 20, 60, false],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        ["sushi", 40, 0, true],
+        ["ramen", 20, 40, true],
+        []
+
+
+
+    ]
+}
