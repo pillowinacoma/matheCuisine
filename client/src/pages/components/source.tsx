@@ -23,7 +23,7 @@ export const Text = ({
             height: 10,
             curveSegments: 32,
             bevelEnabled: true,
-            bevelThickness: 6,
+            bevelThickness: 1,
             bevelSize: 2.5,
             bevelOffset: 0,
             bevelSegments: 8,
@@ -76,7 +76,7 @@ const Source = ({ ...props }) => {
                 />
             </a.mesh>
             {props.val !== undefined ? (
-                <Text position={[-3, 7, 0]} color="brown">
+                <Text size={0.7} position={[-3, -10, 5]} color="brown">
                     {(props?.val ?? 0) + ""}
                 </Text>
             ) : (

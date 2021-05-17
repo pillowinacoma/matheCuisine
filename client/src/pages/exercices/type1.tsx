@@ -30,13 +30,13 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const Type1 = (props: {
-    params: any,
-    gen: any,
-    setFinish: any,
-    nbError: number,
-    setNbError: any,
-    solveur: any,
-    replay: boolean
+    params: any;
+    gen: any;
+    setFinish: any;
+    nbError: number;
+    setNbError: any;
+    solveur: any;
+    replay: boolean;
 }): JSX.Element => {
     const classes = useStyle();
     const [reponse, setReponse] = React.useState<string>("");
@@ -146,49 +146,65 @@ const Type1 = (props: {
                 <React.Suspense fallback="loading">
                     <Source
                         val={1}
-                        position={[-60, -30, 0]}
+                        position={[-60, -20, 0]}
                         createElem={() => setValTable([...valTable, 1])}
                     />
                     <Source
                         val={2}
-                        position={[-40, -30, 0]}
+                        position={[-40, -20, 0]}
                         createElem={() => setValTable([...valTable, 2])}
                     />
                     <Source
                         val={5}
-                        position={[-20, -30, 0]}
+                        position={[-20, -20, 0]}
                         createElem={() => setValTable([...valTable, 5])}
                     />
                     <Source
                         val={10}
-                        position={[0, -30, 0]}
+                        position={[0, -20, 0]}
                         createElem={() => setValTable([...valTable, 10])}
                     />
                     <Source
                         val={100}
-                        position={[20, -30, 0]}
+                        position={[20, -20, 0]}
                         createElem={() => setValTable([...valTable, 100])}
                     />
                     <Source
                         val={1000}
-                        position={[50, -30, 0]}
+                        position={[50, -20, 0]}
                         createElem={() => setValTable([...valTable, 1000])}
                     />
                     <Cible
                         negative={negEntry}
-                        execute={() => {
-                            setReponse(valEntry + "");
-                            console.log(valEntry);
-                        }}
                         position={[-10, -10, -2]}
                         valEntry={Math.abs(valEntry)}
                     />
                     <Cible
                         execute={() => setNegEntry(!negEntry)}
-                        size={0.3}
-                        rotation={[0, Math.PI / 6, 0]}
-                        position={[-50, -10, -2]}
+                        size={0.5}
+                        rotation={[0, 0, 0]}
+                        position={[40, -5, -2]}
                         valEntry={"NEGATIVE"}
+                    />
+                    <Cible
+                        execute={() => {
+                            setReponse(valEntry + "");
+                            checkReponse();
+                        }}
+                        size={0.5}
+                        rotation={[0, 0, 0]}
+                        position={[40, 0, -2]}
+                        valEntry={"VALIDER"}
+                    />
+                    <Cible
+                        execute={() => {
+                            setValEntry(0);
+                            setNegEntry(false);
+                        }}
+                        size={0.5}
+                        rotation={[0, 0, 0]}
+                        position={[40, -10, -2]}
+                        valEntry={"RAZ"}
                     />
                 </React.Suspense>
             </Board>

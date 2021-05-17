@@ -22,7 +22,7 @@ const Cible = ({ ...props }) => {
         onHover: ({ hovering }) => setActive(hovering ? 1 : 0),
         onDragStart: ({ hovering }) => props?.execute(),
     });
-    if (props.valEntry)
+    if (props.valEntry !== undefined)
         return (
             //@ts-ignore
             <a.group rotation={props?.rotation ?? [0,0,0]} scale={scale} position={props.position} {...bind()}>
