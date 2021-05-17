@@ -205,17 +205,6 @@ export const Fraction = (): JSX.Element => {
                 la rendre plus compréhensible, ou meme plus facile à utiliser en
                 effectuant des calculs
             </p>
-            <ul>
-                <li>
-                    <span></span>
-                </li>
-                <li>
-                    <span>x * 3 = 3</span> <span>(5 - 2)</span>
-                </li>
-                <li>
-                    <span>x = 1</span> <span>(3 / 3)</span>
-                </li>
-            </ul>
         </div>
     );
 };

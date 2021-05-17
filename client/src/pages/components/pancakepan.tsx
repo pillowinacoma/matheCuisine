@@ -28,7 +28,7 @@ const PancakePan = ({ ...props }) => {
     const [total, setTotal] = useState(dims[1] * dims[0]);
     let mouse: { x: number; y: number };
 
-    useFrame(() => {
+    /*useFrame(() => {
         const m = bigPan.current;
 
         if (m && mouse) {
@@ -37,7 +37,7 @@ const PancakePan = ({ ...props }) => {
                 -pi / 6 + (mouse.y - coords.y / 2) / 300 / pi + pi / 2;
             m.rotation.z = (mouse.x - coords.x / 2) * 0.0005;
         }
-    });
+    });*/
 
     useEffect(() => {
         if(props.setFlipped != undefined) props.setFlipped(flipped);
