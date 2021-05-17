@@ -3,6 +3,8 @@ import Board from '../components/board';
 import BackgroundImage from '../components/bgImage';
 import PancakePan from '../components/pancakepan';
 import pancakeImg from "../../img/pancakes.jpg";
+import { computeHeadingLevel } from '@testing-library/react';
+import { makeStyles } from '@material-ui/core';
 
 const countDecimals = (value: number) => {
     if (Math.floor(value) !== value)
@@ -10,13 +12,33 @@ const countDecimals = (value: number) => {
     return 0;
 }
 
+const useStyle = makeStyles((theme) => ({
+    hour: {
+        fontSize: 40,
+        marginBottom: 30,
+    },
+    problem: {
+        color: "black",
+        position: "absolute",
+        width: 400,
+        marginLeft: 40,
+        padding: 10,
+        border: "5px solid #D35400 ",
+        backgroundColor: "#EDBB99",
+        borderRadius: 20,
+    },
+    valid: {},
+    validIcon: {},
+}));
+
 const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any, replay: boolean})  : JSX.Element => {
     const [flipped, setFlipped] = React.useState(0);
     const [denom, setDenom] = React.useState<number>(0);
     const [nom, setNom] = React.useState<number>(0);
     const [newDenom, setNewDenom] = React.useState<number>(0);
     const [first, setFirst] = React.useState(-1);
-    
+    const classes = useStyle();
+
     React.useEffect(() => {
         var [denomR, denom, nom] = props.gen();
         setDenom(denom);
@@ -31,7 +53,8 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
             f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
         }
-
+        console.log("denombase: ", denom);
+        console.log("nom :", nom);
         console.log("denom :", denomR);
         console.log("other:", f);
 
@@ -52,7 +75,10 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 
     return (
         <div>
-     
+            <div className={classes.problem}>
+                <p>Vos clients vous demande de leur préparé {newDenom} pancakes.</p>
+                <p>L'équivalent de <strong>{nom} / {denom}</strong> des pancakes sont prêt dépéché vous de les retourner !</p>
+            </div>
 
             <Board camera={{ position: [0, 0, 50] }}>
                 <React.Suspense fallback={() => <h1>Loading</h1>}>
