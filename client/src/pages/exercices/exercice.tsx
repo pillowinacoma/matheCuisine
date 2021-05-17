@@ -47,10 +47,9 @@ export const translationRpn = (rpn: any[], letter: string) => {
                 
                 if(tempOp.length != 0) {
                     var str = "";
-                   // if(tempVar.length > 1 || tempOp.length > tempVar.length)
-                    //    str += " ( ";
+                    /*if(tempVar.length > 1 || tempOp.length > tempVar.length)
+                        str += " ( ";*/
                     tempOp.reverse();
-              
                     while(tempVar.length !== 0) {
                         var a = tempVar.pop();
                         if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
@@ -60,9 +59,10 @@ export const translationRpn = (rpn: any[], letter: string) => {
                         }
                         else {
                             if((tempOp[tempOp.length - 1] == "*" || tempOp[tempOp.length - 1] == "*") && str != "") str = " ( " + str + " ) ";
-                            str = str + " " + tempOp.pop() + " " + a + " ";
+                                str = str + " " + tempOp.pop() + " " + a + " ";
                         }
                     }
+                    z = 0;
                     tempOp.reverse();
                     
                     if(tempOp.length >= 1) {
@@ -80,10 +80,6 @@ export const translationRpn = (rpn: any[], letter: string) => {
                 tempOp.push(rpn[i]);
             }
 
-
-
-        // console.log(translation);
-        //  console.log(i)
         }
     }
 
@@ -136,7 +132,6 @@ export const selectOp = (notions: string[]) => {
 
     newTable = newTable.filter(item => item !== "fraction" && item !== "equation" && item !== "temps")
 
-    console.log("notions :" , notions)
     let choose = notions[randOp % newTable.length];
     switch (choose) {
         case "addition":
@@ -342,9 +337,11 @@ export const solveur = (rpn: any[], attemptResult: number, reponse?: number): [b
                 impossible = true;
                 break;
             }
+
             let c = calc(a,b, rpn[i]);
             tempVar.push(c);
         }
+
     }   
 
     tmpResult = tempVar[0];
@@ -393,7 +390,7 @@ export const checkResult = (rpn: any, eq: any, equation: boolean, attemptR: any,
         if(rpn != undefined ) {
             var [correct, result] = solveur(rpn, attemptR, parseFloat(reponse));
             if(equation) {
-                if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
+                if((isFinite(resultat) || isNaN(resultat))){
                     setFinish(true);
                 } else if(correct) {
                     setFinish(true);
@@ -468,7 +465,6 @@ export const solveurTime = (startTime: {hour:number, min: number},values: any[],
 
     }
 
-    console.log(endTime)
 
     return [correct, endTime];
 
@@ -696,8 +692,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
      */
     var gen = () => {};
     var solve;
-    console.log(type)
-    console.log(json[props.ex].type)
+
     switch(json[props.ex].type % 10) { 
         case 0: //equation et calcule simple avec mini jeux et qcm 
             gen = () => {
@@ -742,6 +737,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             setReplay(false);
         }
     }, [replay])
+
 
 
     const handleHelp = () => {

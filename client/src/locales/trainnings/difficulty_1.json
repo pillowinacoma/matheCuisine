@@ -54,8 +54,11 @@
         "notions": [
             "division"
         ],
-        "decimal": "yes",
-        "acceptNegatif": "no",
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 10,
         "vars": [
             1,
             1,

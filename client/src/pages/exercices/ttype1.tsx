@@ -93,6 +93,8 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
 
     const checkReponse = () => {
         checkResult(rpn, eq, equation, attemptR, resultat, reponse, props.setNbError, props.nbError, props.setFinish, setIncorrect );
+        var [correct, result] = props.solveur(rpn, attemptR, parseFloat(reponse));
+        console.log(result);
     }
 
     return (
