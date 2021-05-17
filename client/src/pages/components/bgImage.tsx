@@ -8,8 +8,8 @@ const BackgroundImage = ({ ...props }) => {
     const texture = useLoader(THREE.TextureLoader, props?.img ?? imgExample);
     return (
         <Billboard args={[0, 0]}>
-            <mesh position={[0, 0, -100]}>
-                <planeBufferGeometry attach="geometry" args={[400, 400]} />
+            <mesh position={ props?.position ?? [0, 0, -100]}>
+                <planeBufferGeometry attach="geometry" args={props?.args ?? [400, 400]} />
                 <meshBasicMaterial
                     attach="material"
                     //@ts-ignore

@@ -276,7 +276,7 @@ const ClockGroup = (props: {
     );
 };
 
-const Textee = ({
+export const Textee = ({
     children = "",
     size = 1.5,
     color = "#00ff00",
