@@ -35,7 +35,7 @@ const Lesson = () => {
 
 export default Lesson;
 
-export const Addition = () => {
+export const Addition = (): JSX.Element => {
 
     const classes = useStyle();
 
@@ -57,7 +57,7 @@ export const Addition = () => {
 }
 
 
-export const Soustraction = () => {
+export const Soustraction = (): JSX.Element => {
 
     const classes = useStyle();
 
@@ -76,7 +76,7 @@ export const Soustraction = () => {
 
 }
 
-export const Multiplication = () => {
+export const Multiplication = (): JSX.Element => {
 
     const classes = useStyle();
 
@@ -93,7 +93,7 @@ export const Multiplication = () => {
 
 }
 
-export const Division = () => {
+export const Division = (): JSX.Element => {
 
     const classes = useStyle();
 
@@ -107,7 +107,7 @@ export const Division = () => {
 
 }
 
-export const Equation = () => {
+export const Equation = (): JSX.Element => {
 
     const classes = useStyle();
 
@@ -128,7 +128,7 @@ export const Equation = () => {
 
 }
 
-export const Horraire = () => {
+export const Horraire = (): JSX.Element => {
 
     const classes = useStyle();
 

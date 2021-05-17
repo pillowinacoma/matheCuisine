@@ -17,6 +17,8 @@ import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import { TransitionProps } from '@material-ui/core/transitions/transition';
 import Help from '../components/help';
 import { LangContext } from '../../engine/translation/i18n';
+import { Horraire } from '../components/lesson';
+import { Addition, Soustraction, Multiplication, Division, Equation } from '../components/lesson';
 
 const type = [
     Type1,
@@ -467,6 +469,7 @@ export const solveurTime = (startTime: {hour:number, min: number},values: any[],
 
 const useStyle = makeStyles((theme) => ({
     gameBox: {
+        width: "100%",
         height: "calc(100vh - 64px)",
     },
     hourGlass: {
@@ -491,7 +494,7 @@ const useStyle = makeStyles((theme) => ({
     exHeader: {
         position: "relative",
         display: "flex",
-        width: "100%",
+        width: "calc(100% - 1px)",
         justifyContent: "space-between"
     },
     useLessContent: {
@@ -501,7 +504,7 @@ const useStyle = makeStyles((theme) => ({
         position: "relative",
         width: 300,
         display: "flex",
-        alignSelf: "end",
+        justifyContent: "flex-end",
     },
     exHeaderLeft: {
         position: "relative",
@@ -529,6 +532,8 @@ const useStyle = makeStyles((theme) => ({
     replayBox: {
         backgroundColor: "unset",
         top: 35,
+        height: 76,
+        marginRight: 20,
     },
     replay: {
         marginLeft: "calc(50% - 30px)",
@@ -552,9 +557,9 @@ const useStyle = makeStyles((theme) => ({
         color: "#58D68D"
     },
     helpBox: {
-        backgroundColor: "unset",
         top: 35,
-
+        height: 76,
+        backgroundColor: "unset",
         color: "whitesmoke"
     },
     helpIcon: {
@@ -575,7 +580,7 @@ const Timer = (props:{finish: boolean, replay: boolean, setNeedHelp: any}) => {
         const timer = setTimeout(() => {
             if(!props.finish) {
                 setTime(time + 0.01);
-                if(time > 10) {
+                if(time > 2) {
                     props.setNeedHelp(true);
                 }
             }
@@ -718,7 +723,37 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
                 <DialogTitle id="alert-dialog-slide-title">{translate("help")}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        
+                        {Object.entries(json[props.ex].notions).map((element) => {
+                            var notions = element[1];
+                            var Text: any ;
+                            switch(notions) {
+                                case "addition":
+                                    Text = Addition;
+                                    break;
+                                case "soustraction":
+                                    Text = Soustraction;
+                                    break;
+                                case "multiplication":
+                                    Text = Multiplication;
+                                    break;
+                                case "division":
+                                    Text = Division;
+                                    break;
+                                case "temps":
+                                    Text = Horraire;
+                                    break;
+                                case "equation":
+                                    Text = Equation;
+                                    break;
+                                default: 
+                                    Text = undefined;
+                                    break;
+                            }
+
+                            return (
+                            <div>{Text != undefined ? <Text/> : "" }</div>
+                            )
+                        })}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

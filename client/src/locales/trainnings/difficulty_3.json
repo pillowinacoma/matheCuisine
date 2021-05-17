@@ -63,7 +63,8 @@
         "notions": [
             "multiplication",
             "addition",
-            "soustraction"
+            "soustraction",
+            "equation"
         ],
         "decimal": false,
         "acceptNegatif": false,
@@ -83,7 +84,8 @@
         "difficulty": 1,
         "id": 1,
         "notions": [
-            "multiplication"
+            "multiplication",
+            "equation"
         ],
         "decimal": false,
         "acceptNegatif": false,
@@ -105,7 +107,8 @@
         "difficulty": 1,
         "id": 1,
         "notions": [
-            "addition"
+            "addition",
+            "equation"
         ],
         "decimal": false,
         "acceptNegatif": false,
@@ -126,7 +129,8 @@
         "difficulty": 1,
         "id": 1,
         "notions": [
-            "soustraction"
+            "soustraction",
+            "equation"
         ],
         "decimal": false,
         "acceptNegatif": false,
