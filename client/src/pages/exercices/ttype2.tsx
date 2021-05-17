@@ -10,6 +10,7 @@ const useStyle = makeStyles((theme) => ({
         marginBottom: 30
     },
     problem: {
+        color: "black",
         position: "absolute",
         width: 400,
         marginLeft: "20%",
@@ -44,6 +45,10 @@ const useStyle = makeStyles((theme) => ({
     },
     game: {
         color: "whitesmoke"
+    },
+    field: {
+        backgroundColor:"whitesmoke",
+        borderColor: "whitesmoke"
     }
 
 }));
@@ -114,8 +119,8 @@ const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
             </div>
             
             <div className={classes.resolution}>
-                <div className={classes.hour} >heure = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.hour) && incorrect} helperText= {isNumber(reponse.hour) && incorrect ? "Mauvaise réponse" : ""} value={reponse.hour} onChange={handleChange("hour")}/> </div>
-                <div className={classes.hour} >minute = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.min) && incorrect} helperText= {isNumber(reponse.min) && incorrect ? "Mauvaise réponse" : ""} value={reponse.min} onChange={handleChange("min")}/> </div>
+                <div className={classes.hour} >heure = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.hour) && incorrect} helperText= {isNumber(reponse.hour) && incorrect ? "Mauvaise réponse" : ""} value={reponse.hour} onChange={handleChange("hour")}  className={classes.field}/> </div>
+                <div className={classes.hour} >minute = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.min) && incorrect} helperText= {isNumber(reponse.min) && incorrect ? "Mauvaise réponse" : ""} value={reponse.min} onChange={handleChange("min")}  className={classes.field}/> </div>
                 <Button onClick={checkReponse} className={classes.valid}>
                     <CheckIcon className={classes.validIcon}/>
                     <p>Valider</p>

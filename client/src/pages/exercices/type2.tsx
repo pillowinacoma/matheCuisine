@@ -9,6 +9,7 @@ const useStyle = makeStyles((theme) => ({
         marginBottom: 30,
     },
     problem: {
+        color: "black",
         position: "absolute",
         width: 400,
         marginLeft: 40,

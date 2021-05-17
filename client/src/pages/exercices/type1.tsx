@@ -14,6 +14,7 @@ const useStyle = makeStyles((theme) => ({
         marginBottom: 30,
     },
     problem: {
+        color: "black",
         position: "absolute",
         width: "calc(100% - 80px)",
         marginLeft: 40,

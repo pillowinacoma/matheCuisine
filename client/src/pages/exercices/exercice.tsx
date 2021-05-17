@@ -527,6 +527,7 @@ const useStyle = makeStyles((theme) => ({
         marginLeft: "25%",
         marginRight: "25%",
         textAlign: "center",
+        color: "#58D68D",
         border: "5px solid #58D68D ",
         borderRadius: 15,
     },
@@ -624,6 +625,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
 
     React.useEffect(()=> {
         if(replay == true) {
+            setFinish(false);
             setReplay(false);
         }
     }, [replay])
