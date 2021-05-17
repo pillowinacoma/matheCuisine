@@ -9,7 +9,12 @@ import * as THREE from "three";
 
 const pi = Math.PI;
 
-const Text = ({ children = "", size = 1.5, color = "#00ff00", ...props }) => {
+export const Text = ({
+    children = "",
+    size = 1.5,
+    color = "#00ff00",
+    ...props
+}) => {
     const font = useLoader(THREE.FontLoader, "/fonts/bold.blob");
     const config = useMemo(
         () => ({
@@ -70,9 +75,13 @@ const Source = ({ ...props }) => {
                     attach="material"
                 />
             </a.mesh>
-            <Suspense fallback="loading">
-                <Text position={[-3, 7, 0]} color="brown">{(props?.val ?? 0) + ""}</Text>
-            </Suspense>
+            {props.val !== undefined ? (
+                <Text position={[-3, 7, 0]} color="brown">
+                    {(props?.val ?? 0) + ""}
+                </Text>
+            ) : (
+                ""
+            )}
         </a.group>
     );
 };

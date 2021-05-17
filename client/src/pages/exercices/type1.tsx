@@ -3,10 +3,13 @@ import Board from "../components/board";
 import Draggable from "../components/draggable";
 import Cible from "../components/cible";
 import Source from "../components/source";
+import { Text } from "../components/source";
 import { makeStyles } from "@material-ui/core";
 import { isNumber } from "util";
 import recette from "../../locales/recettes.json";
 import { getRandomInt } from "./exercice";
+import Droppable from "../components/droppable";
+import { Box } from "@react-three/drei";
 
 const useStyle = makeStyles((theme) => ({
     hour: {
@@ -44,6 +47,8 @@ const Type1 = (props: {
     const [letter, setLetter] = React.useState("");
     const [question, setQuestion] = React.useState<string | JSX.Element>("");
     const [valTable, setValTable] = React.useState<number[]>([]);
+    const [valEntry, setValEntry] = React.useState(0);
+    const [negEntry, setNegEntry] = React.useState(false);
 
     React.useEffect(() => {
         var [_rpn, _r, _resultat] = props.gen();
@@ -114,9 +119,13 @@ const Type1 = (props: {
         }
     };
 
-    React.useEffect(()=>{
-        console.log(valTable)
-    },[valTable])
+    React.useEffect(() => {
+        setValEntry(
+            valTable.reduce((acc, curr) => {
+                return acc + curr;
+            }, 0) * (negEntry ? -1 : 1)
+        );
+    }, [valTable, negEntry]);
 
     return (
         <div>
@@ -132,28 +141,54 @@ const Type1 = (props: {
                 )}
             </div>
             <Board camera={{ position: [0, 0, 50] }}>
-                <Source
-                    val={1}
-                    position={[-60, -30, 0]}
-                    createElem={() => setValTable([...valTable, 1])}
-                />
-                <Source
-                    val={2}
-                    position={[-40, -30, 0]}
-                    createElem={() => setValTable([...valTable, 2])}
-                />
-                <Source
-                    val={5}
-                    position={[-20, -30, 0]}
-                    createElem={() => setValTable([...valTable, 5])}
-                />
-                <Source
-                    val={10}
-                    position={[0, -30, 0]}
-                    createElem={() => setValTable([...valTable, 10])}
-                />
-
-                {valTable.map((elem) => {})}
+                <React.Suspense fallback="loading">
+                    <Source
+                        val={1}
+                        position={[-60, -30, 0]}
+                        createElem={() => setValTable([...valTable, 1])}
+                    />
+                    <Source
+                        val={2}
+                        position={[-40, -30, 0]}
+                        createElem={() => setValTable([...valTable, 2])}
+                    />
+                    <Source
+                        val={5}
+                        position={[-20, -30, 0]}
+                        createElem={() => setValTable([...valTable, 5])}
+                    />
+                    <Source
+                        val={10}
+                        position={[0, -30, 0]}
+                        createElem={() => setValTable([...valTable, 10])}
+                    />
+                    <Source
+                        val={100}
+                        position={[20, -30, 0]}
+                        createElem={() => setValTable([...valTable, 100])}
+                    />
+                    <Source
+                        val={1000}
+                        position={[50, -30, 0]}
+                        createElem={() => setValTable([...valTable, 1000])}
+                    />
+                    <Cible
+                        negative={negEntry}
+                        execute={() => {
+                            setReponse(valEntry + "");
+                            console.log(valEntry);
+                        }}
+                        position={[-10, -10, -2]}
+                        valEntry={Math.abs(valEntry)}
+                    />
+                    <Cible
+                        execute={() => setNegEntry(!negEntry)}
+                        size={0.3}
+                        rotation={[0, Math.PI / 6, 0]}
+                        position={[-50, -10, -2]}
+                        valEntry={"NEGATIVE"}
+                    />
+                </React.Suspense>
             </Board>
         </div>
     );
