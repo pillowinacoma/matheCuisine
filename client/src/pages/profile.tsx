@@ -43,8 +43,7 @@ const useStyle = makeStyles((theme) => ({
         "border-collapse": "collapse",
     },
     Cell: {
-        width: "50%",
-        textAlign: "start",
+        "text-align" : "center"
     },
     Row: {
         borderBottom: "2px solid dimgray",
@@ -55,6 +54,7 @@ const Profile = () => {
     const { translate } = React.useContext(LangContext);
     const { state } = React.useContext(UserContext);
     const classes = useStyle();
+    const exos = state.doneExos;
 
     return (
         <div className={classes.page}>
@@ -85,6 +85,19 @@ const Profile = () => {
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+                    {mockExos.map((exo) => {
+                        return (
+                            <tr className={classes.Row}>
+                                <th className={classes.Cell} colSpan={2}>{exo.id}</th>
+                                <td  className={classes.Cell} colSpan={2}>{exo.time}s</td>
+                                <td  className={classes.Cell} colSpan={2}>{exo.indices}</td>
+                                <td  className={classes.Cell} colSpan={2}>{exo.errors}</td>
+                                <td  className={classes.Cell} colSpan={2}>{exo.count}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
             </table>
         </div>
     );
