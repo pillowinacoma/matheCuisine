@@ -17,6 +17,7 @@ const useStyle = makeStyles((theme) => ({
         marginBottom: 30,
     },
     problem: {
+        color: "black",
         position: "absolute",
         width: "calc(100% - 80px)",
         marginLeft: 40,
@@ -29,12 +30,13 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const Type1 = (props: {
-    params: any;
-    gen: any;
-    setFinish: any;
-    nbError: number;
-    setNbError: any;
-    solveur: any;
+    params: any,
+    gen: any,
+    setFinish: any,
+    nbError: number,
+    setNbError: any,
+    solveur: any,
+    replay: boolean
 }): JSX.Element => {
     const classes = useStyle();
     const [reponse, setReponse] = React.useState<string>("");
@@ -69,7 +71,7 @@ const Type1 = (props: {
         const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
         setLetter(alphabet[Math.floor(Math.random() * alphabet.length)]);
-    }, []);
+    }, [props.replay]);
 
     React.useEffect(() => {
         if (rpn != undefined) {

@@ -10,6 +10,7 @@ const useStyle = makeStyles((theme) => ({
         marginBottom: 30
     },
     problem: {
+        color: "black",
         position: "absolute",
         width: 400,
         marginLeft: "20%",
@@ -41,11 +42,18 @@ const useStyle = makeStyles((theme) => ({
         position: "absolute",
         marginTop: 80,
         marginLeft: "calc(400px + 20% + 60px)",
+    },
+    game: {
+        color: "whitesmoke"
+    },
+    field: {
+        backgroundColor:"whitesmoke",
+        borderColor: "whitesmoke"
     }
 
 }));
 
-const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any}) : JSX.Element => {
+const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any, replay: boolean}) : JSX.Element => {
 
     const classes = useStyle();
     const [reponse, setReponse] = React.useState({hour: 0, min:0});
@@ -61,7 +69,7 @@ const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
         setStartTime(startTime);
         setValues(values);
 
-    }, []);
+    }, [props.replay]);
 
 
     const handleChange = (type: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +96,7 @@ const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
     }
 
     return (
-        <div>
+        <div className={classes.game}>
 
             <div className={classes.problem}>
                 <p>Vous vous lancez dans la préparation d'un repas. Vous ne savez pas encore à quel heure vous finirez. Mais vous connaissez le temps de préparation de chaqu'un de vos plat.</p>
@@ -111,8 +119,8 @@ const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
             </div>
             
             <div className={classes.resolution}>
-                <div className={classes.hour} >heure = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.hour) && incorrect} helperText= {isNumber(reponse.hour) && incorrect ? "Mauvaise réponse" : ""} value={reponse.hour} onChange={handleChange("hour")}/> </div>
-                <div className={classes.hour} >minute = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.min) && incorrect} helperText= {isNumber(reponse.min) && incorrect ? "Mauvaise réponse" : ""} value={reponse.min} onChange={handleChange("min")}/> </div>
+                <div className={classes.hour} >heure = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.hour) && incorrect} helperText= {isNumber(reponse.hour) && incorrect ? "Mauvaise réponse" : ""} value={reponse.hour} onChange={handleChange("hour")}  className={classes.field}/> </div>
+                <div className={classes.hour} >minute = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse.min) && incorrect} helperText= {isNumber(reponse.min) && incorrect ? "Mauvaise réponse" : ""} value={reponse.min} onChange={handleChange("min")}  className={classes.field}/> </div>
                 <Button onClick={checkReponse} className={classes.valid}>
                     <CheckIcon className={classes.validIcon}/>
                     <p>Valider</p>

@@ -5,6 +5,8 @@ import { UserContext } from '../engine/profile/profile';
 import classes from '*.module.css';
 import { makeStyles } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { LangContext } from '../engine/translation/i18n';
+
 const useStyle = makeStyles((theme) => ({
     bg: {
         position: "fixed",
@@ -49,13 +51,13 @@ const useStyle = makeStyles((theme) => ({
 const Layout = (props: {children: React.ReactNode | JSX.Element}): JSX.Element => {
 
     const classes = useStyle();
-
+    const {translate} = React.useContext(LangContext);
     const [sideOpen, setSideOpen] = React.useState(false);
     const { state } = React.useContext(UserContext);
     return (
         <div>
             <NavBar sideOpen={sideOpen} setSideOpen={setSideOpen}/>
-            {state.login != "" && !sideOpen ? <div className={classes.signalisation}><ArrowUpwardIcon className={classes.signIcon}/><span> Vos exercices !</span></div> : ""}
+            {state.login != "" && !sideOpen ? <div className={classes.signalisation}><ArrowUpwardIcon className={classes.signIcon}/><span> {translate("yourex")}</span></div> : ""}
             {state.login != "" ? <SideBar open={sideOpen}/> : ""}
             <div className={classes.bg}>
                     

@@ -16,5 +16,11 @@
     "difficulty": "Difficulté",
     "easy" : "facile",
     "medium" : "moyen",
-    "hard" : "dur"
+    "hard" : "dur",
+    "needHelp" : "Besoin d'aide ?",
+    "resolveComp" : "Resoudre le calcule suivant :",
+    "resolveEq": "Résoudre l'équation suivante :",
+    "reply": "Réponse",
+    "valid": "Valider",
+    "yourex": "Vos exercices !"
 }

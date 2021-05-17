@@ -9,6 +9,7 @@ const useStyle = makeStyles((theme) => ({
         marginBottom: 30,
     },
     problem: {
+        color: "black",
         position: "absolute",
         width: 400,
         marginLeft: 40,
@@ -22,12 +23,13 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const Type2 = (props: {
-    params: any;
-    gen: any;
-    setFinish: any;
-    nbError: number;
-    setNbError: any;
-    solveur: any;
+    params: any,
+    gen: any,
+    setFinish: any,
+    nbError: number,
+    setNbError: any,
+    solveur: any,
+    replay: boolean
 }): JSX.Element => {
     const classes = useStyle();
     const [reponse, setReponse] = React.useState({ hour: 0, min: 0 });
@@ -41,7 +43,7 @@ const Type2 = (props: {
         var [startTime, values, valuesUseless] = props.gen();
         setStartTime(startTime);
         setValues(values);
-    }, []);
+    }, [props.replay]);
 
     const checkReponse = () => {
         const [correct, endTime] = props.solveur(startTime, values, reponse);

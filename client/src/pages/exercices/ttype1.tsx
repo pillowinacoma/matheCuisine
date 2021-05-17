@@ -7,9 +7,9 @@ import { isNumber } from 'util';
 import { makeStyles, InputBase, TextField, Button } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { genEffect, translationRpn, checkResult } from './exercice';
+import { LangContext } from '../../engine/translation/i18n';
 
 const useStyle = makeStyles((theme) => ({
-
     equation: {
         fontWeight: 100,
         fontSize: 40,
@@ -20,6 +20,7 @@ const useStyle = makeStyles((theme) => ({
         fontWeight: 100
     },
     game: {
+        color: "whitesmoke",
         position: "relative",
         marginLeft: "20%",
         marginRight: "20%",
@@ -49,11 +50,15 @@ const useStyle = makeStyles((theme) => ({
         marginLeft: "30%",
         marginBottom: 50,
         fontSize: 40
+    },
+    field: {
+        backgroundColor:"whitesmoke",
+        borderColor: "whitesmoke"
     }
 
 }));
 
-const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any}) : JSX.Element => {
+const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any, replay: boolean}) : JSX.Element => {
 
     const classes = useStyle();
     const [reponse, setReponse] = React.useState<string>("");
@@ -65,11 +70,11 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
     const [attemptR, setAttemptR] = React.useState<number>(Infinity);
     const [incorrect, setIncorrect] = React.useState(false);
     const [letter, setLetter] = React.useState("");
-
+    const {translate} = React.useContext(LangContext);
 
     React.useEffect(() => {
         genEffect(setRpn, setAttemptR, setResultat, setEquation, setLetter, props.gen);
-    }, []);
+    }, [props.replay]);
 
 
     React.useEffect(() => {
@@ -92,15 +97,15 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
 
     return (
         <div className={classes.game}>
-            <h2 className={classes.question}>Résoudre {equation ? " l'équation à un inconnue suivante": "le calcule suivant"} :</h2>
+            <h2 className={classes.question}>{equation ? translate("resolveEq") : translate("resolveComp")} </h2>
             
-            <p className={classes.equation}>{eq} = {equation ? resultat :  <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse) && isNaN(reponse) || incorrect} helperText= {isNumber(reponse) && isNaN(reponse) ? "vous devez entrez un nombre" : incorrect ? "Mauvaise réponse" : ""} value={reponse} onChange={handleChange()}/>}</p>
+            <p className={classes.equation}>{eq} = {equation ? resultat :  <TextField id="outlined-basic" label={translate("reply")} variant="outlined" error={isNumber(reponse) && isNaN(reponse) || incorrect} helperText= {isNumber(reponse) && isNaN(reponse) ? "vous devez entrez un nombre" : incorrect ? "Mauvaise réponse" : ""} value={reponse} onChange={handleChange()}  className={classes.field}/>}</p>
 
-            {equation ? <div className={classes.varReponse} >{letter} = <TextField id="outlined-basic" label="Réponse" variant="outlined" error={isNumber(reponse) && isNaN(reponse) || incorrect} helperText= {isNumber(reponse) && isNaN(reponse) ? "vous devez entrez un nombre" : incorrect ? "Mauvaise réponse" : ""} value={reponse} onChange={handleChange()}/> </div> : ""}
+            {equation ? <div className={classes.varReponse} >{letter} = <TextField id="outlined-basic" label={translate("reply")} variant="outlined" error={isNumber(reponse) && isNaN(reponse) || incorrect} helperText= {isNumber(reponse) && isNaN(reponse) ? "vous devez entrez un nombre" : incorrect ? "Mauvaise réponse" : ""} value={reponse} onChange={handleChange()}  className={classes.field}/> </div> : ""}
 
             <Button onClick={checkReponse} className={classes.valid}>
                 <CheckIcon className={classes.validIcon}/>
-                <p>Valider</p>
+                <p>{translate("valid")}</p>
             </Button>
         </div>
     );

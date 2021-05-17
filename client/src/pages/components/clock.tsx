@@ -17,7 +17,7 @@ import { useEffect } from "react";
 
 const scale = 1;
 const pi = Math.PI;
-const cameraDistance = 5;
+const cameraDistance = 7;
 
 const Face: React.FC = (props) => {
     const radius = 2;
@@ -263,9 +263,9 @@ const ClockGroup = (props: {
             ref={group}
             rotation={[pi / 2, 0, 0]}
             scale={[scale, scale, scale]}
-            onPointerMove={(event) => {
+            /*onPointerMove={(event) => {
                 mouse = { x: event.clientX, y: event.clientY };
-            }}
+            }}*/
         >
             <Face />
             <Hand type={1} color="#eeeef0" time={props.time} />
