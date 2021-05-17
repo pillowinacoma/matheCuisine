@@ -821,7 +821,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             </Dialog>
             {finish ? <div className={classes.reussite}><SentimentVerySatisfiedIcon className={classes.satisfiedIcon}/> Vous avez trouvé la bonne réponse !</div> : ""}
 
-            <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve} replay={replay}/>
+            {finish ? "" : <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve} replay={replay}/>}
 
         </div>
     );
