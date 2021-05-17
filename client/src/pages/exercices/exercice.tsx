@@ -64,11 +64,12 @@ export const translationRpn = (rpn: any[], letter: string) => {
                         }
                     }
                     tempOp.reverse();
-                    if(str.includes(" ( "))
-                        str += " ) "
+                    
                     if(tempOp.length >= 1) {
                         str = tempOp.pop() + " ( " + str + " ) ";
                     }
+                    if(str.includes(" ( ") && !str.includes(" ) "))
+                        str += " ) "
                     tempStr.push(str);
                 }
                 tempVar.push(rpn[i]);
