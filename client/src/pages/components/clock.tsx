@@ -17,7 +17,7 @@ import { useEffect } from "react";
 
 const scale = 1;
 const pi = Math.PI;
-const cameraDistance = 3.5;
+const cameraDistance = 5;
 
 const Face: React.FC = (props) => {
     const radius = 2;

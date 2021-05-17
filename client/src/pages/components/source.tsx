@@ -27,8 +27,8 @@ const Text = ({ children = "", size = 1.5, color = "#00ff00", ...props }) => {
     );
     return (
         <a.group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
-            <a.mesh rotation={[0, 0, 0]} position={props.position}>
-                <textGeometry args={[props?.children ?? "A", config]} />
+            <a.mesh rotation={[0, 0, 0]} position={[0, 0, 0]}>
+                <textGeometry args={[children, config]} />
                 <meshStandardMaterial color={color} />
             </a.mesh>
         </a.group>
@@ -43,15 +43,16 @@ const Source = ({ ...props }) => {
     });
     const [imgX, imgY, imgZ] = props.position;
     // interpolate values from commong spring
-    const scale = spring.to([0, 1], [10, 20]);
+    const scale = spring.to([0, 1], [10, 11]);
     const positionY = spring.to([0, 1], [0, 0.5]);
-    const color = spring.to([0, 1], ["red", "red"]);
-    const opacity = spring.to([0, 1], [1, 0.5]);
+    const opacity = spring.to([0, 1], [1, 0.7]);
 
     const bind = useGesture({
         onHover: ({ hovering }) => setActive(hovering ? 1 : 0),
         onDragStart: ({ hovering }) => props?.createElem(),
     });
+
+    const texture = useLoader(THREE.TextureLoader, imgBasket);
     return (
         //@ts-ignore
         <a.group position={props.position} {...bind()}>
@@ -61,24 +62,16 @@ const Source = ({ ...props }) => {
                 scale-z={scale}
                 scale-y={scale}
             >
-                <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-                <a.meshStandardMaterial
+                <a.boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+                <a.meshBasicMaterial
+                    map={texture}
                     transparent={true}
                     opacity={opacity}
-                    roughness={0.5}
                     attach="material"
-                    color={color}
                 />
             </a.mesh>
             <Suspense fallback="loading">
-                <Text>10</Text>
-            </Suspense>
-            <Suspense fallback="loading">
-                <BackgroundImage
-                    img={imgBasket}
-                    position={[imgX, imgY, imgZ]}
-                    args={[10, 10]}
-                />
+                <Text position={[-3, 7, 0]} color="brown">{(props?.val ?? 0) + ""}</Text>
             </Suspense>
         </a.group>
     );
