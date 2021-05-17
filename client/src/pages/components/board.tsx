@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyle = makeStyles((theme) => ({
     canvas:{
         position: "absolute",
+        top: 64,
         height: "calc(100vh - 64px)",
         width: "100%"
     }
