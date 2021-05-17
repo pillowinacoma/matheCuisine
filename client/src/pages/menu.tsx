@@ -13,16 +13,29 @@ import Help from './components/help';
 import Lesson from './components/lesson';
 const useStyle = makeStyles((theme) => ({
     page: {
-        backgroundColor: "rgba(251, 238, 230, 0.85)",
+        backgroundColor: "unset",
         position: "relative",
         marginTop: 100,
         margin: "auto",
         width: "680px",
         padding: 10,
-        "backdrop-filter": "blur(4px)",
+
         "& *": {
             backgroundColor: "unset"
-        }
+        },
+
+    },       
+    bg: {
+        top: -1,
+        left: -1,
+        borderRadius: 20,
+        width: "100%",
+        zIndex: -90,
+        "box-shadow": "inset 0 0 2000px rgba(255, 255, 255, .5)",
+        position: "absolute",
+        backgroundColor: "rgba(251, 238, 230, 0.65)",
+        height: "100%",
+        "filter": "blur(1px)"
     },
     logo: {
         fontSize: 60
@@ -93,6 +106,7 @@ const Menu = () => {
 
     return (
         <Paper className={classes.page}>
+            <div className={classes.bg}></div>
             <Button className={classes.button}>
                 <Paper elevation={0} >
                     <AccountBoxIcon className={classes.logo}/>
