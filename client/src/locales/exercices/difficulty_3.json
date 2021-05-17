@@ -1,4 +1,62 @@
 {
+    "Equation-1": {
+        "type": 0,
+        "notions": [
+            "addition",
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 50,
+        "vars": [
+            1,
+            2,
+            "r",
+            1
+        ]
+    },
+    "Equation-3": {
+        "type": 0,
+        "notions": [
+            "addition",
+            "soustraction",
+            "multiplication"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 75,
+        "vars": [
+            1,
+            "r",
+            1,
+            1,
+            1
+        ]
+    },
+    "Equation-4": {
+        "type": 0,
+        "notions": [
+            "addition",
+            "soustraction",
+            "multiplication",
+            "division"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 75,
+        "vars": [
+            1,
+            "r",
+            1,
+            1
+        ]
+    },
     "Exercice 4": {
         "type": 0,
         "difficulty": 5,

@@ -32,7 +32,7 @@ export const translationRpn = (rpn: any[], letter: string) => {
     var tempVar: any[] = [];
     var tempOp: any[]  = [];
     var tempStr: string[] = [];
-
+    let z = 0;
     if(rpn !== undefined)   {
         for(let i = 0; i < rpn?.length ; i++) {
 
@@ -43,7 +43,7 @@ export const translationRpn = (rpn: any[], letter: string) => {
                    // if(tempVar.length > 1 || tempOp.length > tempVar.length)
                     //    str += " ( ";
                     tempOp.reverse();
-                    let z = 0;
+              
                     while(tempVar.length !== 0) {
                         var a = tempVar.pop();
                         if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
@@ -84,13 +84,15 @@ export const translationRpn = (rpn: any[], letter: string) => {
         tempOp.reverse();
         while(tempVar.length !== 0) {
             var a = tempVar.pop();
-            if(tempOp.length > 0 && tempVar.length > 0) {
+            if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
                 var b = tempVar.pop();
                 str = str + b + " " + tempOp.pop() + " " + a + " ";
+                z++;
             }
             else
                 str = str + " " + tempOp.pop() + " " + a + " ";
         }
+        z = 0;
         tempOp.reverse();
 
         if(tempOp.length >= 1) {
@@ -155,7 +157,7 @@ export const generator = (detail: any, difficulty: number) => {
 
     var restart = true;
 
-    var r = parseFloat((Math.random() * (maxRand + 50)).toFixed(detail.acceptFloat ? 3 : 0));
+    var r = parseFloat((Math.random() * (maxRand)).toFixed(detail.acceptFloat ? 3 : 0));
 
     while (restart) {
         restart = false;
@@ -252,10 +254,22 @@ export const generator = (detail: any, difficulty: number) => {
                 }
             }
         }
+        var [correct, resultat] = solveur(rpn, r);
+
+        if(countDecimals(resultat) > 2 || resultat == Infinity) {
+            restart = true;
+        }
+
     }
     return {rpn, r};
 };
 
+
+const countDecimals = (value: number) => {
+    if (Math.floor(value) !== value)
+        return value.toString().split(".")[1].length || 0;
+    return 0;
+}
 
 export const isOp = (elem: any) => {
 

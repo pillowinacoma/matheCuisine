@@ -4,10 +4,9 @@ import Draggable from "../components/draggable";
 import Cible from "../components/cible";
 import Source from "../components/source";
 import { makeStyles } from "@material-ui/core";
-import { isNumber } from "util";
-import recette from "../../locales/recettes.json";
-import { convertCompilerOptionsFromJson } from "typescript";
-import { useEffect } from "react";
+import { isNumber } from 'util';
+import recette from '../../locales/recettes.json';
+import { getRandomInt } from './exercice';
 
 const useStyle = makeStyles((theme) => ({
     hour: {
@@ -70,7 +69,7 @@ const Type1 = (props: {
     React.useEffect(() => {
         if (rpn != undefined) {
             setEq(translationRpn(rpn, letter));
-            setQuestion(selectQuestion(rpn, equation, "banane"));
+            setQuestion(selectQuestion(rpn, equation, resultat, letter, "banane"));
         }
     }, [letter]);
 
@@ -119,7 +118,10 @@ const Type1 = (props: {
 
     return (
         <div>
-            <div className={classes.problem}>{question}</div>
+            <div className={classes.problem}>
+                {question}
+                {equation ? <p>Trouvez <strong>{letter}</strong> ce sera la quantité dont vous aurez besoin ;).</p>: ""}
+            </div>
             <Board camera={{ position: [0, 0, 50] }}>
                 <Source
                     position={[-20, 30, 0]}
@@ -149,8 +151,13 @@ const Type1 = (props: {
 
 export default Type1;
 
-const selectQuestion = (rpn: any[], equation: boolean, model: string) => {
-    const unities = ["gramme", "kilo", ""];
+const selectQuestion = (rpn: any[], equation: boolean, resultat: number, letter: string, model: string) => {
+
+    const unities = [
+        "gramme",
+        "kilo",
+        "",
+    ];
 
     var count = 0;
 
@@ -222,24 +229,91 @@ const selectQuestion = (rpn: any[], equation: boolean, model: string) => {
                 );
                 break;
             case "*":
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{rpn[0]} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour un des éléments composant le plat, <br/> au dernier on vous préviens que vous serez plus nombreux pour le repas vous décidez alors de faire le même plat {rpn[1]} fois</p>
+                    <p>Combien vous faut t-il de {randGarniture}{rpn[0] > 1 ? "s" : ""} pour pouvoir réaliser tous vos plats ?</p>
+                </div>
                 break;
             case "/":
+                ret = <div>
+                    <p>Se soir vous n'êtes pas nombreux. Votre recette péféré semble trop copieuse vous décidez alors de diviser par <strong>{rpn[1]} les quantités</strong>.</p>
+                    <p>Votre recette, {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]}{randRecette[3] == true ? "s " : " "}, a besoin normalement de <strong>{rpn[0]} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation.</p>
+                    <p>Combien vous faut t-il de {randGarniture}{rpn[0] > 1 ? "s" : ""} pour pouvoir réaliser votre plats ?</p>
+                </div>
                 break;
         }
-    }
-
-    if (count == 2 && equation) {
-        switch (tmpOp[0]) {
+    } else if(count == 2 && equation) {
+        let randVers = Math.floor(Math.random() * 2);
+        switch(tmpOp[0]) {
             case "+":
-                question = "Vous préparé ";
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation vous en avais déjà sorti <strong>{rpn[0]}</strong></p>
+                    <p>Combien vous manque t'il de {randGarniture}s ?</p>
+                </div>
                 break;
             case "-":
+                ret = <div>
+                    <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez besoin de <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation vous en avais déjà sorti <strong>{rpn[0]}</strong></p>
+                    <p>Combien avez vous sorti de {randGarniture}s trop ?</p>
+                </div>
                 break;
             case "*":
+                if(randVers == 0) {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien devez vous multipliez le reste des ingrédients pour suivre la recette dans les même proportions ?</p>
+                    </div>
+                } else {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien avez vous multipliez la quantité ?</p>
+                    </div>
+                }
                 break;
             case "/":
+
+               
+                if(randVers == 0) {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien devez vous divisez le reste des ingrédients pour suivre la recette ?</p>
+                    </div>
+                } else {
+                    ret = <div>
+                        <p>Vous préparé {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]} vous avez sorti <strong>{resultat} {randGarniture}{rpn[0] > 1 ? "s" : ""}</strong>  pour sa réalisation mais vous en aviez besoin de <strong>{rpn[0]}</strong></p>
+                        <p>Par combien avez vous divisez la quantité ?</p>
+                    </div>
+                }
+               
                 break;
         }
+    } else {
+        let randDenom = Math.floor(Math.random() * 8);
+        const denomination = [
+            ["papa", "il"],
+            ["maman", "elle"],
+            ["grand frère", "il"],
+            ["grande soeur", "elle"],
+            ["oncle", "il"],
+            ["tante", "elle"],
+            ["grand mère", "elle"],
+            ["grand père", "il"]
+        ]
+        const smileSentences = [
+            ["C'est bien jolie ! Mais vous ne connaissez pas la recette. Qu'elle idée...", "C'est pas grave vous demandez à votre " + denomination[randDenom][0] + " de vous donnez la recette. Mais pour l'un des ingrédients " + denomination[randDenom][1] +" vous donne " +  (equation ? "cette équation" : "ce calcule :") + " compliqué à résoudre"],
+            ["Ah ah vous vous lancez dans une recette compliqué.", "Votre " + denomination[randDenom][0] + " vous a fait parvenir la recette. Mais pour trouver combien il vous faut de " + randGarniture + " " + denomination[randDenom][1] + " veut que vous resolviez " + (equation ? "cette équation" : "ce calcule :") ],
+            ["Vous êtes sur de vouloir faire cette recette ?", "Bien ! Mais je ne vais pas vous simplifiez la tache pour trouvez combien de  " + randGarniture + "s vous aurez besoin vous allez devoir faire " +  (equation ? "cette équation" : "ce calcule ") + " pour moi."]
+        ];
+        let randSmile = Math.floor(Math.random() * 3);
+        var smile = "";
+
+        console.log(rpn);
+
+        ret = <div>
+                <p>Vous voulez préparer {randRecette[3] == true ? "des " : "un/une "} {randRecette[0]}. {smileSentences[randSmile][0]}</p>
+                <p>{smileSentences[randSmile][1]}</p>
+                <p><strong>{translationRpn(rpn, letter)} = {equation ? resultat : " ? "}</strong></p>
+            </div>
     }
 
     return ret;
@@ -249,32 +323,33 @@ const translationRpn = (rpn: any[], letter: string) => {
     var tempVar: any[] = [];
     var tempOp: any[] = [];
     var tempStr: string[] = [];
+    let z = 0;
+    if(rpn !== undefined)   {
+        for(let i = 0; i < rpn?.length ; i++) {
 
-    if (rpn !== undefined) {
-        for (let i = 0; i < rpn?.length; i++) {
-            if (isNumber(rpn[i]) || rpn[i] === "r") {
-                if (tempOp.length != 0) {
+            if(isNumber(rpn[i]) || rpn[i] === "r") {
+                
+                if(tempOp.length != 0) {
                     var str = "";
                     // if(tempVar.length > 1 || tempOp.length > tempVar.length)
                     //    str += " ( ";
                     tempOp.reverse();
-                    let z = 0;
-                    while (tempVar.length !== 0) {
+
+                    while(tempVar.length !== 0) {
                         var a = tempVar.pop();
                         if (tempOp.length > 0 && tempVar.length > 0 && z == 0) {
                             var b = tempVar.pop();
                             str = str + b + " " + tempOp.pop() + " " + a + " ";
                             z++;
-                        } else {
-                            if (
-                                (tempOp[tempOp.length - 1] == "*" ||
-                                    tempOp[tempOp.length - 1] == "*") &&
-                                str != ""
-                            )
-                                str = " ( " + str + " ) ";
-                            str = str + " " + tempOp.pop() + " " + a + " ";
+                        }
+                        else {
+                            var op = tempOp.pop();
+                            console.log(a, op);
+                            if((tempOp[tempOp.length - 1] == "*" || tempOp[tempOp.length - 1] == "*") && str != "") str = " ( " + str + " ) ";
+                            str = str + " " + op + " " + a + " ";
                         }
                     }
+                    z = 0;
                     tempOp.reverse();
                     if (str.includes(" ( ")) str += " ) ";
                     if (tempOp.length >= 1) {
@@ -293,17 +368,21 @@ const translationRpn = (rpn: any[], letter: string) => {
             //  console.log(i)
         }
     }
-
-    if (tempOp.length != 0) {
+    if(tempOp.length != 0) {
         var str = "";
         tempOp.reverse();
         while (tempVar.length !== 0) {
             var a = tempVar.pop();
-            if (tempOp.length > 0 && tempVar.length > 0) {
+            if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
                 var b = tempVar.pop();
                 str = str + b + " " + tempOp.pop() + " " + a + " ";
-            } else str = str + " " + tempOp.pop() + " " + a + " ";
+                z++
+            }
+            else {
+                str = str + " " + tempOp.pop() + " " + a + " ";
+            }
         }
+        z = 0;
         tempOp.reverse();
 
         if (tempOp.length >= 1) {
