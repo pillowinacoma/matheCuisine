@@ -14,6 +14,7 @@ import { Suspense } from "react";
 import { a, useSpring } from "@react-spring/three";
 import { Text } from "@react-three/drei";
 import { useEffect } from "react";
+import Cible from "../components/cible";
 
 const scale = 1;
 const pi = Math.PI;
@@ -328,6 +329,8 @@ const Clock = (props: {
     time: { hour: number; min: number };
     setResponse: any;
     setClicked: any;
+    valider: any;
+    active: boolean;
 }) => {
     let [time, setTime] = useState<Date>(new Date());
 
@@ -347,6 +350,15 @@ const Clock = (props: {
                         setClicked={props.setClicked}
                         speed={5}
                     />
+                    {(!props.active) ? (
+                        <Cible
+                            execute={() => props.valider()}
+                            size={0.05}
+                            rotation={[0, 0, 0]}
+                            position={[-0.9, -3, 0]}
+                            valEntry={"VALIDER"}
+                        />
+                    ) : null}
                 </Suspense>
             </Board>
         </Fragment>
