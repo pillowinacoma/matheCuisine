@@ -127,5 +127,12 @@
             1,
             4
         ]
+    },
+    "Fraction-1": {
+        "type": 2,
+        "notions":[
+            
+        ],
+        "denominateurMax": 30
     }
 }

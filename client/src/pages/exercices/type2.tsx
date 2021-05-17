@@ -55,11 +55,6 @@ const Type2 = (props: {
         }
     };
 
-    useEffect(()=>{
-        if(clicked){
-            console.log("clicked")
-        }
-    }, [clicked])
 
     return (
         <div>

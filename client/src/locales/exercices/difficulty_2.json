@@ -248,14 +248,15 @@
     },
     "Exercice-3": {
         "type": 0,
-        "difficulty": 5,
-        "id": 1,
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 50,
         "notions": [
             "addition",
             "multiplication"
         ],
-        "decimal": "yes",
-        "acceptNegatif": "no",
         "vars": [
             1,
             1,
@@ -263,5 +264,12 @@
         ],
         "coef": 2,
         "result": 100
+    },
+    "Fraction-1": {
+        "type": 2,
+        "notions":[
+
+        ],
+        "denominateurMax": 30
     }
 }

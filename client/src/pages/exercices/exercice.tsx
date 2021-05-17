@@ -465,6 +465,54 @@ export const solveurTime = (startTime: {hour:number, min: number},values: any[],
 
 }
 
+/** Type 3 */
+
+const genFract = (detail: any) => {
+
+
+    //BASEDENOM est le dénominateur de départ on donne à rechercher a l'utilisateur son dénominateur
+    var denomR = getRandomInt(detail.denominateurMax) ;
+ 
+
+
+
+    //DENOM est le denominateur donnez a l'utilisateur
+    var denom = getRandomInt(detail.denominateurMax);
+    var nom = getRandomInt(denom - 1);
+
+
+    var [correct, result] = solveurFraction(denom, nom, denomR);
+
+    while(denom == 0 || denomR == 0 || countDecimals(result) != 0) {
+        denomR = getRandomInt(detail.denominateurMax);
+        denom = getRandomInt(detail.denominateurMax);
+        nom = getRandomInt(denom - 1);
+        [correct, result] = solveurFraction(denom,nom,denomR);
+    }
+    
+
+
+    return {denomR, nom, denom};
+
+
+}
+
+const solveurFraction = (denom: number, nom: number, denomR: number, nomR?: number): [boolean, number] => {
+
+    var correct = false;
+    var coef = denomR / denom;
+
+    var result = nom * coef;
+
+    if(nomR != undefined && result == nomR ) {
+        correct = true;
+    }
+
+
+    return [correct, result];
+
+}
+
 /** Loader pour exercice */
 
 const useStyle = makeStyles((theme) => ({
@@ -660,7 +708,13 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             };
             solve = solveurTime;
             break;
-        case 2: // convertion avec mini jeux et qcm
+        case 2: // fraction avec mini jeux et qcm
+            gen = () => {
+                var {denomR, denom, nom} = genFract(json[props.ex]);
+
+                return [denomR, denom, nom];
+            }
+            solve = solveurFraction;
             break;
         default:
             break;

@@ -40,7 +40,7 @@ const PancakePan = ({ ...props }) => {
     });
 
     useEffect(() => {
-        console.log(`flipped : ${flipped} / ${total}`);
+        if(props.setFlipped != undefined) props.setFlipped(flipped);
     }, [flipped]);
 
     const increment = (entry: number) => setFlipped(entry + 1);
@@ -52,9 +52,9 @@ const PancakePan = ({ ...props }) => {
             ref={bigPan}
             rotation={props?.rotation ?? [pi / 3, 0, 0]}
             position={[pos[0], pos[1], 0]}
-            onPointerMove={(event) => {
+           /* onPointerMove={(event) => {
                 mouse = { x: event.clientX, y: event.clientY };
-            }}
+            }}*/
         >
             <Paquet
                 center={[0, 0, 0]}
