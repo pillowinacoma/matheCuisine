@@ -43,7 +43,7 @@ const useStyle = makeStyles((theme) => ({
         "border-collapse": "collapse",
     },
     Cell: {
-        "text-align" : "center"
+        "text-align": "center",
     },
     Row: {
         borderBottom: "2px solid dimgray",
@@ -55,50 +55,82 @@ const Profile = () => {
     const { state } = React.useContext(UserContext);
     const classes = useStyle();
     const exos = state.doneExos;
+    console.log(state);
 
     return (
         <div className={classes.page}>
             <div className={classes.glass}></div>
             <h1>Bonjour {state.login} </h1>
-            <h3>Voici votre profile</h3>
-            <p>
-                Vous trouverez si dessous les exercices que vousavez réalisé
-                avec quelques de details
-            </p>
-            <table className={classes.table}>
-                <thead>
-                    <tr>
-                        <th colSpan={2}>
-                            <h5>Id</h5>
-                        </th>
-                        <th colSpan={2}>
-                            <h5>Temps</h5>
-                        </th>
-                        <th colSpan={2}>
-                            <h5>Indices utilisés</h5>
-                        </th>
-                        <th colSpan={2}>
-                            <h5>Nombres d'erreur</h5>
-                        </th>
-                        <th colSpan={2}>
-                            <h5>Répétitions</h5>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {mockExos.map((exo) => {
-                        return (
-                            <tr className={classes.Row}>
-                                <th className={classes.Cell} colSpan={2}>{exo.id}</th>
-                                <td  className={classes.Cell} colSpan={2}>{exo.time}s</td>
-                                <td  className={classes.Cell} colSpan={2}>{exo.indices}</td>
-                                <td  className={classes.Cell} colSpan={2}>{exo.errors}</td>
-                                <td  className={classes.Cell} colSpan={2}>{exo.count}</td>
+            {exos.length !== 0 ? (
+                <>
+                    <h3>Voici votre profile</h3>
+                    <p>
+                        Vous trouverez si dessous les exercices que vousavez
+                        réalisé avec quelques de details
+                    </p>
+                    <table className={classes.table}>
+                        <thead>
+                            <tr>
+                                <th colSpan={2}>
+                                    <h5>Id</h5>
+                                </th>
+                                <th colSpan={2}>
+                                    <h5>Temps moyen</h5>
+                                </th>
+                                <th colSpan={2}>
+                                    <h5>Indices utilisés (moyenne)</h5>
+                                </th>
+                                <th colSpan={2}>
+                                    <h5>Nombres d'erreur</h5>
+                                </th>
+                                <th colSpan={2}>
+                                    <h5>Répétitions</h5>
+                                </th>
                             </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {state.doneExos.map((exo) => {
+                                return (
+                                    <tr className={classes.Row}>
+                                        <th
+                                            className={classes.Cell}
+                                            colSpan={2}
+                                        >
+                                            {exo.id}
+                                        </th>
+                                        <td
+                                            className={classes.Cell}
+                                            colSpan={2}
+                                        >
+                                            {exo.time.toFixed(2)}s
+                                        </td>
+                                        <td
+                                            className={classes.Cell}
+                                            colSpan={2}
+                                        >
+                                            {exo.indices}
+                                        </td>
+                                        <td
+                                            className={classes.Cell}
+                                            colSpan={2}
+                                        >
+                                            {exo.errors}
+                                        </td>
+                                        <td
+                                            className={classes.Cell}
+                                            colSpan={2}
+                                        >
+                                            {exo.count}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </>
+            ) : (
+                <h3>Vous n'avez pas encore réalisé d'exercices</h3>
+            )}
         </div>
     );
 };
