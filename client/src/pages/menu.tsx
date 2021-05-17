@@ -107,11 +107,10 @@ const Menu = () => {
     return (
         <Paper className={classes.page}>
             <div className={classes.bg}></div>
-            <Button className={classes.button}>
+            <Button className={classes.button} component={Link} to="/profile">
                 <Paper elevation={0} >
                     <AccountBoxIcon className={classes.logo}/>
                     <h2>Profile</h2>
-                    <span>progression</span>
                 </Paper>
             </Button>
             <a href="https://fr.wikibooks.org/wiki/Catégorie:Recettes_de_cuisine_par_ingrédient" rel="noreferrer" target="_blank" className={classes.nodeco}>
