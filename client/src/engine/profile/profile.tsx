@@ -67,9 +67,9 @@ const User: React.FC<UserStateProps> = ({ children }) => {
 
         if(exo != undefined) {
 
-            exo.time = ((exo.time * exo.count) + time) / (exo.count) + 1;
-            exo.indices = ((exo.indices * exo.count) + indices) / (exo.count) + 1;
-            exo.errors = ((exo.errors * exo.count) + errors) / (exo.count) + 1;
+            exo.time = ((exo.time * exo.count) + time) / ((exo.count) + 1);
+            exo.indices = ((exo.indices * exo.count) + indices) / ((exo.count) + 1);
+            exo.errors = ((exo.errors * exo.count) + errors) / ((exo.count) + 1);
             exo.count++;
 
             let exos = state.doneExos.filter((exo) => exo.id !== exoId);

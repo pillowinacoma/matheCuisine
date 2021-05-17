@@ -747,6 +747,7 @@ const Exercice = (props: {
     React.useEffect(() => {
         if (replay) {
             setNbIndice(0);
+            setNbError(0);
             setNeedHelp(false);
             setFinish(false);
             setReplay(false);
@@ -764,6 +765,8 @@ const Exercice = (props: {
             } else {
                 addExo(props.ex, time, nbIndice, nbError);
             }
+
+            console.log(state.doneExos);
 
         }
     }, [finish])
