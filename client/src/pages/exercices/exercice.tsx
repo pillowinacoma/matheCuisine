@@ -35,6 +35,7 @@ import {
     Equation,
     Fraction,
 } from "../components/lesson";
+import { UserContext } from "../../engine/profile/profile";
 
 const type = [Type1, Type2, Type3];
 
@@ -637,27 +638,28 @@ const Timer = (props: {
     finish: boolean;
     replay: boolean;
     setNeedHelp: any;
+    time: number;
+    setTime: any;
 }) => {
-    const [time, setTime] = React.useState(0.0);
 
     React.useEffect(() => {
-        setTime(0);
+        props.setTime(0);
     }, [props.replay]);
 
     React.useEffect(() => {
         const timer = setTimeout(() => {
             if (!props.finish) {
-                setTime(time + 0.01);
-                if (time > 10) {
+                props.setTime(props.time + 0.01);
+                if (props.time > 10) {
                     props.setNeedHelp(true);
                 }
             }
         }, 10);
 
         return () => clearTimeout(timer);
-    }, [time]);
+    }, [props.time]);
 
-    return <p>{time.toFixed(2)}</p>;
+    return <p>{props.time.toFixed(2)}</p>;
 };
 
 const Transition = React.forwardRef(function Transition(
@@ -675,8 +677,10 @@ const Exercice = (props: {
     const classes = useStyle();
     var json: any;
     const { translate } = React.useContext(LangContext);
+    const { state, addExo, updateExo } = React.useContext(UserContext);
     const [finish, setFinish] = React.useState(false);
 
+    const [time, setTime] = React.useState(0);
     const [nbError, setNbError] = React.useState(0);
     const [nbIndice, setNbIndice] = React.useState(0);
 
@@ -749,6 +753,21 @@ const Exercice = (props: {
         }
     }, [replay]);
 
+    React.useEffect(() => {
+        if(finish) {
+
+            let exos = state.doneExos.filter((exo) => exo.id === props.ex);
+
+
+            if(exos.length !== 0) {
+                updateExo(props.ex, time, nbIndice, nbError);
+            } else {
+                addExo(props.ex, time, nbIndice, nbError);
+            }
+
+        }
+    }, [finish])
+
 
     const handleHelp = () => {
         if (!openHelp) setNbIndice(nbIndice + 1);
@@ -774,6 +793,8 @@ const Exercice = (props: {
                             finish={finish}
                             replay={replay}
                             setNeedHelp={setNeedHelp}
+                            time={time}
+                            setTime={setTime}
                         />
                     </div>
                 </div>
