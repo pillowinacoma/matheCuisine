@@ -609,10 +609,10 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
     return (
         <div className={classes.gameBox}>
             <div className={classes.exHeader}>
-                <div>
+                {/*<div>
                     <EmojiObjectsIcon className={classes.indice}/>
                     <p>{nbIndice}</p>
-                </div>
+                </div>*/}
                 <div>
                     <CancelIcon className={classes.cancel} />
                     <p>{nbError}</p>

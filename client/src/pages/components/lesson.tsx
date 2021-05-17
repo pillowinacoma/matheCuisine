@@ -25,7 +25,6 @@ const Lesson = () => {
             <Multiplication/>
             <Division/>
             <h1>Plus avancé</h1>
-            <Conversion/>
             <Horraire/>
             <Equation/>
 
@@ -84,7 +83,11 @@ export const Multiplication = () => {
     return (
         <div>
             <h2>Multiplication</h2>
-            <p></p>
+            <p>Il s'agit ici de résoudre des calcules de la forme <strong>2 * 4</strong></p>
+            <p>pour cela il faut connaitre ses tables de multiplication ou encore connaitre une méthode simple quoi que plus longue pour y résoudre.</p>
+            <p>La méthode longue consiste simplement à prendre l'un des chiffre (le plus grand de préférence) et de l'additionner à lui même autant de fois que le second nombre nous le demande.</p>
+            <p>On aura par exemple pour <strong>2 * 4</strong> : 4 + 4 = 8</p>
+            <p>et pour <strong>3 * 6</strong> : 6 + 6 + 6 = <strong>18</strong></p>
         </div>
     );
 
@@ -97,21 +100,8 @@ export const Division = () => {
     return (
         <div>
             <h2>Division</h2>
-            <p></p>
-        </div>
-    );
-
-}
-
-
-export const Conversion = () => {
-
-    const classes = useStyle();
-
-    return (
-        <div>
-            <h2>Convertion</h2>
-            <p></p>
+            <p>Nous cherchons à résoudre des calcules de la forme <strong>8 / 2</strong></p>
+            <p>il faut tous simplement séparer huit en 2 par égale et donc la taille de ses part sera le résultat. Ici : <strong>4</strong></p>
         </div>
     );
 
@@ -124,7 +114,15 @@ export const Equation = () => {
     return (
         <div>
             <h2>Equation</h2>
-            <p></p>
+            <p>Le but d'une équation est de rechercher un inconnue pour cela il faudra savoir se servir correctement des opération vu avant.</p>
+            <p>On cherche à trouver <strong>x</strong> dans : <strong>2 + x * 3 = 5</strong></p>
+            <p>Lors de la résolution pour trouver <strong>x</strong> il faut vien faire attention aux priorité.</p>
+            <p>Par exemple ici une façon de résoudre serait:</p>
+            <ul>
+                <li><span>2 + x * 3 = 5</span> </li>
+                <li><span>x * 3 = 3</span> <span>(5 - 2)</span></li>
+                <li><span>x = 1</span> <span>(3 / 3)</span></li>
+            </ul>
         </div>
     );
 
@@ -137,7 +135,14 @@ export const Horraire = () => {
     return (
         <div>
             <h2>Calcule avec les heures</h2>
-            <p></p>
+            <p>Le calcule avec les horraire n'est pas forcément évident au début.</p>
+            <p>Il y a quelque régles à retenir :</p>
+            <ul>
+                <li>dans une journée il y a 24 heures</li>
+                <li>dans une heure il y a 60 minutes</li>
+                <li>dans une minute il y a 60 secondes</li>
+            </ul>
+            <p>On comprend donc que lorsque l'on veut convertir 120 secondes, par exemples, on divise 120 par 60 ce qui nous donne 2. Donc 2 minutes</p>.
         </div>
     );
 

@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import { UserContext } from '../engine/profile/profile';
 import classes from '*.module.css';
 import { makeStyles } from '@material-ui/core';
-
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 const useStyle = makeStyles((theme) => ({
     bg: {
         position: "fixed",
@@ -27,6 +27,22 @@ const useStyle = makeStyles((theme) => ({
         minHeight: "100vh",
         "filter": "blur(8px)",
         "-webkit-filter": "blur(8px)"
+    },
+    signalisation: {
+        position: "absolute",
+        marginTop: 10,
+        display: "flex",
+        fontSize: 30,
+        fontWeight: 600,
+        color: "whitesmoke",
+        "& span": {
+            marginLeft: 10,
+            marginTop: 10,
+        }
+    },
+    signIcon: {
+        marginLeft: 10,
+        fontSize: 50
     }
 }));
 
@@ -39,6 +55,7 @@ const Layout = (props: {children: React.ReactNode | JSX.Element}): JSX.Element =
     return (
         <div>
             <NavBar sideOpen={sideOpen} setSideOpen={setSideOpen}/>
+            {state.login != "" && !sideOpen ? <div className={classes.signalisation}><ArrowUpwardIcon className={classes.signIcon}/><span> Vos exercices !</span></div> : ""}
             {state.login != "" ? <SideBar open={sideOpen}/> : ""}
             <div className={classes.bg}>
                     
