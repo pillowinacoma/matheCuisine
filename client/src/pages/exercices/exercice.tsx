@@ -483,17 +483,19 @@ const useStyle = makeStyles((theme) => ({
         color: "#CB4335",
     },
     exHeader: {
+        
         position: "relative",
         display: "flex",
         width: 500,
         marginLeft: "calc(50% - 250px)",
         "& div": {
+            backgroundColor: "rgba(251, 238, 230, 0.65)",
             margin: "auto",
             marginTop: 25,
             marginBottom: 25,
             width: 150,
             height: 100,
-            border: "2px solid dimgray",
+            border: "2px solid rgba(251, 238, 230, 0.85)",
             borderRadius: 10,
             "& p": {
                 width: "50%",
