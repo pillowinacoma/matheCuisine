@@ -3,10 +3,8 @@ import React from 'react'
 export enum ActionType {
     SET_LOGIN = "SET_LOGIN",
     GET_LOGIN = "GET_LOGIN",
-    GET_SCORE = "GET_SCODE",
-    PLUS_SCORE = "PLUS_SCORE",
-    MINUS_SCORE = "MINUS_SCORE",
     ADD_EXO = "ADD_EXO",
+    UPDATE_EXO = "UPDATE_EXO",
     GET_EXOS = "GET_EXOS",
     DELETE_LOGIN = "DELETE_LOGIN"
 }
@@ -14,15 +12,17 @@ export enum ActionType {
 export interface UserState {
     login: string,
     score: number,
-    doneExos: Array<Exo>
+    doneExos: Exo[]
     //type : string,
     //profile : Profile
 }
 
 export interface Exo {
-    id: number,
+    id: string,
+    count: number,
     time: number, // time en ms
-    score: number //score obtenue
+    indices: number,
+    errors: number
 }
 
 export interface UserStateProps {
@@ -36,10 +36,8 @@ export interface UserAction {
 
 export interface ContextProps {
     state: UserState;
-    //dispatch : (payload : UserState) => any|null|undefined
     setLogin: (login: string) => void;
     deleteLogin: () => void;
-    plusScore: (pointsToAdd: number) => number;
-    minusScore: (opintsToAbduct: number) => number;
-    addExo: (exerciceToAdd: Exo) => Array<Exo>;
+    addExo: (exoId: string, time: number, indices: number, errors: number) => void;
+    updateExo: (exoId: string, time: number, indices: number, errors: number) => void;
 }

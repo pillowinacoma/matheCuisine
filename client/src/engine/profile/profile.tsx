@@ -5,12 +5,13 @@ const userReducer = (state: UserState, action: UserAction) => {
     switch (action.type) {
         case ActionType.SET_LOGIN:
             return {...state, login : action.payload.login};
-        case ActionType.PLUS_SCORE:
-            return {...state, score : state.score + action.payload.score}
-        case ActionType.MINUS_SCORE:
-            return {...state, score : state.score - action.payload.score}
         case ActionType.ADD_EXO:
             return {...state, doneExos : state.doneExos.concat(action.payload.doneExos)}
+        case ActionType.UPDATE_EXO:
+            return {
+                ...state,
+                doneExos: action.payload.doneExos
+            };
         case ActionType.DELETE_LOGIN:
             return action.payload;
         default:
@@ -47,41 +48,45 @@ const User: React.FC<UserStateProps> = ({ children }) => {
         localStorage.removeItem('user');
     }
 
-    const plusScore = (scoreToAdd : number) => {
-        const initScoreUser = {...initialUser, score : scoreToAdd};
+    const addExo = (exoId: string, time: number, indices: number, errors: number) => {
+        let exo = {id: exoId, count: 1, time: time, indices: indices, errors: errors};
+        const initExoUser = {...initialUser, doneExos : [exo]};
 
         dispatch({
-            type : ActionType.PLUS_SCORE,
-            payload : initScoreUser
-        })
-
-        return initScoreUser.score + initialUser.score;
-    }
-
-    const minusScore = (scoreToAdd : number) => {
-        const initScoreUser = {...initialUser, score : scoreToAdd};
-
-        dispatch({
-            type : ActionType.PLUS_SCORE,
-            payload : initScoreUser
-        })
-
-        return - initScoreUser.score + initialUser.score;
-    }
-
-    const addExo = (exerciceToAdd : Exo) => {
-        const initExoUser = {...initialUser, doneExos : [exerciceToAdd]};
-
-        dispatch({
-            type : ActionType.PLUS_SCORE,
+            type : ActionType.ADD_EXO,
             payload : initExoUser
         })
 
-        return initialUser.doneExos.concat(initExoUser.doneExos);
+    }
+
+    const updateExo = (exoId: string, time: number, indices: number, errors: number) => {
+
+        let tmp = state.doneExos.filter((exo) => exo.id === exoId);
+
+        let exo = tmp[0];
+
+        if(exo != undefined) {
+
+            exo.time = ((exo.time * exo.count) + time) / (exo.count) + 1;
+            exo.indices = ((exo.indices * exo.count) + indices) / (exo.count) + 1;
+            exo.errors = ((exo.errors * exo.count) + errors) / (exo.count) + 1;
+            exo.count++;
+
+            let exos = state.doneExos.filter((exo) => exo.id !== exoId);
+
+            exos.push(exo);
+            let initExoUser = {...initialUser, doneExos : exos};
+            dispatch({
+                type: ActionType.UPDATE_EXO,
+                payload: initExoUser
+            });
+
+        }
+
     }
 
     return (
-        <UserContext.Provider value={{ state, setLogin, plusScore, minusScore, addExo, deleteLogin}}>
+        <UserContext.Provider value={{ state, setLogin, addExo, updateExo ,deleteLogin}}>
             {children}
         </UserContext.Provider>
     );
