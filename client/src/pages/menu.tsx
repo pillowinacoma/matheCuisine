@@ -107,7 +107,7 @@ const Menu = () => {
     return (
         <Paper className={classes.page}>
             <div className={classes.bg}></div>
-            <Button className={classes.button}>
+            <Button className={classes.button} disabled>
                 <Paper elevation={0} >
                     <AccountBoxIcon className={classes.logo}/>
                     <h2>Profile</h2>

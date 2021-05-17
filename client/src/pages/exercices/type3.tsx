@@ -24,12 +24,16 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
         setNom(nom);
         setNewDenom(denomR);
 
-        let f = Math.floor(Math.random() * (denom - 1));
+        let f = Math.floor(Math.random() * (denom - 1)) + 1;
+
         while( countDecimals(denom/f) != 0  ) {
 
-            f = Math.floor(Math.random() * (denom - 1));
+            f = Math.floor(Math.random() * (denom - 1)) + 1;
 
         }
+
+        console.log("denom :", denom);
+        console.log("other:", f);
 
         setFirst(f);
 
@@ -52,11 +56,8 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
                 <React.Suspense fallback={() => <h1>Loading</h1>}>
                     <BackgroundImage img={pancakeImg}/>
                 </React.Suspense>
-                <PancakePan dimensions={[(denom-first), first]} setFlipped={setFlipped}/>
+                <PancakePan dimensions={[(denom/first), first]} setFlipped={setFlipped}/>
             </Board>
-
-
-
         </div>
     );
 }
