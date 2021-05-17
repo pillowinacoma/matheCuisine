@@ -23,18 +23,18 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const Type2 = (props: {
-    params: any,
-    gen: any,
-    setFinish: any,
-    nbError: number,
-    setNbError: any,
-    solveur: any,
-    replay: boolean
+    params: any;
+    gen: any;
+    setFinish: any;
+    nbError: number;
+    setNbError: any;
+    solveur: any;
+    replay: boolean;
 }): JSX.Element => {
     const classes = useStyle();
     const [reponse, setReponse] = React.useState({ hour: 0, min: 0 });
     const [incorrect, setIncorrect] = React.useState(false);
-    const [clicked, setClicked] = React.useState(false);
+    const [active, setActive] = React.useState(false);
 
     const [startTime, setStartTime] = React.useState({ hour: 0, min: 0 });
     const [values, setValues] = React.useState([]);
@@ -55,6 +55,15 @@ const Type2 = (props: {
         }
     };
 
+<<<<<<< HEAD
+=======
+    useEffect(() => {
+        console.log("clicked", active);
+    }, [active]);
+    useEffect(() => {
+        console.log("reponse", reponse);
+    }, [reponse]);
+>>>>>>> a40d568c5c958fb52e3ec4531112b6e0defc1ed0
 
     return (
         <div>
@@ -77,20 +86,35 @@ const Type2 = (props: {
                 </p>
                 <p>Trouvez l'heure à laquelle vous finirez de cusinez.</p>
                 <ul>
-                {Object.entries(values).map((values) => {
-                    
-                    console.log(values[1]);
-                    let cook = values[1][0];
+                    {Object.entries(values).map((values) => {
+                        console.log(values[1]);
+                        let cook = values[1][0];
 
-                    return (
-                        <li>
-                            <p>Il vous faudra <strong>{values[1][1]} minutes</strong> pour préparer {values[1][3] ? "vos" : "votre"} {cook} {values[1][2] != 0 ? <span>et <strong>{values[1][2]} minutes</strong> pour la cuisson</span> : ""}</p>
-                        </li>
-                    )
-                })}
+                        return (
+                            <li>
+                                <p>
+                                    Il vous faudra{" "}
+                                    <strong>{values[1][1]} minutes</strong> pour
+                                    préparer {values[1][3] ? "vos" : "votre"}{" "}
+                                    {cook}{" "}
+                                    {values[1][2] != 0 ? (
+                                        <span>
+                                            et{" "}
+                                            <strong>
+                                                {values[1][2]} minutes
+                                            </strong>{" "}
+                                            pour la cuisson
+                                        </span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </p>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
-            <Clock time={startTime} setResponse={setReponse} setClicked={setClicked}/>
+            <Clock time={startTime} setResponse={setReponse} setClicked={setActive} valider={checkReponse} active={active}/>
         </div>
     );
 };
