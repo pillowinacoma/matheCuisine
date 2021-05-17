@@ -6,6 +6,7 @@ import pancakeImg from "../../img/pancakes.jpg";
 import Cible from "../components/cible";
 import { computeHeadingLevel } from '@testing-library/react';
 import { makeStyles } from '@material-ui/core';
+import { OrbitControls } from "@react-three/drei";
 
 const countDecimals = (value: number) => {
     if (Math.floor(value) !== value)
@@ -90,6 +91,7 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
                     />
                 </React.Suspense>
                 <PancakePan dimensions={[(newDenom/first), first]} setFlipped={setFlipped}/>
+                <OrbitControls/>
             </Board>
         </div>
     );
