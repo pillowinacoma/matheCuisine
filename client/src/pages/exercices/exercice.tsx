@@ -2,7 +2,7 @@ import * as React from 'react';
 import TType1 from './ttype1';
 import TType2 from './ttype2';
 import TType3 from './ttype3';
-import { makeStyles, Button } from '@material-ui/core';
+import { makeStyles, Button, Slide, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
@@ -13,6 +13,11 @@ import Type1 from './type1';
 import Type2 from './type2';
 import Type3 from './type3';
 import ReplayIcon from '@material-ui/icons/Replay';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import { TransitionProps } from '@material-ui/core/transitions/transition';
+import Help from '../components/help';
+import { LangContext } from '../../engine/translation/i18n';
+
 const type = [
     Type1,
     Type2,
@@ -484,11 +489,24 @@ const useStyle = makeStyles((theme) => ({
     },
 
     exHeader: {
-        
         position: "relative",
         display: "flex",
-        width: 500,
-        marginLeft: "calc(50% - 250px)",
+        width: "100%",
+        justifyContent: "space-between"
+    },
+    useLessContent: {
+        width: 300
+    },
+    exHeaderRight: {
+        position: "relative",
+        width: 300,
+        display: "flex",
+        alignSelf: "end",
+    },
+    exHeaderLeft: {
+        position: "relative",
+        width:  500,
+        display: "flex",
         "& div": {
             backgroundColor: "rgba(251, 238, 230, 0.65)",
             margin: "auto",
@@ -510,14 +528,11 @@ const useStyle = makeStyles((theme) => ({
     },
     replayBox: {
         backgroundColor: "unset",
-        top: 20,
-        position: "absolute",
-        right: -400,
+        top: 35,
     },
     replay: {
         marginLeft: "calc(50% - 30px)",
         fontSize: "60px",
-        marginTop: 15,
         color: "#3498DB",
     },
     reussite: {
@@ -535,11 +550,21 @@ const useStyle = makeStyles((theme) => ({
         fontSize: 60,
         width: "100%",
         color: "#58D68D"
+    },
+    helpBox: {
+        backgroundColor: "unset",
+        top: 35,
+
+        color: "whitesmoke"
+    },
+    helpIcon: {
+        color: "#F1C40F",
+        fontSize: 60
     }
 }));
 
 
-const Timer = (props:{finish: boolean, replay: boolean}) => {
+const Timer = (props:{finish: boolean, replay: boolean, setNeedHelp: any}) => {
     const [time, setTime] = React.useState(0.00);
 
     React.useEffect(() => {
@@ -548,8 +573,12 @@ const Timer = (props:{finish: boolean, replay: boolean}) => {
 
     React.useEffect(() => {
         const timer = setTimeout(() => {
-            if(!props.finish)
+            if(!props.finish) {
                 setTime(time + 0.01);
+                if(time > 10) {
+                    props.setNeedHelp(true);
+                }
+            }
         }, 10)
 
         return () => clearTimeout(timer);
@@ -559,17 +588,26 @@ const Timer = (props:{finish: boolean, replay: boolean}) => {
 
 }
 
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    ref: React.Ref<unknown>,
+  ) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
 
 const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) => {
     const classes = useStyle();
     var json: any;
-
+    const {translate} = React.useContext(LangContext);
     const [finish, setFinish] = React.useState(false);
 
     const [nbError, setNbError] = React.useState(0);
     const [nbIndice, setNbIndice] = React.useState(0);
 
     const [replay, setReplay] = React.useState(false);
+    const [needHelp, setNeedHelp] = React.useState(false);
+    const [openHelp, setOpenHelp] = React.useState(false);
 
     if(!props.trainning) 
         json = require ('../../locales/exercices/difficulty_'+props.difficulty+'.json');
@@ -624,37 +662,71 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
     }
 
     React.useEffect(()=> {
-        if(replay == true) {
+        if(replay) {
+            setNbIndice(0);
+            setNeedHelp(false);
             setFinish(false);
             setReplay(false);
         }
     }, [replay])
 
 
-
+    const handleHelp = () => {
+        if(!openHelp)
+            setNbIndice(nbIndice + 1)
+        setOpenHelp(!openHelp)
+    }
 
 
 
     return (
         <div className={classes.gameBox}>
             <div className={classes.exHeader}>
-                {/*<div>
-                    <EmojiObjectsIcon className={classes.indice}/>
-                    <p>{nbIndice}</p>
-                </div>*/}
-                <div>
-                    <CancelIcon className={classes.cancel} />
-                    <p>{nbError}</p>
+                <div className={classes.useLessContent}></div>
+                <div className={classes.exHeaderLeft}>
+                    <div>
+                        <EmojiObjectsIcon className={classes.indice}/>
+                        <p>{nbIndice}</p>
+                    </div>
+                    <div>
+                        <CancelIcon className={classes.cancel} />
+                        <p>{nbError}</p>
+                    </div>
+                    <div>
+                        <HourglassEmptyIcon className={classes.hourGlass} />
+                        <Timer finish={finish} replay={replay} setNeedHelp={setNeedHelp}/>
+                    </div>
                 </div>
-                <div>
-                    <HourglassEmptyIcon className={classes.hourGlass} />
-                    <Timer finish={finish} replay={replay}/>
+                <div className={classes.exHeaderRight}>
+                { needHelp ? <Button className={classes.helpBox} onClick={handleHelp}>
+                            <LiveHelpIcon className={classes.helpIcon}/>
+                            <p>{translate("needHelp")}</p>                
+                        </Button> : ""}
+                        <Button className={classes.replayBox} onClick={() => setReplay(true)}>
+                            <ReplayIcon className={classes.replay}/>
+                        </Button>
                 </div>
-                <Button className={classes.replayBox} onClick={() => setReplay(true)}>
-                    <ReplayIcon className={classes.replay}/>
-                </Button>
             </div>
-
+            <Dialog
+                open={openHelp}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleHelp}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title">{translate("help")}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleHelp} color="primary">
+                    {translate("close")}
+                </Button>
+                </DialogActions>
+            </Dialog>
             {finish ? <div className={classes.reussite}><SentimentVerySatisfiedIcon className={classes.satisfiedIcon}/> Vous avez trouvé la bonne réponse !</div> : ""}
 
             <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve} replay={replay}/>
