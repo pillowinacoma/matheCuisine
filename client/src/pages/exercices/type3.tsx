@@ -33,10 +33,16 @@ const Type3 = (props: {
         setNom(nom);
         setNewDenom(denomR);
 
-        let f = Math.floor(Math.random() * (denom - 1));
-        while (countDecimals(denom / f) != 0) {
-            f = Math.floor(Math.random() * (denom - 1));
+        let f = Math.floor(Math.random() * (denom - 1)) + 1;
+
+        while( countDecimals(denom/f) != 0  ) {
+
+            f = Math.floor(Math.random() * (denom - 1)) + 1;
+
         }
+
+        console.log("denom :", denom);
+        console.log("other:", f);
 
         setFirst(f);
     }, [props.replay]);
