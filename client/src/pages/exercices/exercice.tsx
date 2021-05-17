@@ -1,72 +1,80 @@
-import * as React from 'react';
-import TType1 from './ttype1';
-import TType2 from './ttype2';
-import TType3 from './ttype3';
-import { makeStyles, Button, Slide, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
-import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
-import CancelIcon from '@material-ui/icons/Cancel';
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
-import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
-import { isNumber } from 'util';
-import recette from '../../locales/recettes.json';
-import Type1 from './type1';
-import Type2 from './type2';
-import Type3 from './type3';
-import ReplayIcon from '@material-ui/icons/Replay';
-import LiveHelpIcon from '@material-ui/icons/LiveHelp';
-import { TransitionProps } from '@material-ui/core/transitions/transition';
-import Help from '../components/help';
-import { LangContext } from '../../engine/translation/i18n';
-import { Horraire } from '../components/lesson';
-import { Addition, Soustraction, Multiplication, Division, Equation } from '../components/lesson';
+import * as React from "react";
+import TType1 from "./ttype1";
+import TType2 from "./ttype2";
+import TType3 from "./ttype3";
+import {
+    makeStyles,
+    Button,
+    Slide,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions,
+} from "@material-ui/core";
+import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
+import CancelIcon from "@material-ui/icons/Cancel";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
+import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
+import { isNumber } from "util";
+import recette from "../../locales/recettes.json";
+import Type1 from "./type1";
+import Type2 from "./type2";
+import Type3 from "./type3";
+import ReplayIcon from "@material-ui/icons/Replay";
+import LiveHelpIcon from "@material-ui/icons/LiveHelp";
+import { TransitionProps } from "@material-ui/core/transitions/transition";
+import Help from "../components/help";
+import { LangContext } from "../../engine/translation/i18n";
+import { Horraire } from "../components/lesson";
+import {
+    Addition,
+    Soustraction,
+    Multiplication,
+    Division,
+    Equation,
+    Fraction,
+} from "../components/lesson";
 
-const type = [
-    Type1,
-    Type2,
-    Type3
-];
+const type = [Type1, Type2, Type3];
 
-const trtype = [
-    TType1,
-    TType2,
-    TType3
-];
+const trtype = [TType1, TType2, TType3];
 
 /** Type 1 */
 
 export const translationRpn = (rpn: any[], letter: string) => {
-
     var tempVar: any[] = [];
-    var tempOp: any[]  = [];
+    var tempOp: any[] = [];
     var tempStr: string[] = [];
     let z = 0;
-    if(rpn !== undefined)   {
-        for(let i = 0; i < rpn?.length ; i++) {
-
-            if(isNumber(rpn[i]) || rpn[i] === "r") {
-                
-                if(tempOp.length != 0) {
+    if (rpn !== undefined) {
+        for (let i = 0; i < rpn?.length; i++) {
+            if (isNumber(rpn[i]) || rpn[i] === "r") {
+                if (tempOp.length != 0) {
                     var str = "";
-                   // if(tempVar.length > 1 || tempOp.length > tempVar.length)
+                    // if(tempVar.length > 1 || tempOp.length > tempVar.length)
                     //    str += " ( ";
                     tempOp.reverse();
-              
-                    while(tempVar.length !== 0) {
+
+                    while (tempVar.length !== 0) {
                         var a = tempVar.pop();
-                        if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
+                        if (tempOp.length > 0 && tempVar.length > 0 && z == 0) {
                             var b = tempVar.pop();
                             str = str + b + " " + tempOp.pop() + " " + a + " ";
                             z++;
-                        }
-                        else {
-                            if((tempOp[tempOp.length - 1] == "*" || tempOp[tempOp.length - 1] == "*") && str != "") str = " ( " + str + " ) ";
+                        } else {
+                            if (
+                                (tempOp[tempOp.length - 1] == "*" ||
+                                    tempOp[tempOp.length - 1] == "*") &&
+                                str != ""
+                            )
+                                str = " ( " + str + " ) ";
                             str = str + " " + tempOp.pop() + " " + a + " ";
                         }
                     }
                     tempOp.reverse();
-                    if(str.includes(" ( "))
-                        str += " ) "
-                    if(tempOp.length >= 1) {
+                    if (str.includes(" ( ")) str += " ) ";
+                    if (tempOp.length >= 1) {
                         str = tempOp.pop() + " ( " + str + " ) ";
                     }
                     tempStr.push(str);
@@ -74,60 +82,49 @@ export const translationRpn = (rpn: any[], letter: string) => {
                 tempVar.push(rpn[i]);
             }
 
-            if(isOp(rpn[i]))
-            {
+            if (isOp(rpn[i])) {
                 tempOp.push(rpn[i]);
             }
 
-
-
-        // console.log(translation);
-        //  console.log(i)
+            // console.log(translation);
+            //  console.log(i)
         }
     }
 
-    if(tempOp.length != 0) {
+    if (tempOp.length != 0) {
         var str = "";
         tempOp.reverse();
-        while(tempVar.length !== 0) {
+        while (tempVar.length !== 0) {
             var a = tempVar.pop();
-            if(tempOp.length > 0 && tempVar.length > 0 && z == 0) {
+            if (tempOp.length > 0 && tempVar.length > 0 && z == 0) {
                 var b = tempVar.pop();
                 str = str + b + " " + tempOp.pop() + " " + a + " ";
                 z++;
-            }
-            else
-                str = str + " " + tempOp.pop() + " " + a + " ";
+            } else str = str + " " + tempOp.pop() + " " + a + " ";
         }
         z = 0;
         tempOp.reverse();
 
-        if(tempOp.length >= 1) {
+        if (tempOp.length >= 1) {
             str = tempOp.pop() + " ( " + str + " ) ";
         }
 
         tempStr.push(str);
     }
 
-
     var finalEq = "";
 
-    for(let i = 0; i < tempStr.length; i++) {
-
-
-        if(tempStr[i].startsWith("* ") || tempStr[i].startsWith("/ ")) {
+    for (let i = 0; i < tempStr.length; i++) {
+        if (tempStr[i].startsWith("* ") || tempStr[i].startsWith("/ ")) {
             finalEq = " ( " + finalEq + " ) " + tempStr[i];
         } else {
             finalEq += tempStr[i];
         }
-
-
     }
 
     finalEq = finalEq.replace("r", letter);
     return finalEq;
-
-}
+};
 
 export const selectOp = (notions: string[]) => {
     let randOp = Math.floor(getRandomInt(10));
@@ -145,7 +142,7 @@ export const selectOp = (notions: string[]) => {
         default:
             return "+";
     }
-}
+};
 
 export const generator = (detail: any, difficulty: number) => {
     const vars: any[] = detail.vars;
@@ -164,7 +161,9 @@ export const generator = (detail: any, difficulty: number) => {
 
     var restart = true;
 
-    var r = parseFloat((Math.random() * (maxRand)).toFixed(detail.acceptFloat ? 3 : 0));
+    var r = parseFloat(
+        (Math.random() * maxRand).toFixed(detail.acceptFloat ? 3 : 0)
+    );
 
     while (restart) {
         restart = false;
@@ -173,7 +172,7 @@ export const generator = (detail: any, difficulty: number) => {
         rpnTmpOp = [];
 
         for (let i = 0; i < vars.length; i++) {
-            if (vars[i] === "r") {   
+            if (vars[i] === "r") {
                 generateVar.push("r");
             } else {
                 let x = 1;
@@ -263,25 +262,22 @@ export const generator = (detail: any, difficulty: number) => {
         }
         var [correct, resultat] = solveur(rpn, r);
 
-        if(countDecimals(resultat) > 2 || resultat == Infinity) {
+        if (countDecimals(resultat) > 2 || resultat == Infinity) {
             restart = true;
         }
-
     }
-    return {rpn, r};
+    return { rpn, r };
 };
-
 
 const countDecimals = (value: number) => {
     if (Math.floor(value) !== value)
         return value.toString().split(".")[1].length || 0;
     return 0;
-}
+};
 
 export const isOp = (elem: any) => {
-
-    switch(elem) {
-        case '+':
+    switch (elem) {
+        case "+":
             return true;
         case "-":
             return true;
@@ -309,209 +305,217 @@ export const calc = (a: number, b: number, op: any) => {
     }
 };
 
-export const solveur = (rpn: any[], attemptResult: number, reponse?: number): [boolean, number] => {
+export const solveur = (
+    rpn: any[],
+    attemptResult: number,
+    reponse?: number
+): [boolean, number] => {
     var tempVar: any[] = [];
     var tmpResult = 0;
     var correct = false;
     var tmpR = attemptResult;
-    if(reponse != undefined) {
+    if (reponse != undefined) {
         correct = attemptResult == reponse;
         tmpR = reponse;
     }
 
     for (let i = 0; i < rpn?.length; i++) {
         if (isNumber(rpn[i]) || rpn[i] === "r") {
-            if(rpn[i] === "r") {
+            if (rpn[i] === "r") {
                 tempVar.push(tmpR);
             } else {
                 tempVar.push(rpn[i]);
             }
-
         }
 
-        if(isOp(rpn[i]) && tempVar.length > 0) {
+        if (isOp(rpn[i]) && tempVar.length > 0) {
             let b = tempVar.pop();
             let a = tempVar.pop();
-            let c = calc(a,b, rpn[i]);
+            let c = calc(a, b, rpn[i]);
             tempVar.push(c);
         }
-    }   
+    }
 
     tmpResult = tempVar[0];
 
-    if(!correct && reponse != undefined) {
-
+    if (!correct && reponse != undefined) {
         var [ok, res] = solveur(rpn, attemptResult);
-        correct = (tmpResult == res);
+        correct = tmpResult == res;
     }
 
-    return [
-        correct,
-        tmpResult
-    ];
+    return [correct, tmpResult];
 };
 
-export const recCalc = (tabVar: any[], tabOp: any[]) : number => {
+export const recCalc = (tabVar: any[], tabOp: any[]): number => {
     var a = tabVar.pop();
-    if(tabVar.length > 0) {
+    if (tabVar.length > 0) {
         var op = tabOp.pop();
-        return calc(a,recCalc(tabVar, tabOp), op);
-    }
-    else
-        return a; 
+        return calc(a, recCalc(tabVar, tabOp), op);
+    } else return a;
+};
 
-}
-
-export const genEffect = (setRpn: any, setAttemptR: any, setResultat: any, setEquation: any, setLetter: any, gen: any) => {
-    var  [_rpn, _r, _resultat] = gen();
+export const genEffect = (
+    setRpn: any,
+    setAttemptR: any,
+    setResultat: any,
+    setEquation: any,
+    setLetter: any,
+    gen: any
+) => {
+    var [_rpn, _r, _resultat] = gen();
     setRpn(_rpn);
     setAttemptR(_r);
     setResultat(_resultat);
-    if(_rpn != undefined)
-        Object.entries(_rpn).forEach((value: [string, any], index: number, array: [string, any][]) => {
-            if(value[1] === "r") setEquation(true);
-        });
+    if (_rpn != undefined)
+        Object.entries(_rpn).forEach(
+            (value: [string, any], index: number, array: [string, any][]) => {
+                if (value[1] === "r") setEquation(true);
+            }
+        );
 
-        
-    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    setLetter(alphabet[Math.floor(Math.random() * alphabet.length)])
-}
+    setLetter(alphabet[Math.floor(Math.random() * alphabet.length)]);
+};
 
-export const checkResult = (rpn: any, eq: any, equation: boolean, attemptR: any, resultat:any, reponse: any,  setNbError: any, nbError: number, setFinish: any, setIncorrect: any) => {
-        if(rpn != undefined ) {
-            var [correct, result] = solveur(rpn, attemptR, parseFloat(reponse));
-            if(equation) {
-                if(eq.includes("/ 0") && reponse === undefined && (isFinite(resultat) || isNaN(resultat))){
-                    setFinish(true);
-                } else if(correct) {
-                    setFinish(true);
-                } else {
-                    setIncorrect(true);
-                    setNbError(nbError + 1);
-                }
+export const checkResult = (
+    rpn: any,
+    eq: any,
+    equation: boolean,
+    attemptR: any,
+    resultat: any,
+    reponse: any,
+    setNbError: any,
+    nbError: number,
+    setFinish: any,
+    setIncorrect: any
+) => {
+    if (rpn != undefined) {
+        var [correct, result] = solveur(rpn, attemptR, parseFloat(reponse));
+        if (equation) {
+            if (
+                eq.includes("/ 0") &&
+                reponse === undefined &&
+                (isFinite(resultat) || isNaN(resultat))
+            ) {
+                setFinish(true);
+            } else if (correct) {
+                setFinish(true);
             } else {
-                if(result == parseFloat(reponse)) {
-                    setFinish(true)
-                } else {
-                    setIncorrect(true);
-                    setNbError(nbError + 1);
-                }
+                setIncorrect(true);
+                setNbError(nbError + 1);
+            }
+        } else {
+            if (result == parseFloat(reponse)) {
+                setFinish(true);
+            } else {
+                setIncorrect(true);
+                setNbError(nbError + 1);
             }
         }
-    
-}
-
+    }
+};
 
 /** Type 2 */
 
-
-
-
 export const generateurTime = () => {
-
-
     var nbVar = 1 + getRandomInt(4);
     var nbVarUseless = getRandomInt(2);
     var values: [any, any, any, any][] = [];
 
     var recettes = recette.recettes;
-    var startTime = {hour:getRandomInt(12), min: getRandomInt(59) };
+    var startTime = { hour: getRandomInt(12), min: getRandomInt(59) };
 
-    for(let i = 0; i < nbVar; i++) {
+    for (let i = 0; i < nbVar; i++) {
         let randRecette = getRandomInt(recettes.length);
-        values.push([recettes[randRecette][0], recettes[randRecette][1], recettes[randRecette][2], recettes[randRecette][3] ] );
+        values.push([
+            recettes[randRecette][0],
+            recettes[randRecette][1],
+            recettes[randRecette][2],
+            recettes[randRecette][3],
+        ]);
     }
 
-    return {startTime, values};
-
-}
-export const solveurTime = (startTime: {hour:number, min: number},values: any[], reponse?: {hour: number, min: number}): [boolean,  {hour: number, min: number}] => {
-
-
-    var endTime = {hour: startTime.hour, min: startTime.min}
+    return { startTime, values };
+};
+export const solveurTime = (
+    startTime: { hour: number; min: number },
+    values: any[],
+    reponse?: { hour: number; min: number }
+): [boolean, { hour: number; min: number }] => {
+    var endTime = { hour: startTime.hour, min: startTime.min };
 
     var correct = false;
 
-    for(let i = 0; i < values.length; i++) {
-        
-        
-        endTime.min += values[i][1] ;
-        if(values[i][2] != undefined)
-            endTime.min += + values[i][2];
-        if(endTime.min > 59) {
+    for (let i = 0; i < values.length; i++) {
+        endTime.min += values[i][1];
+        if (values[i][2] != undefined) endTime.min += +values[i][2];
+        if (endTime.min > 59) {
             let reste = endTime.min % 60;
             let qoef = endTime.min / 60;
             endTime.hour += Math.floor(qoef);
             endTime.min = reste;
         }
-
     }
 
-    if(endTime.hour > 23) {
+    if (endTime.hour > 23) {
         endTime.hour = endTime.hour % 24;
     }
-    
 
-    if(reponse != undefined) {
-
+    if (reponse != undefined) {
         correct = endTime.hour === reponse.hour && endTime.min === reponse.min;
-
     }
 
-    console.log(endTime)
+    console.log(endTime);
 
     return [correct, endTime];
-
-}
+};
 
 /** Type 3 */
 
 const genFract = (detail: any) => {
-
-
     //BASEDENOM est le dénominateur de départ on donne à rechercher a l'utilisateur son dénominateur
-    var denomR = getRandomInt(detail.denominateurMax) ;
- 
-
-
+    var denomR = getRandomInt(detail.denominateurMax);
 
     //DENOM est le denominateur donnez a l'utilisateur
     var denom = getRandomInt(detail.denominateurMax);
     var nom = getRandomInt(denom - 1);
 
-
     var [correct, result] = solveurFraction(denom, nom, denomR);
 
-    while(denom == 0 || denomR == 0 || countDecimals(result) != 0 || nom == 0|| result == 0) {
+    while (
+        denom == 0 ||
+        denomR == 0 ||
+        countDecimals(result) != 0 ||
+        nom == 0 ||
+        result == 0
+    ) {
         denomR = getRandomInt(detail.denominateurMax);
         denom = getRandomInt(detail.denominateurMax);
         nom = getRandomInt(denom - 1);
-        [correct, result] = solveurFraction(denom,nom,denomR);
+        [correct, result] = solveurFraction(denom, nom, denomR);
     }
-    
 
+    return { denomR, nom, denom };
+};
 
-    return {denomR, nom, denom};
-
-
-}
-
-const solveurFraction = (denom: number, nom: number, denomR: number, nomR?: number): [boolean, number] => {
-
+const solveurFraction = (
+    denom: number,
+    nom: number,
+    denomR: number,
+    nomR?: number
+): [boolean, number] => {
     var correct = false;
     var coef = denomR / denom;
 
     var result = nom * coef;
 
-    if(nomR != undefined && result == nomR ) {
+    if (nomR != undefined && result == nomR) {
         correct = true;
     }
 
-
     return [correct, result];
-
-}
+};
 
 /** Loader pour exercice */
 
@@ -543,10 +547,10 @@ const useStyle = makeStyles((theme) => ({
         position: "relative",
         display: "flex",
         width: "calc(100% - 1px)",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     useLessContent: {
-        width: 300
+        width: 300,
     },
     exHeaderRight: {
         position: "relative",
@@ -556,7 +560,7 @@ const useStyle = makeStyles((theme) => ({
     },
     exHeaderLeft: {
         position: "relative",
-        width:  500,
+        width: 500,
         display: "flex",
         "& div": {
             backgroundColor: "rgba(251, 238, 230, 0.65)",
@@ -573,9 +577,9 @@ const useStyle = makeStyles((theme) => ({
                 margin: 0,
                 marginLeft: "25%",
                 marginRight: "25%",
-                textAlign: "center"
-            }
-        }
+                textAlign: "center",
+            },
+        },
     },
     replayBox: {
         backgroundColor: "unset",
@@ -607,23 +611,26 @@ const useStyle = makeStyles((theme) => ({
     satisfiedIcon: {
         fontSize: 60,
         width: "100%",
-        color: "#58D68D"
+        color: "#58D68D",
     },
     helpBox: {
         top: 35,
         height: 76,
         backgroundColor: "unset",
-        color: "whitesmoke"
+        color: "whitesmoke",
     },
     helpIcon: {
         color: "#F1C40F",
-        fontSize: 60
-    }
+        fontSize: 60,
+    },
 }));
 
-
-const Timer = (props:{finish: boolean, replay: boolean, setNeedHelp: any}) => {
-    const [time, setTime] = React.useState(0.00);
+const Timer = (props: {
+    finish: boolean;
+    replay: boolean;
+    setNeedHelp: any;
+}) => {
+    const [time, setTime] = React.useState(0.0);
 
     React.useEffect(() => {
         setTime(0);
@@ -631,33 +638,35 @@ const Timer = (props:{finish: boolean, replay: boolean, setNeedHelp: any}) => {
 
     React.useEffect(() => {
         const timer = setTimeout(() => {
-            if(!props.finish) {
+            if (!props.finish) {
                 setTime(time + 0.01);
-                if(time > 10) {
+                if (time > 10) {
                     props.setNeedHelp(true);
                 }
             }
-        }, 10)
+        }, 10);
 
         return () => clearTimeout(timer);
-    },[time]) 
+    }, [time]);
 
-    return (<p>{time.toFixed(2)}</p>);
-
-}
+    return <p>{time.toFixed(2)}</p>;
+};
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement<any, any> },
-    ref: React.Ref<unknown>,
-  ) {
+    ref: React.Ref<unknown>
+) {
     return <Slide direction="up" ref={ref} {...props} />;
-  });
+});
 
-
-const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) => {
+const Exercice = (props: {
+    difficulty: number;
+    ex: string;
+    trainning?: boolean;
+}) => {
     const classes = useStyle();
     var json: any;
-    const {translate} = React.useContext(LangContext);
+    const { translate } = React.useContext(LangContext);
     const [finish, setFinish] = React.useState(false);
 
     const [nbError, setNbError] = React.useState(0);
@@ -667,18 +676,21 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
     const [needHelp, setNeedHelp] = React.useState(false);
     const [openHelp, setOpenHelp] = React.useState(false);
 
-    if(!props.trainning) 
-        json = require ('../../locales/exercices/difficulty_'+props.difficulty+'.json');
-    else 
-        json = require ('../../locales/trainnings/difficulty_'+props.difficulty+'.json');
-
+    if (!props.trainning)
+        json = require("../../locales/exercices/difficulty_" +
+            props.difficulty +
+            ".json");
+    else
+        json = require("../../locales/trainnings/difficulty_" +
+            props.difficulty +
+            ".json");
 
     let Type: any;
 
-    if(!props.trainning) {
-        Type = type[json[props.ex].type]
+    if (!props.trainning) {
+        Type = type[json[props.ex].type];
     } else {
-        Type = trtype[json[props.ex].type % 10]
+        Type = trtype[json[props.ex].type % 10];
     }
 
     /**
@@ -687,27 +699,23 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
      */
     var gen = () => {};
     var solve;
-    console.log(type)
-    console.log(json[props.ex].type)
-    switch(json[props.ex].type % 10) { 
-        case 0: //equation et calcule simple avec mini jeux et qcm 
+    console.log(type);
+    console.log(json[props.ex].type);
+    switch (json[props.ex].type % 10) {
+        case 0: //equation et calcule simple avec mini jeux et qcm
             gen = () => {
-     
-                var {rpn, r} = generator(json[props.ex], props.difficulty);
+                var { rpn, r } = generator(json[props.ex], props.difficulty);
                 var rpnG = rpn;
                 var rG: number = r;
-                var [correct, resultat] = solveur(
-                    rpnG,
-                    rG
-                );
-             
+                var [correct, resultat] = solveur(rpnG, rG);
+
                 return [rpn, rG, resultat];
             };
             solve = solveur;
             break;
         case 1: // jeux et qcm avec temps
             gen = () => {
-                var {startTime, values} = generateurTime();
+                var { startTime, values } = generateurTime();
 
                 return [startTime, values];
             };
@@ -715,33 +723,29 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             break;
         case 2: // fraction avec mini jeux et qcm
             gen = () => {
-                var {denomR, denom, nom} = genFract(json[props.ex]);
+                var { denomR, denom, nom } = genFract(json[props.ex]);
 
                 return [denomR, denom, nom];
-            }
+            };
             solve = solveurFraction;
             break;
         default:
             break;
     }
 
-    React.useEffect(()=> {
-        if(replay) {
+    React.useEffect(() => {
+        if (replay) {
             setNbIndice(0);
             setNeedHelp(false);
             setFinish(false);
             setReplay(false);
         }
-    }, [replay])
-
+    }, [replay]);
 
     const handleHelp = () => {
-        if(!openHelp)
-            setNbIndice(nbIndice + 1)
-        setOpenHelp(!openHelp)
-    }
-
-
+        if (!openHelp) setNbIndice(nbIndice + 1);
+        setOpenHelp(!openHelp);
+    };
 
     return (
         <div className={classes.gameBox}>
@@ -749,7 +753,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
                 <div className={classes.useLessContent}></div>
                 <div className={classes.exHeaderLeft}>
                     <div>
-                        <EmojiObjectsIcon className={classes.indice}/>
+                        <EmojiObjectsIcon className={classes.indice} />
                         <p>{nbIndice}</p>
                     </div>
                     <div>
@@ -758,17 +762,31 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
                     </div>
                     <div>
                         <HourglassEmptyIcon className={classes.hourGlass} />
-                        <Timer finish={finish} replay={replay} setNeedHelp={setNeedHelp}/>
+                        <Timer
+                            finish={finish}
+                            replay={replay}
+                            setNeedHelp={setNeedHelp}
+                        />
                     </div>
                 </div>
                 <div className={classes.exHeaderRight}>
-                { needHelp ? <Button className={classes.helpBox} onClick={handleHelp}>
-                            <LiveHelpIcon className={classes.helpIcon}/>
-                            <p>{translate("needHelp")}</p>                
-                        </Button> : ""}
-                        <Button className={classes.replayBox} onClick={() => setReplay(true)}>
-                            <ReplayIcon className={classes.replay}/>
+                    {needHelp ? (
+                        <Button
+                            className={classes.helpBox}
+                            onClick={handleHelp}
+                        >
+                            <LiveHelpIcon className={classes.helpIcon} />
+                            <p>{translate("needHelp")}</p>
                         </Button>
+                    ) : (
+                        ""
+                    )}
+                    <Button
+                        className={classes.replayBox}
+                        onClick={() => setReplay(true)}
+                    >
+                        <ReplayIcon className={classes.replay} />
+                    </Button>
                 </div>
             </div>
             <Dialog
@@ -779,64 +797,87 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{translate("help")}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">
+                    {translate("help")}
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {Object.entries(json[props.ex].notions).map((element) => {
-                            var notions = element[1];
-                            var Text: any ;
-                            switch(notions) {
-                                case "addition":
-                                    Text = Addition;
-                                    break;
-                                case "soustraction":
-                                    Text = Soustraction;
-                                    break;
-                                case "multiplication":
-                                    Text = Multiplication;
-                                    break;
-                                case "division":
-                                    Text = Division;
-                                    break;
-                                case "temps":
-                                    Text = Horraire;
-                                    break;
-                                case "equation":
-                                    Text = Equation;
-                                    break;
-                                default: 
-                                    Text = undefined;
-                                    break;
-                            }
+                        {Object.entries(json[props.ex].notions).map(
+                            (element) => {
+                                var notions = element[1];
+                                var Text: any;
+                                switch (notions) {
+                                    case "addition":
+                                        Text = Addition;
+                                        break;
+                                    case "soustraction":
+                                        Text = Soustraction;
+                                        break;
+                                    case "multiplication":
+                                        Text = Multiplication;
+                                        break;
+                                    case "division":
+                                        Text = Division;
+                                        break;
+                                    case "temps":
+                                        Text = Horraire;
+                                        break;
+                                    case "equation":
+                                        Text = Equation;
+                                        break;
+                                    case "fraction":
+                                        Text = Fraction;
+                                        break;
+                                    default:
+                                        Text = undefined;
+                                        break;
+                                }
 
-                            return (
-                            <div>{Text != undefined ? <Text/> : "" }</div>
-                            )
-                        })}
+                                return (
+                                    <div>
+                                        {Text != undefined ? <Text /> : ""}
+                                    </div>
+                                );
+                            }
+                        )}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleHelp} color="primary">
-                    {translate("close")}
-                </Button>
+                    <Button onClick={handleHelp} color="primary">
+                        {translate("close")}
+                    </Button>
                 </DialogActions>
             </Dialog>
-            {finish ? <div className={classes.reussite}><SentimentVerySatisfiedIcon className={classes.satisfiedIcon}/> Vous avez trouvé la bonne réponse !</div> : ""}
+            {finish ? (
+                <div className={classes.reussite}>
+                    <SentimentVerySatisfiedIcon
+                        className={classes.satisfiedIcon}
+                    />{" "}
+                    Vous avez trouvé la bonne réponse !
+                </div>
+            ) : (
+                ""
+            )}
 
-            {finish ? "" : <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve} replay={replay}/>}
-
+            {finish ? (
+                ""
+            ) : (
+                <Type
+                    params={json[props.ex]}
+                    gen={gen}
+                    setFinish={setFinish}
+                    nbError={nbError}
+                    setNbError={setNbError}
+                    solveur={solve}
+                    replay={replay}
+                />
+            )}
         </div>
     );
 };
-
 
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
 }
 
-
 export default Exercice;
-
-
-
-

@@ -74,5 +74,14 @@
         ],
         "coef": 2,
         "result": 100
+    },
+    
+    "Fraction-3": {
+        "type": 2,
+        "notions":[
+            "fraction",
+            "division"
+        ],
+        "denominateurMax": 50
     }
 }

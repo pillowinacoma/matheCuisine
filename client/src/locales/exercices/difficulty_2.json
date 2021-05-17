@@ -265,11 +265,12 @@
         "coef": 2,
         "result": 100
     },
-    "Fraction-1": {
+    "Fraction-2": {
         "type": 2,
         "notions":[
-
+            "fraction",
+            "division"
         ],
-        "denominateurMax": 50
+        "denominateurMax": 20
     }
 }
