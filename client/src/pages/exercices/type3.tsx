@@ -48,15 +48,14 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 
         let f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
-        while( countDecimals(denomR/f) != 0  ) {
+        while( countDecimals(denomR/f) != 0 || f == denomR) {
 
             f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
         }
-        console.log("denombase: ", denom);
-        console.log("nom :", nom);
-        console.log("denom :", denomR);
-        console.log("other:", f);
+
+        console.log('ligne ', denomR/f)
+        console.log("colonne ", f)
 
         setFirst(f);
 
@@ -76,7 +75,7 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
     return (
         <div>
             <div className={classes.problem}>
-                <p>Vos clients vous demande de leur préparé {newDenom} pancakes.</p>
+                <p>Vos clients vous demande de leur préparé <strong>{newDenom}</strong> pancakes.</p>
                 <p>L'équivalent de <strong>{nom} / {denom}</strong> des pancakes sont prêt dépéché vous de les retourner !</p>
             </div>
 
