@@ -18,7 +18,7 @@
     "medium" : "moyen",
     "hard" : "dur",
     "needHelp" : "Besoin d'aide ?",
-    "resolveCalc" : "Resoudre le calcule suivant :",
+    "resolveComp" : "Resoudre le calcule suivant :",
     "resolveEq": "Résoudre l'équation suivante :",
     "reply": "Réponse",
     "valid": "Valider",

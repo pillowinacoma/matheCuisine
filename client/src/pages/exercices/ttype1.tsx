@@ -97,7 +97,7 @@ const TType1 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
 
     return (
         <div className={classes.game}>
-            <h2 className={classes.question}>{equation ? translate("resolveComp"): translate("resolveEq")} </h2>
+            <h2 className={classes.question}>{equation ? translate("resolveEq") : translate("resolveComp")} </h2>
             
             <p className={classes.equation}>{eq} = {equation ? resultat :  <TextField id="outlined-basic" label={translate("reply")} variant="outlined" error={isNumber(reponse) && isNaN(reponse) || incorrect} helperText= {isNumber(reponse) && isNaN(reponse) ? "vous devez entrez un nombre" : incorrect ? "Mauvaise réponse" : ""} value={reponse} onChange={handleChange()}  className={classes.field}/>}</p>
 

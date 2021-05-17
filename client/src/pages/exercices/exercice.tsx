@@ -580,7 +580,7 @@ const Timer = (props:{finish: boolean, replay: boolean, setNeedHelp: any}) => {
         const timer = setTimeout(() => {
             if(!props.finish) {
                 setTime(time + 0.01);
-                if(time > 2) {
+                if(time > 10) {
                     props.setNeedHelp(true);
                 }
             }
