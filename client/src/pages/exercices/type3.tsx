@@ -80,7 +80,7 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
                 <p>L'équivalent de <strong>{nom} / {denom}</strong> des pancakes sont prêt dépéché vous de les retourner !</p>
             </div>
 
-            <Board camera={{ position: [0, 0, 50] }}>
+            <Board camera={{ position: [0, 0, 70] }}>
                 <React.Suspense fallback="loading text">
                     <Cible
                         execute={() => console.log(checkReponse())}

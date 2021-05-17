@@ -176,6 +176,9 @@ const Type1 = (props: {
                     />
                     <Cible
                         negative={negEntry}
+                        execute={()=>{
+                            console.log(valEntry)
+                        }}
                         position={[-10, -10, -2]}
                         valEntry={Math.abs(valEntry)}
                     />
@@ -183,7 +186,7 @@ const Type1 = (props: {
                         execute={() => setNegEntry(!negEntry)}
                         size={0.5}
                         rotation={[0, 0, 0]}
-                        position={[40, -5, -2]}
+                        position={[20, -5, -2]}
                         valEntry={"NEGATIVE"}
                     />
                     <Cible
@@ -193,18 +196,19 @@ const Type1 = (props: {
                         }}
                         size={0.5}
                         rotation={[0, 0, 0]}
-                        position={[40, 0, -2]}
+                        position={[20, 0, -2]}
                         valEntry={"VALIDER"}
                     />
                     <Cible
                         execute={() => {
                             setValEntry(0);
                             setNegEntry(false);
+                            setValTable([]);
                         }}
                         size={0.5}
                         rotation={[0, 0, 0]}
-                        position={[40, -10, -2]}
-                        valEntry={"RAZ"}
+                        position={[20, -10, -2]}
+                        valEntry={"REINITIALISER"}
                     />
                 </React.Suspense>
             </Board>

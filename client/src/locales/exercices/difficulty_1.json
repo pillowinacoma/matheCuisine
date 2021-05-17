@@ -1,70 +1,51 @@
 {
     "Addition": {
         "type": 0,
-        "notions": [
-            "addition"
-        ],
+        "notions": ["addition"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 50,
-        "vars": [
-            1,
-            1
-        ]
+        "vars": [1, 1]
     },
     "Soustraction": {
         "type": 0,
-        "notions": [
-            "soustraction"
-        ],
+        "notions": ["soustraction"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 50,
-        "vars": [
-            1,
-            2
-        ]
+        "vars": [1, 2]
     },
     "Multiplication": {
         "type": 0,
-        "notions": [
-            "multiplication"
-        ],
+        "notions": ["multiplication"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 50,
-        "vars": [
-            1,
-            1
-        ]
+        "vars": [1, 1]
     },
     "Division": {
         "type": 0,
-        "notions": [
-            "division"
-        ],
+        "notions": ["division"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 50,
-        "vars": [
-            1,
-            1
-        ]
+        "vars": [1, 1]
     },
-    "Horraire" : {
-        "type" : 1,
-        "notions" : [
-            "temps",
-            "addition"
-        ]
-
+    "Fraction-1": {
+        "type": 2,
+        "notions": ["fraction", "division"],
+        "denominateurMax": 10
+    },
+    "Horraire": {
+        "type": 1,
+        "notions": ["temps", "addition"]
     }
 }
