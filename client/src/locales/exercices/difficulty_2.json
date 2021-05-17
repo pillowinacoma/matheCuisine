@@ -1,276 +1,118 @@
 {
-    "Calcule-1": {
+    "Addition": {
         "type": 0,
-        "notions": [
-            "soustraction"
-        ],
+        "notions": ["addition"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [
-            1,
-            2,
-            1
-        ]
+        "vars": [1, 1, 2]
     },
-    "Calcule-2": {
+    "Soustraction": {
         "type": 0,
-        "notions": [
-            "addition"
-        ],
+        "notions": ["soustraction"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            2
-        ]
+        "vars": [1, 2, 1]
     },
-    "Calcule-3": {
+    "Multiplication": {
         "type": 0,
-        "notions": [
-            "multiplication"
-        ],
+        "notions": ["multiplication"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
+        "vars": [1, 1, 1]
     },
-    "Calcule-4": {
+    "Division": {
         "type": 0,
-        "notions": [
-            "division"
-        ],
+        "notions": ["division"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
-    },
-    "Calcule-5": {
-        "type": 0,
-        "notions": [
-            "division",
-            "multiplication"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
-    },
-    "Calcule-6": {
-        "type": 0,
-        "notions": [
-            "addition",
-            "multiplication"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
-    },
-    "Calcule-7": {
-        "type": 0,
-        "notions": [
-            "division",
-            "addition"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
+        "vars": [1, 1, 1]
     },
 
-    "Calcule-8": {
+    "Notions Multiple 1": {
         "type": 0,
-        "notions": [
-            "division",
-            "soustraction"
-        ],
+        "notions": ["addition", "soustraction", "division"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
+        "vars": [1, 1, 1, 1]
     },
 
-    "Calcule-9": {
+    "Notions Multiple 2": {
         "type": 0,
-        "notions": [
-            "division",
-            "multiplication"
-        ],
+        "notions": ["addition", "soustraction", "multiplication"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
+        "vars": [1, 1, 1, 1]
     },
-
-    "Calcule-10": {
-        "type": 0,
-        "notions": [
-            "soustraction",
-            "multiplication"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
+    "Horraire": {
+        "type": 1,
+        "notions": ["temps", "addition"]
     },
-    "Calcule-9": {
-        "type": 0,
-        "notions": [
-            "addition",
-            "soustraction"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            2,
-            1
-        ]
+    "Fraction-1": {
+        "type": 2,
+        "notions": [],
+        "denominateurMax": 50
     },
-    "Equation-1": {
+    "Equation 1": {
         "type": 0,
-        "notions": [
-            "addtion"
-        ],
+        "notions": ["addtion"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 30,
-        "vars": [
-            2,
-            "r"
-        ]
+        "vars": [2, "r"]
     },
-    "Equation-2": {
+    "Equation 2": {
         "type": 0,
-        "notions": [
-            "soustraction"
-        ],
+        "notions": ["soustraction"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 33,
-        "vars": [
-            3,
-            "r"
-        ]
+        "vars": [3, "r"]
     },
-    "Equation-3": {
+    "Equation 3": {
         "type": 0,
-        "notions": [
-            "multiplication"
-        ],
+        "notions": ["multiplication"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 20,
-        "vars": [
-            1,
-            "r"
-        ]
+        "vars": [1, "r"]
     },
-    "Equation-4": {
+    "Equation 4": {
         "type": 0,
-        "notions": [
-            "division"
-        ],
+        "notions": ["division"],
         "decimal": false,
         "acceptNegatif": false,
         "acceptFloat": false,
         "random": true,
         "maxRand": 50,
-        "vars": [
-            2,
-            "r"
-        ]
-    },
-    "Exercice-3": {
-        "type": 0,
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 50,
-        "notions": [
-            "addition",
-            "multiplication"
-        ],
-        "vars": [
-            1,
-            1,
-            1
-        ],
-        "coef": 2,
-        "result": 100
+        "vars": [2, "r"]
     },
     "Fraction-2": {
         "type": 2,
-        "notions":[
-            "fraction",
-            "division"
-        ],
+        "notions": ["fraction", "division"],
         "denominateurMax": 20
     }
 }

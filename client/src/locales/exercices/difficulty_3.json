@@ -1,5 +1,13 @@
 {
-    "Equation-1": {
+    "Horraire" : {
+        "type" : 1,
+        "notions" : [
+            "temps",
+            "addition"
+        ]
+
+    },
+    "Equation 1": {
         "type": 0,
         "notions": [
             "addition",
@@ -17,7 +25,7 @@
             1
         ]
     },
-    "Equation-3": {
+    "Equation 2": {
         "type": 0,
         "notions": [
             "addition",
@@ -37,7 +45,7 @@
             1
         ]
     },
-    "Equation-4": {
+    "Equation 3": {
         "type": 0,
         "notions": [
             "addition",
