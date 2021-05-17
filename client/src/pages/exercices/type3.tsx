@@ -14,25 +14,25 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
     const [flipped, setFlipped] = React.useState(0);
     const [denom, setDenom] = React.useState<number>(0);
     const [nom, setNom] = React.useState<number>(0);
-    const [newDenom, setNewDenom] = React.useState<number>(0)
-
+    const [newDenom, setNewDenom] = React.useState<number>(0);
     const [first, setFirst] = React.useState(-1);
-
+    
     React.useEffect(() => {
         var [denomR, denom, nom] = props.gen();
         setDenom(denom);
         setNom(nom);
         setNewDenom(denomR);
+       
 
-        let f = Math.floor(Math.random() * (denom - 1)) + 1;
+        let f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
-        while( countDecimals(denom/f) != 0  ) {
+        while( countDecimals(denomR/f) != 0  ) {
 
-            f = Math.floor(Math.random() * (denom - 1)) + 1;
+            f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
         }
 
-        console.log("denom :", denom);
+        console.log("denom :", denomR);
         console.log("other:", f);
 
         setFirst(f);
@@ -40,8 +40,9 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
     }, [props.replay]);
 
     const checkReponse = () => {
+        
         const [correct, result] = props.solveur(denom, nom, newDenom, flipped);
-
+        
         if (correct) {
             props.setFinish(true);
         } else {
@@ -51,12 +52,13 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
 
     return (
         <div>
+     
 
             <Board camera={{ position: [0, 0, 50] }}>
                 <React.Suspense fallback={() => <h1>Loading</h1>}>
                     <BackgroundImage img={pancakeImg}/>
                 </React.Suspense>
-                <PancakePan dimensions={[(denom/first), first]} setFlipped={setFlipped}/>
+                <PancakePan dimensions={[(newDenom/first), first]} setFlipped={setFlipped}/>
             </Board>
         </div>
     );
