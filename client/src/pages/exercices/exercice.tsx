@@ -594,6 +594,8 @@ const useStyle = makeStyles((theme) => ({
         position: "relative",
         duisplay: "block",
         width: "50%",
+        padding: 20,
+        marginTop: 100,
         marginLeft: "25%",
         marginRight: "25%",
         textAlign: "center",
