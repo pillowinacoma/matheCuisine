@@ -11,8 +11,13 @@ import Profile from "./pages/profile";
 import Exercice from "./pages/exercices/exercice";
 import { UserContext } from "./engine/profile/profile";
 import Trainnings from "./pages/trainnings";
+import { makeStyles } from "@material-ui/core";
+
+
 
 function App() {
+
+
     var json1 = require("./locales/exercices/difficulty_1.json");
     var json2 = require("./locales/exercices/difficulty_2.json");
     var json3 = require("./locales/exercices/difficulty_3.json");
@@ -21,7 +26,7 @@ function App() {
     var json6 = require("./locales/trainnings/difficulty_3.json");
     const { state } = React.useContext(UserContext);
     return (
-        <div>
+        <div >
             <BrowserRouter>
                 <Layout>
                     <Switch>

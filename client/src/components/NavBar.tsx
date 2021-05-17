@@ -75,8 +75,8 @@ const NavBar = (props: { sideOpen: boolean, setSideOpen: any }): JSX.Element => 
 
     return (
         <React.Fragment>
-            <AppBar position="static">
-                <Toolbar>
+            <AppBar position="static" elevation={0.5}>
+                <Toolbar >
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toogleSide}>
                         <MenuIcon />
                     </IconButton>

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
         height: "calc(100% - 300px)",
         maxHeight: "calc(100% - 300px)",
         "overflow": "auto",
+        backgroundColor: "#EDBB99"
     },
     listItem: {
         width: "100%",
@@ -21,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
     bottomList: {
         position: "relative",
-        bottom: -30,
+        height: "calc(100% - (100% - 300px))",
+        backgroundColor: "#A04000",
+        color: "white"
     },
     infos: {
         textAlign: "left",

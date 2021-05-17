@@ -462,8 +462,7 @@ export const solveurTime = (startTime: {hour:number, min: number},values: any[],
 
 const useStyle = makeStyles((theme) => ({
     gameBox: {
-        height: "100vh",
-        position: "relative"
+        height: "calc(100vh - 64px)",
     },
     hourGlass: {
         fontSize: "40px",

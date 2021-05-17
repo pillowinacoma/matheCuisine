@@ -13,40 +13,56 @@ import Help from './components/help';
 import Lesson from './components/lesson';
 const useStyle = makeStyles((theme) => ({
     page: {
+        backgroundColor: "rgba(251, 238, 230, 0.85)",
+        position: "relative",
         marginTop: 100,
         margin: "auto",
         width: "680px",
-        padding: 10
+        padding: 10,
+        "backdrop-filter": "blur(4px)",
+        "& *": {
+            backgroundColor: "unset"
+        }
     },
     logo: {
         fontSize: 60
     },
     button: {
+        backgroundColor: "rgba(251, 245, 240, 1)",
         margin: 10,
         minWidth: 200,
         minHeight: 150,
         marginTop: 10,
         marginBottom: 10,
-        border: "5px solid whitesmoke",
+        border: "5px solid rgba(251, 245, 240, 1)",
         textAlign: "center",
         "& h2": {
             margin: 0
+        },
+        "& *": {
+            backgroundColor: "unset",
         }
     },
-    "a h2" : {
-        "text-decoration": "inherit",
-    },
+
     buttonDouble: {
+        backgroundColor: "rgba(251, 245, 240, 1)",
+
         margin: 10,
         minWidth: 420,
         minHeight: 150,
         marginTop: 10,
         marginBottom: 10,
-        border: "5px solid whitesmoke",
+        border: "5px solid rgba(251, 245, 240, 1)",
         "& h2": {
             margin: 0
+        },
+        "& *": {
+            backgroundColor: "unset",
         }
-    }
+    },
+    nodeco : {
+        "text-decoration": "none",
+    },
 }));
 
 const Transition = React.forwardRef(function Transition(
@@ -84,7 +100,7 @@ const Menu = () => {
                     <span>progression</span>
                 </Paper>
             </Button>
-            <a href="https://fr.wikibooks.org/wiki/Catégorie:Recettes_de_cuisine_par_ingrédient" rel="noreferrer" target="_blank">
+            <a href="https://fr.wikibooks.org/wiki/Catégorie:Recettes_de_cuisine_par_ingrédient" rel="noreferrer" target="_blank" className={classes.nodeco}>
                 <Button className={classes.buttonDouble}>
                     <Paper elevation={0} >
                         <KitchenIcon className={classes.logo}/>

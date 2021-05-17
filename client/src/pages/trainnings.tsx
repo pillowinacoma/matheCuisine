@@ -4,7 +4,17 @@ import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles((theme) => ({
-
+    page: {
+        backgroundColor: "rgba(251, 238, 230, 0.85)",
+        position: "relative",
+        marginTop: 100,
+        margin: "auto",
+        width: "680px",
+        padding: 10,
+        "& *": {
+            backgroundColor: "unset" 
+        }
+    },
 }));
 
 const Trainnings = () => {
@@ -18,7 +28,7 @@ const Trainnings = () => {
     const classes = useStyle();
 
     return (
-        <div>
+        <div className={classes.page}>
             <h1>Exercices d'entrainement</h1>
             <p>Tous les exercices d'entrainement présent ici sont sous forme de qcm ou encore sous un format des plus claire possible. </p>
             <p>Cela afin de ce concentrer sur les notions que l'on souhaite apprendre.</p>

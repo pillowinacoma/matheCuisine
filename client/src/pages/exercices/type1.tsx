@@ -112,10 +112,6 @@ const Type1 = (props: {
         }
     };
 
-    useEffect(()=>{
-        console.log(dragTable);
-    }, [dragTable])
-
     return (
         <div>
             <div className={classes.problem}>
