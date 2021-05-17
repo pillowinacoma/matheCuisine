@@ -24,11 +24,11 @@ const Type3 = (props: {params: any, gen: any, setFinish: any, nbError:number, se
         setNewDenom(denomR);
        
 
-        let f = Math.floor(Math.random() * (denomR - 1)) + 2;
+        let f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
         while( countDecimals(denomR/f) != 0  ) {
 
-            f = Math.floor(Math.random() * (denomR - 1)) + 2;
+            f = Math.floor(Math.random() * (denomR - 1)) + 1;
 
         }
 

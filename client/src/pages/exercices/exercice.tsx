@@ -483,7 +483,7 @@ const genFract = (detail: any) => {
 
     var [correct, result] = solveurFraction(denom, nom, denomR);
 
-    while(denom == 0 || denomR == 0 || countDecimals(result) != 0 && nom > 1) {
+    while(denom == 0 || denomR == 0 || countDecimals(result) != 0 && nom > 1 && result > 1) {
         denomR = getRandomInt(detail.denominateurMax);
         denom = getRandomInt(detail.denominateurMax);
         nom = getRandomInt(denom - 1);
