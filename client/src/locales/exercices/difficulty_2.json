@@ -7,7 +7,12 @@
         "acceptFloat": false,
         "random": true,
         "maxRand": 100,
-        "vars": [1, 1, 2]
+        "vars": [
+            1,
+            1,
+            2,
+            1
+        ]
     },
     "Soustraction": {
         "type": 0,

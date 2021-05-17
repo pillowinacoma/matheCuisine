@@ -73,10 +73,12 @@ export const translationRpn = (rpn: any[], letter: string) => {
                         }
                     }
                     tempOp.reverse();
-                    if (str.includes(" ( ")) str += " ) ";
-                    if (tempOp.length >= 1) {
+                    
+                    if(tempOp.length >= 1) {
                         str = tempOp.pop() + " ( " + str + " ) ";
                     }
+                    if(str.includes(" ( ") && !str.includes(" ) "))
+                        str += " ) "
                     tempStr.push(str);
                 }
                 tempVar.push(rpn[i]);
@@ -128,8 +130,12 @@ export const translationRpn = (rpn: any[], letter: string) => {
 
 export const selectOp = (notions: string[]) => {
     let randOp = Math.floor(getRandomInt(10));
-    let choose = notions[randOp % notions.length];
+    let newTable = notions;
 
+    newTable = newTable.filter(item => item !== "fraction" && item !== "equation" && item !== "temps")
+
+    console.log("notions :" , notions)
+    let choose = notions[randOp % newTable.length];
     switch (choose) {
         case "addition":
             return "+";
@@ -260,9 +266,9 @@ export const generator = (detail: any, difficulty: number) => {
                 }
             }
         }
-        var [correct, resultat] = solveur(rpn, r);
+        var [correct, resultat, impossible] = solveur(rpn, r);
 
-        if (countDecimals(resultat) > 2 || resultat == Infinity) {
+        if(countDecimals(resultat) > 2 || resultat == Infinity || impossible) {
             restart = true;
         }
     }
@@ -305,16 +311,13 @@ export const calc = (a: number, b: number, op: any) => {
     }
 };
 
-export const solveur = (
-    rpn: any[],
-    attemptResult: number,
-    reponse?: number
-): [boolean, number] => {
+export const solveur = (rpn: any[], attemptResult: number, reponse?: number): [boolean, number, boolean] => {
     var tempVar: any[] = [];
     var tmpResult = 0;
     var correct = false;
     var tmpR = attemptResult;
-    if (reponse != undefined) {
+    let impossible = false;
+    if(reponse != undefined) {
         correct = attemptResult == reponse;
         tmpR = reponse;
     }
@@ -331,19 +334,28 @@ export const solveur = (
         if (isOp(rpn[i]) && tempVar.length > 0) {
             let b = tempVar.pop();
             let a = tempVar.pop();
-            let c = calc(a, b, rpn[i]);
+            if(rpn[i] == "/" && b == 0) {
+                impossible = true;
+                break;
+            }
+            let c = calc(a,b, rpn[i]);
             tempVar.push(c);
         }
     }
 
     tmpResult = tempVar[0];
+    if(!impossible) {
+        if(!correct && reponse != undefined) {
 
-    if (!correct && reponse != undefined) {
-        var [ok, res] = solveur(rpn, attemptResult);
-        correct = tmpResult == res;
+            var [ok, res] = solveur(rpn, attemptResult);
+            correct = (tmpResult == res);
+        }
     }
-
-    return [correct, tmpResult];
+    return [
+        correct,
+        tmpResult,
+        impossible
+    ];
 };
 
 export const recCalc = (tabVar: any[], tabOp: any[]): number => {
