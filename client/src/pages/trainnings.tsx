@@ -71,7 +71,6 @@ const Trainnings = () => {
                 {    
                     Object.entries(json1).map((element: any) => {
                         let key = element[0];
-                        console.log(json1[key].notions)
                         return (
                             <tr className={classes.Row}>
                                 <th className={classes.Cell}><Link to={"trainning/difficulty-1/"+key}>{key}</Link></th>
