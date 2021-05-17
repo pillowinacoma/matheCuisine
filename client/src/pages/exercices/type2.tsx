@@ -55,15 +55,6 @@ const Type2 = (props: {
         }
     };
 
-<<<<<<< HEAD
-=======
-    useEffect(() => {
-        console.log("clicked", active);
-    }, [active]);
-    useEffect(() => {
-        console.log("reponse", reponse);
-    }, [reponse]);
->>>>>>> a40d568c5c958fb52e3ec4531112b6e0defc1ed0
 
     return (
         <div>
