@@ -66,10 +66,10 @@ const Type3 = (props: {
                 />
                 <React.Suspense fallback="loading text">
                     <Cible
-                        execute={() => console.log("validé")}
-                        size={5}
+                        execute={() => console.log(checkReponse())}
+                        size={1}
                         rotation={[0, 0, 0]}
-                        position={[0, 0, 0]}
+                        position={[-20, 30, 0]}
                         valEntry={"VALIDER"}
                     />
                 </React.Suspense>
