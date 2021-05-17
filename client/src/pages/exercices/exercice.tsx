@@ -2,7 +2,7 @@ import * as React from 'react';
 import TType1 from './ttype1';
 import TType2 from './ttype2';
 import TType3 from './ttype3';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import CancelIcon from '@material-ui/icons/Cancel';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
@@ -12,7 +12,7 @@ import recette from '../../locales/recettes.json';
 import Type1 from './type1';
 import Type2 from './type2';
 import Type3 from './type3';
-
+import ReplayIcon from '@material-ui/icons/Replay';
 const type = [
     Type1,
     Type2,
@@ -482,6 +482,7 @@ const useStyle = makeStyles((theme) => ({
         fontSize: "40px",
         color: "#CB4335",
     },
+
     exHeader: {
         
         position: "relative",
@@ -507,6 +508,18 @@ const useStyle = makeStyles((theme) => ({
             }
         }
     },
+    replayBox: {
+        backgroundColor: "unset",
+        top: 20,
+        position: "absolute",
+        right: -400,
+    },
+    replay: {
+        marginLeft: "calc(50% - 30px)",
+        fontSize: "60px",
+        marginTop: 15,
+        color: "#3498DB",
+    },
     reussite: {
         position: "relative",
         duisplay: "block",
@@ -525,8 +538,12 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 
-const Timer = (props:{finish: boolean}) => {
+const Timer = (props:{finish: boolean, replay: boolean}) => {
     const [time, setTime] = React.useState(0.00);
+
+    React.useEffect(() => {
+        setTime(0);
+    }, [props.replay]);
 
     React.useEffect(() => {
         const timer = setTimeout(() => {
@@ -550,6 +567,8 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
 
     const [nbError, setNbError] = React.useState(0);
     const [nbIndice, setNbIndice] = React.useState(0);
+
+    const [replay, setReplay] = React.useState(false);
 
     if(!props.trainning) 
         json = require ('../../locales/exercices/difficulty_'+props.difficulty+'.json');
@@ -603,6 +622,12 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             break;
     }
 
+    React.useEffect(()=> {
+        if(replay == true) {
+            setReplay(false);
+        }
+    }, [replay])
+
 
 
 
@@ -621,13 +646,16 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
                 </div>
                 <div>
                     <HourglassEmptyIcon className={classes.hourGlass} />
-                    <Timer finish={finish}/>
+                    <Timer finish={finish} replay={replay}/>
                 </div>
+                <Button className={classes.replayBox} onClick={() => setReplay(true)}>
+                    <ReplayIcon className={classes.replay}/>
+                </Button>
             </div>
 
             {finish ? <div className={classes.reussite}><SentimentVerySatisfiedIcon className={classes.satisfiedIcon}/> Vous avez trouvé la bonne réponse !</div> : ""}
 
-            <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve}/>
+            <Type params={json[props.ex]} gen={gen} setFinish={setFinish} nbError={nbError} setNbError={setNbError} solveur={solve} replay={replay}/>
 
         </div>
     );

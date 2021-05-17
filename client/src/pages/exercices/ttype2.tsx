@@ -41,11 +41,14 @@ const useStyle = makeStyles((theme) => ({
         position: "absolute",
         marginTop: 80,
         marginLeft: "calc(400px + 20% + 60px)",
+    },
+    game: {
+        color: "whitesmoke"
     }
 
 }));
 
-const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any}) : JSX.Element => {
+const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, setNbError:any, solveur: any, replay: boolean}) : JSX.Element => {
 
     const classes = useStyle();
     const [reponse, setReponse] = React.useState({hour: 0, min:0});
@@ -61,7 +64,7 @@ const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
         setStartTime(startTime);
         setValues(values);
 
-    }, []);
+    }, [props.replay]);
 
 
     const handleChange = (type: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +91,7 @@ const TType2 = (props: {params: any, gen: any, setFinish: any, nbError:number, s
     }
 
     return (
-        <div>
+        <div className={classes.game}>
 
             <div className={classes.problem}>
                 <p>Vous vous lancez dans la préparation d'un repas. Vous ne savez pas encore à quel heure vous finirez. Mais vous connaissez le temps de préparation de chaqu'un de vos plat.</p>
