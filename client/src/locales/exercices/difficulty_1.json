@@ -1,20 +1,5 @@
 {
-    "Calcule-1": {
-        "type": 0,
-        "notions": [
-            "soustraction"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 50,
-        "vars": [
-            1,
-            2
-        ]
-    },
-    "Calcule-2": {
+    "Addition": {
         "type": 0,
         "notions": [
             "addition"
@@ -29,7 +14,22 @@
             1
         ]
     },
-    "Calcule-3": {
+    "Soustraction": {
+        "type": 0,
+        "notions": [
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 50,
+        "vars": [
+            1,
+            2
+        ]
+    },
+    "Multiplication": {
         "type": 0,
         "notions": [
             "multiplication"
@@ -44,7 +44,7 @@
             1
         ]
     },
-    "Calcule-4": {
+    "Division": {
         "type": 0,
         "notions": [
             "division"

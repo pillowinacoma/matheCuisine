@@ -1,21 +1,5 @@
 {
-    "Calcule-1": {
-        "type": 0,
-        "notions": [
-            "soustraction"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            2,
-            1
-        ]
-    },
-    "Calcule-2": {
+    "Addition": {
         "type": 0,
         "notions": [
             "addition"
@@ -31,7 +15,23 @@
             2
         ]
     },
-    "Calcule-3": {
+    "Soustraction": {
+        "type": 0,
+        "notions": [
+            "soustraction"
+        ],
+        "decimal": false,
+        "acceptNegatif": false,
+        "acceptFloat": false,
+        "random": true,
+        "maxRand": 100,
+        "vars": [
+            1,
+            2,
+            1
+        ]
+    },
+    "Multiplication": {
         "type": 0,
         "notions": [
             "multiplication"
@@ -47,7 +47,7 @@
             1
         ]
     },
-    "Calcule-4": {
+    "Division": {
         "type": 0,
         "notions": [
             "division"
@@ -63,28 +63,13 @@
             1
         ]
     },
-    "Calcule-5": {
-        "type": 0,
-        "notions": [
-            "division",
-            "multiplication"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
-    },
-    "Calcule-6": {
+
+    "Notions Multiple 1": {
         "type": 0,
         "notions": [
             "addition",
-            "multiplication"
+            "soustraction",
+            "division"
         ],
         "decimal": false,
         "acceptNegatif": false,
@@ -93,67 +78,16 @@
         "maxRand": 100,
         "vars": [
             1,
-            1,
-            1
-        ]
-    },
-    "Calcule-7": {
-        "type": 0,
-        "notions": [
-            "division",
-            "addition"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
             1,
             1,
             1
         ]
     },
 
-    "Calcule-8": {
+    "Notions Multiple 2": {
         "type": 0,
         "notions": [
-            "division",
-            "soustraction"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
-    },
-
-    "Calcule-9": {
-        "type": 0,
-        "notions": [
-            "division",
-            "multiplication"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
-            1,
-            1,
-            1
-        ]
-    },
-
-    "Calcule-10": {
-        "type": 0,
-        "notions": [
+            "addition",
             "soustraction",
             "multiplication"
         ],
@@ -165,24 +99,7 @@
         "vars": [
             1,
             1,
-            1
-        ]
-    },
-    "Calcule-11": {
-        "type": 0,
-        "notions": [
-            "addition",
-            "soustraction"
-        ],
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 100,
-        "vars": [
             1,
-            1,
-            2,
             1
         ]
     },
@@ -201,7 +118,7 @@
         ],
         "denominateurMax": 50
     },
-    "Equation-1": {
+    "Equation 1": {
         "type": 0,
         "notions": [
             "addtion"
@@ -216,7 +133,7 @@
             "r"
         ]
     },
-    "Equation-2": {
+    "Equation 2": {
         "type": 0,
         "notions": [
             "soustraction"
@@ -231,7 +148,7 @@
             "r"
         ]
     },
-    "Equation-3": {
+    "Equation 3": {
         "type": 0,
         "notions": [
             "multiplication"
@@ -246,7 +163,7 @@
             "r"
         ]
     },
-    "Equation-4": {
+    "Equation 4": {
         "type": 0,
         "notions": [
             "division"
