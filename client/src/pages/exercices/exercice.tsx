@@ -405,13 +405,10 @@ export const checkResult = (rpn: any, eq: any, equation: boolean, attemptR: any,
 
 /** Type 2 */
 
+export const generateurTime = (difficulty: number) => {
 
 
-
-export const generateurTime = () => {
-
-
-    var nbVar = 1 + getRandomInt(4);
+    var nbVar = difficulty + getRandomInt(1);
     var nbVarUseless = getRandomInt(2);
     var values: [any, any, any, any][] = [];
 
@@ -426,6 +423,7 @@ export const generateurTime = () => {
     return {startTime, values};
 
 }
+
 export const solveurTime = (startTime: {hour:number, min: number},values: any[], reponse?: {hour: number, min: number}): [boolean,  {hour: number, min: number}] => {
 
 
@@ -707,7 +705,7 @@ const Exercice = (props: {difficulty: number, ex: string, trainning?: boolean}) 
             break;
         case 1: // jeux et qcm avec temps
             gen = () => {
-                var {startTime, values} = generateurTime();
+                var {startTime, values} = generateurTime(props.difficulty);
 
                 return [startTime, values];
             };
@@ -836,7 +834,3 @@ export function getRandomInt(max: number) {
 
 
 export default Exercice;
-
-
-
-

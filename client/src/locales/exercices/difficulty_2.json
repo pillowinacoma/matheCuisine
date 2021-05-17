@@ -168,7 +168,7 @@
             1
         ]
     },
-    "Calcule-9": {
+    "Calcule-11": {
         "type": 0,
         "notions": [
             "addition",
@@ -185,6 +185,21 @@
             2,
             1
         ]
+    },
+    "Horraire" : {
+        "type" : 1,
+        "notions" : [
+            "temps",
+            "addition"
+        ]
+
+    },
+    "Fraction-1": {
+        "type": 2,
+        "notions":[
+
+        ],
+        "denominateurMax": 50
     },
     "Equation-1": {
         "type": 0,
@@ -245,31 +260,5 @@
             2,
             "r"
         ]
-    },
-    "Exercice-3": {
-        "type": 0,
-        "decimal": false,
-        "acceptNegatif": false,
-        "acceptFloat": false,
-        "random": true,
-        "maxRand": 50,
-        "notions": [
-            "addition",
-            "multiplication"
-        ],
-        "vars": [
-            1,
-            1,
-            1
-        ],
-        "coef": 2,
-        "result": 100
-    },
-    "Fraction-1": {
-        "type": 2,
-        "notions":[
-
-        ],
-        "denominateurMax": 50
     }
 }
