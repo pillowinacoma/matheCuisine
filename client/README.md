@@ -14,11 +14,11 @@ Ce projet est une Web App réalisé principalement en utilisant React et TypeScr
 
 Tout d'abord, un système de connection permet à l'utilisateur de se connecter pour pouvoir acceder au logiciel, l'utilisateur se retrouve devant un menu qui contient des liens vers les differents parties du logiciel : 
 
-    + Aide : partie qui explique le fonctionnement du logiciel et des jeux intercatifs.
-    + Cours : explication brève des notions mathématiques interprétés.
-    + Profile : profile de l'utilisateur, contiens des données sur les jeux et les exercices réalisés (temps moyen, erreur moyenne, nombre d'essays ...).
-    + Entrainement : contient des exercices d'entrainement générés classés selon les notions et la difficulté.
-    + Exercices : contient des jeux interactifs générés et classé selon la difficulté et les notion contenus.
++ Aide : partie qui explique le fonctionnement du logiciel et des jeux intercatifs.
++ Cours : explication brève des notions mathématiques interprétés.
++ Profile : profile de l'utilisateur, contiens des données sur les jeux et les exercices réalisés (temps moyen, erreur moyenne, nombre d'essays ...).
++ Entrainement : contient des exercices d'entrainement générés classés selon les notions et la difficulté.
++ Exercices : contient des jeux interactifs générés et classé selon la difficulté et les notion contenus.
 
 ### `Génération des jeux et d'entainements`
 - hello 
