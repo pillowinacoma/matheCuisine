@@ -21,4 +21,9 @@ Tout d'abord, un système de connection permet à l'utilisateur de se connecter 
 + Exercices : contient des jeux interactifs générés et classé selon la difficulté et les notion contenus.
 
 ### `Génération des jeux et d'entainements`
-- hello 
+- les fichiers JSON contenus dans 'exercices' et 'trainings' [(ici)](https://forge.univ-lyon1.fr/p1509899/mathecuisine/-/tree/master/client/src/locales) contiennent les parametres à partir desquels le générateur génére les exercices, ces paramettres sont differents pour chaque type d'exercice mais en générale ils détérminent les notions abordés et la difficulté : 
++ pour les equations par exemple les parametres détérminerons si on peut avoir une solution décimale, negative, et la limite de la hauter des coefficients ... 
+
+Après que le générateur génére le problème aléatoire avec les valeurs numeriques, un ennoncé est formulé sous forme de situation culinaire.
+
+l'interface graphique est implementé differament selon le type de l'exercice/entrainement.
