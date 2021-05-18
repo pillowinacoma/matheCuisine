@@ -20,7 +20,7 @@ Tout d'abord, un système de connection permet à l'utilisateur de se connecter 
 + Entrainement : contient des exercices d'entraînement générés classés selon les notions et la difficulté.
 + Exercices : contient des jeux interactifs générés et classés selon la difficulté et les notions contenus.
  
-### `Génération des jeux et d'entraînements'
+### `Génération des jeux et d'entraînements`
 - les fichiers JSON contenus dans 'exercices' et 'trainings' [(ici)](https://forge.univ-lyon1.fr/p1509899/mathecuisine/-/tree/master/client/src/locales) contiennent les parametres à partir desquels le générateur génére les exercices, ces paramettres sont differents pour chaque type d'exercice mais en générale ils détérminent les notions abordés et la difficulté :
 + pour les équations par exemple les paramètres déterminerons si on peut avoir une solution décimale, négative, et la limite de la hauteur des coefficients ...
  
