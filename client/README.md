@@ -21,4 +21,4 @@ Tout d'abord, un système de connection permet à l'utilisateur de se connecter 
     + Exercices : contient des jeux interactifs générés et classé selon la difficulté et les notion contenus.
 
 ### `Génération des jeux et d'entainements`
-    - hello 
+- hello 
