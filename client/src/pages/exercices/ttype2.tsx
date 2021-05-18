@@ -1,3 +1,8 @@
+/**
+ * entrainement de type 2 (problème de temps), ce fichier est un composant react 
+ * qui s'occupe de l'affichage d'un entrainement de ce type 
+ * et de recuperer la reponse de l'utilisateur et la verifier etc
+ */
 import * as React from 'react';
 import { makeStyles, TextField, Button } from '@material-ui/core';
 import { isNumber } from 'util';

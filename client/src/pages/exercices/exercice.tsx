@@ -1,3 +1,7 @@
+/**
+ * Ce fichier contient les differents générateurs
+ * et les solveurs pour les exercices et les entrainements
+ */
 import * as React from "react";
 import TType1 from "./ttype1";
 import TType2 from "./ttype2";

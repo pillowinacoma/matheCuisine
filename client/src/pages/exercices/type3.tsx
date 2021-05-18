@@ -1,3 +1,9 @@
+
+/**
+ * jeux de type 3 (fraction Pancake), ce fichier est un composant react 
+ * qui s'occupe de l'affichage d'un entrainement de ce type 
+ * et de recuperer la reponse de l'utilisateur et la verifier etc
+ */
 import * as React from "react";
 import Board from "../components/board";
 import BackgroundImage from "../components/bgImage";

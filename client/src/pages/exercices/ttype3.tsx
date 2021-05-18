@@ -1,3 +1,9 @@
+
+/**
+ * entrainement de type 3 (fraction), ce fichier est un composant react 
+ * qui s'occupe de l'affichage d'un entrainement de ce type 
+ * et de recuperer la reponse de l'utilisateur et la verifier etc
+ */
 import * as React from 'react';
 import { TextField, Button, makeStyles } from '@material-ui/core';
 import { isNumber } from 'util';

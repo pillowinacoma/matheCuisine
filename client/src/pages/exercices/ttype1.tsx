@@ -1,3 +1,8 @@
+/**
+ * entrainement de type1 (equation), ce fichier est un composant react 
+ * qui s'occupe de l'affichage d'un entrainement de ce type 
+ * et de recuperer la reponse de l'utilisateur et la verifier etc
+ */
 import * as React from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';

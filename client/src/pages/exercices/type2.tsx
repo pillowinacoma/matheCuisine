@@ -1,3 +1,9 @@
+
+/**
+ * jeux de type 2 (horloge), ce fichier est un composant react 
+ * qui s'occupe de l'affichage d'un entrainement de ce type 
+ * et de recuperer la reponse de l'utilisateur et la verifier etc
+ */
 import Clock from "../components/clock";
 import React from "react";
 import { makeStyles } from "@material-ui/core";
