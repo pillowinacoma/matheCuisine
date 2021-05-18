@@ -30,22 +30,22 @@ l'interface graphique est implémentée différemment selon le type de l'exercic
 
 ### `Répértoires`
 pour vous aider à comprendre le code voici une description du contenu des differents répértoires : 
-- ./src/components : composants visuels (navbar, sideBar ...) et leurs layout
-- ./src/engine : 
+- ./client/src/components : composants visuels (navbar, sideBar ...) et leurs layout
+- ./client/src/engine : 
     - profile : implementation d'un profile qui est exporté avec un povider pour que les composants en dessous puissent faire appel au fonctionnalités liés au profil
     - translation : moteur de traduction (EN/FR)
-- ./src/locales/ : 
+- ./client/src/locales/ : 
     - /exercices/ : parametres des exercices
     - /trainings/ : parametres des entrainements
     - /translation/ : dictionnaire pour les traductions (en construction)
     - recettes.json : recettes utilisées pour generer les ennoncés
 
-- ./src/page/ : 
+- ./client/src/page/ : 
     - contient les composants pour les pages (connection, deconnection, profile ...)
     - /exercices : generateurs et solveurs des exercices et entrainements + logique, contient les composants exercices et entrainements
     - /components : composants 3d, et module d'aide personnalisé pour chaque notion 
-- ./src/App.tsx : composant principal (router, layout ...)
-- ./src/index.tsx : composant racine
+- ./client/src/App.tsx : composant principal (router, layout ...)
+- ./client/src/index.tsx : composant racine
 
  
  
