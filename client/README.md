@@ -27,6 +27,26 @@ Tout d'abord, un système de connection permet à l'utilisateur de se connecter 
 Après que le générateur génère le problème aléatoire avec les valeurs numériques, un énoncé est formulé sous forme de situation culinaire.
  
 l'interface graphique est implémentée différemment selon le type de l'exercice/entraînement.
+
+### `Répértoires`
+pour vous aider à comprendre le code voici une description du contenu des differents répértoires : 
+./src/components : composants visuels (navbar, sideBar ...) et leurs layout
+./src/engine : 
+-profile : implementation d'un profile qui est exporté avec un povider pour que les composants en dessous puissent faire appel au fonctionnalités liés au profil
+-translation : moteur de traduction (EN/FR)
+./src/locales/ : 
+- /exercices/ : parametres des exercices
+- /trainings/ : parametres des entrainements
+- /translation/ : dictionnaire pour les traductions (en construction)
+- recettes.json : recettes utilisées pour generer les ennoncés
+
+./src/page/ : 
+- contient les composants pour les pages (connection, deconnection, profile ...)
+- /exercices : generateurs et solveurs des exercices et entrainements + logique, contient les composants exercices et entrainements
+- /components : composants 3d, et module d'aide personnalisé pour chaque notion 
+-./src/App.tsx : composant principal (router, layout ...)
+-./src/index.tsx : composant racine
+
  
  
 
