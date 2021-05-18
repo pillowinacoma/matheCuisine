@@ -1,53 +1,46 @@
-# MatheCuisine
- 
-Ce projet a été réalisé sous le cadre de l'UE Logiciel Educatif (M1IF28) pour l'année 2020/2021.
- 
-Dans ce fichier README vous allez trouver une description générale du fonctionnement du site
- 
-## Technologies :
- 
-Ce projet est une Web App réalisé principalement en utilisant React et TypeScript, la mise en page du site on a utilisé materialUI en plus du CSS, et pour les jeux interactifs on a utilisé la bibliothèque javaScript Three.js en plus du renderer react pour Three.Js : react-three-fiber
- 
-## `Fonctionnement`
- 
-### `Structure`
- 
-Tout d'abord, un système de connection permet à l'utilisateur de se connecter pour pouvoir accéder au logiciel, l'utilisateur se retrouve devant un menu qui contient des liens vers les differents parties du logiciel :
- 
-+ Aide : partie qui explique le fonctionnement du logiciel et des jeux interactifs.
-+ Cours : explication brève des notions mathématiques interprétées.
-+ Profil : profil de l'utilisateur, contient des données sur les jeux et les exercices réalisés (temps moyen, erreur moyenne, nombre d'essais ...).
-+ Entrainement : contient des exercices d'entraînement générés classés selon les notions et la difficulté.
-+ Exercices : contient des jeux interactifs générés et classés selon la difficulté et les notions contenus.
- 
-### `Génération des jeux et d'entraînements`
-- les fichiers JSON contenus dans 'exercices' et 'trainings' [(ici)](https://forge.univ-lyon1.fr/p1509899/mathecuisine/-/tree/master/client/src/locales) contiennent les parametres à partir desquels le générateur génére les exercices, ces paramettres sont differents pour chaque type d'exercice mais en générale ils détérminent les notions abordés et la difficulté :
-+ pour les équations par exemple les paramètres déterminerons si on peut avoir une solution décimale, négative, et la limite de la hauteur des coefficients ...
- 
-Après que le générateur génère le problème aléatoire avec les valeurs numériques, un énoncé est formulé sous forme de situation culinaire.
- 
-l'interface graphique est implémentée différemment selon le type de l'exercice/entraînement.
+# Getting Started with Create React App
 
-### `Répértoires`
-pour vous aider à comprendre le code voici une description du contenu des differents répértoires : 
-- ./src/components : composants visuels (navbar, sideBar ...) et leurs layout
-- ./src/engine : 
-    - profile : implementation d'un profile qui est exporté avec un povider pour que les composants en dessous puissent faire appel au fonctionnalités liés au profil
-    - translation : moteur de traduction (EN/FR)
-- ./src/locales/ : 
-    - /exercices/ : parametres des exercices
-    - /trainings/ : parametres des entrainements
-    - /translation/ : dictionnaire pour les traductions (en construction)
-    - recettes.json : recettes utilisées pour generer les ennoncés
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-- ./src/page/ : 
-    - contient les composants pour les pages (connection, deconnection, profile ...)
-    - /exercices : generateurs et solveurs des exercices et entrainements + logique, contient les composants exercices et entrainements
-    - /components : composants 3d, et module d'aide personnalisé pour chaque notion 
-- ./src/App.tsx : composant principal (router, layout ...)
-- ./src/index.tsx : composant racine
+## Available Scripts
 
- 
- 
+In the project directory, you can run:
 
+### `npm start`
 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
