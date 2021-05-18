@@ -44,8 +44,8 @@ pour vous aider à comprendre le code voici une description du contenu des diffe
     - contient les composants pour les pages (connection, deconnection, profile ...)
     - /exercices : generateurs et solveurs des exercices et entrainements + logique, contient les composants exercices et entrainements
     - /components : composants 3d, et module d'aide personnalisé pour chaque notion 
--./src/App.tsx : composant principal (router, layout ...)
--./src/index.tsx : composant racine
+- ./src/App.tsx : composant principal (router, layout ...)
+- ./src/index.tsx : composant racine
 
  
  
