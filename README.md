@@ -3,6 +3,8 @@
 Ce projet a été réalisé sous le cadre de l'UE Logiciel Educatif (M1IF28) pour l'année 2020/2021.
  
 Dans ce fichier README vous allez trouver une description générale du fonctionnement du [site](https://mathecuisine.nidc.fr/)
+
+[Video](https://www.youtube.com/watch?v=A2-dO3IXjho)
  
 ## Technologies :
  
